@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Henkilon lisäys</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+</head>
+<body class ="mb-2 bg-primary text-white" >
+
+<div class="jumbotron text-center" style="background-color:inherit">
+  <h2 class="mb-2 bg-primary text-white">Timanttityö Lindh Oy</h2>
+  
+</div>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6" style="background-color:#5158AC">
+    <h2> Lisää työntekijätiedot: </h2>
+
+<form action="tallennus.php" method="post">
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="sukunimi">Sukunimi</label>
+      <input type="text" class="form-control" id="sukunimi" name="sukunimi" placeholder="Sukunimi">
+    </div>
+    <div class="form-group col-md-2">
+      <label for="etunimi">Etunimi</label>
+      <input type="text" class="form-control" id="etunimi" name="etunimi" placeholder="Etunimi">
+    </div>
+    
+    <div class="form-group col-md-3">
+      <label for="saika">Syntymäaika</label>
+      <input type="date" class="form-control" id="date" name="saika" placeholder="MM/DD/YYYY">
+    </div>
+    
+    <div class="form-group col-md-3">
+      <label for="inputPassword4">Veronumero</label>
+      <input type="text" class="form-control" id="veronro" name="veronro" placeholder="VeroNro">
+    </div>
+  </div>
+  <div class="form-row">
+  <div class="form-group col-md-5">
+    <label for="inputAddress">Katuosoite</label>
+    <input type="text" class="form-control" id="address" name="osoite" placeholder="Tiekatu 123">
+  </div>
+  <div class="form-group col-md-2">
+      <label for="postiNro">Postinumero</label>
+      <input type="text" class="form-control" id="postiNro" name="postinro">
+  </div>
+  <div class="form-group col-md-2">
+      <label for="kaupunki">City</label>
+      <input type="text" class="form-control" id="kaupunki" name="kaupunki">
+    </div>
+    </div>
+  
+    <div class="form-group col-md-3">
+      <label for="puhNro">Puhelinnumero</label>
+      <input type="text" class="form-control" id="puhNro" name="puhnro">
+    </div>
+    
+    <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="email">Email tai käyttäjätunnus</label>
+      <input type="text" id="email" name="email" class="form-control">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="password">Salasana</label>
+      <input type="password" id="password" name="salasana" class="form-control">
+    </div>
+     
+  </div>
+ <div class="form-group col-md-5">
+ <br>
+ <button type="submit" class="btn btn-success btn-block" style="height:40px">Tallenna työntekijätiedot</button>
+ </div>
+</form>
+</div>
+
+
+    <div class="col-md-3"></div>
+</div>
+  
+</body>
+</html>
