@@ -25,7 +25,8 @@
 	echo "Connected successfully";
 
 
-	$sql = "INSERT INTO henkilo (etunimet, sukunimi, syntymaaika, osoite, postinumero, kaupunki, puhnro, veronro, ktunnus, salasana) VALUES ('$fname','$lname','$bdate','$address','$zipcode','$city','$phone','$veroNro','$email','$pass')";
+	$sql = "INSERT INTO henkilo (etunimet, sukunimi, syntymaaika, osoite, postinumero, kaupunki, puhnro, veronro, ktunnus, salasana) 
+	VALUES ('$fname','$lname','$bdate','$address','$zipcode','$city','$phone','$veroNro','$email','$pass')";
 
 	if ($conn->query($sql) === TRUE) {
     		echo "New record created successfully";
