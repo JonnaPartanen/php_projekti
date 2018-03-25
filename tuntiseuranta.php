@@ -22,8 +22,8 @@
 	echo "Connected successfully";
 
 
-	$sql = "INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, viikonloppu, kilometrit, kmselite) 
-	VALUES ('$date','$kohde','$tunnit','$ylityo','$vkl','$km','$selite')";
+	$sql = "INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, viikonloppu, kilometrit, kmselite, henkilo_idhenkilo) 
+	VALUES ('$date','$kohde','$tunnit','$ylityo','$vkl','$km','$selite','20000')";
 
 	if ($conn->query($sql) === TRUE) {
     		echo "New record created successfully";
