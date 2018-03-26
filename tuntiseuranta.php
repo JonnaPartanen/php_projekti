@@ -1,6 +1,6 @@
 <?php
 	$date = $_POST["pvm"];
-	$tunnit = $_POST["tunnit"];
+	$tunnit = filter_var($_POST["tunnit"], FILTER_VALIDATE_INT);
 	$ylityo = $_POST["ylityo"];
 	$vkl = $_POST["vkl"];
 	$kohde = $_POST["kohde"];

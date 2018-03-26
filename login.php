@@ -1,10 +1,7 @@
 <?php 
+header('Content-Type:text/html; charset=UTF-8');
 
-
-    $email = $_POST["email"];
-    $pwd = $_POST["pwd"];
-    $testi = "Testimuuttuja";
-    
+function login($email, $pwd){
     
     $servername = "localhost";
     $username = "root";
@@ -17,9 +14,9 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    echo "Connected successfully" . "<br>";
+    //echo "Connected successfully" . "<br>";
     
-    
+
     $sql = "SELECT * FROM henkilo WHERE ktunnus = '$email'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -30,18 +27,21 @@
             $sys_pwd=$row["salasana"];
         }
         if($sys_username==$email && $sys_pwd==$pwd ){
-            echo "Kirjautuminen onnistui";
+            //return "Kirjautuminen onnistui";
             header("Location: seuranta.html"); /* Redirect browser */
         }else{
-            header("Location: index.html");
-            //echo "Tarkista käyttäjänimi ja salasana";
+            //header("Location: index.html");
+            return "Tarkista kï¿½yttï¿½jï¿½nimi ja salasana";
         }
     } else {
-        echo "0 results";
+        return auth_failed();
     }
     
     $conn->close();
-     
+}
+function auth_failed(){
+     return "Kirjautuminen epÃ¤onnistui. Tarkasta kÃ¤yttÃ¤jÃ¤tunnus ja salasana";
+}
 
 
 ?>
