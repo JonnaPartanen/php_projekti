@@ -1,3 +1,27 @@
+<?php
+session_start();
+	require_once('sql_handler.php');
+	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+		
+		if (isset($_POST['check'])){
+			
+			$date = $_POST["pvm"];
+			$hours = filter_var($_POST["tunnit"], FILTER_VALIDATE_INT);
+			$overtime = $_POST["ylityo"];
+			$weekend = $_POST["vkl"];
+			$place = $_POST["kohde"];
+			$kilometers = $_POST["km"];
+			$km_description = $_POST["selite"];
+			
+		}
+	
+	 }
+
+
+	//echo $message
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +42,10 @@
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8" style="background-color:#5158AC">
-    <h2> Työaikaseuranta ja ajopäiväkirja: </h2>
+    <h2> Työaikaseuranta ja ajopäiväkirja: </h2> <br>
+    <?php echo "<p> Tervetuloa ".$_SESSION['username'] . $_SESSION['userid']. "</p>"; ?>
 
-<form action="tuntiseuranta.php" method="post">
+<form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
   <div class="form-row">
 	<div class="form-group col-md-3">
       <label for="pvm">Päivämäärä</label>
@@ -59,7 +84,7 @@
 
  <div class="form-group col-md-5">
  <br>
- <button type="submit" class="btn btn-success btn-block" style="height:40px">Tallenna tiedot</button>
+ <button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">Tallenna tiedot</button>
  </div>
 </form>
 </div>
@@ -67,6 +92,11 @@
 
     <div class="col-md-2"></div>
 </div>
+
+<?php
+	if (isset($km_description))
+		echo "<br><br><p align='center'>".$message=insert_hours($date, $hours, $overtime, $weekend, $place, $kilometers, $km_description) ."</p>";
+?>
   
 </body>
 </html>

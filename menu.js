@@ -1,10 +1,10 @@
 function openKayttajat(){
 	
-	document.location="kayttajat.html";
+	document.location="kayttajat.php";
 	
 }
 
 function openSeuranta(){
 	
-	document.location="seuranta.html";
+	document.location="seuranta.php";
 }

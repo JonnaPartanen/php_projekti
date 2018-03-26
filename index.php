@@ -1,6 +1,6 @@
 <?php
-header('Content-Type:text/html; charset=utf-8');
-	require_once('login.php');
+	session_start();
+	require_once('sql_handler.php');
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		
 		if (isset($_POST['check'])){

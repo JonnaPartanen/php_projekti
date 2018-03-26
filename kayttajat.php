@@ -1,3 +1,21 @@
+<?php
+session_start();
+	require_once('sql_handler.php');
+	if (empty($_SESSION['userid'])) {
+
+			header("Location: index.php"); /* Redirect browser */;
+	}elseif($_SESSION['userid']!=20002){
+		header("Location: index.php"); /* Redirect browser */;
+
+	}else{
+		echo "Tervetuloa " .$_SESSION['username'];
+	}
+	
+
+	
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
