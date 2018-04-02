@@ -18,7 +18,12 @@ function login($email, $pwd){
             //"Kirjautuminen onnistui"
             $_SESSION['userid'] = $current_userid;
             $_SESSION['username'] = $current_user;
-            header("Location: seuranta.php"); /* Redirect browser */
+            $_SESSION['addedRows'] = "";
+            if($_SESSION['userid']!=20002){
+                header("Location: seuranta.php"); /* Redirect browser */
+            }else{
+                header("Location: valikko.php"); /* Redirect browser */
+            }
         }else{
             //header("Location: index.html");
             return "Tarkista käyttäjänimi ja salasana";
@@ -36,9 +41,12 @@ function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, 
     $result = get_database($sql);
     
     if ($result === TRUE) {
-        return "New record created successfully";
+        $_SESSION['addedRows'] .= "<tr><td>" .$userid . "</td><td>". $date . "</td><td>" .$place ."</td><td>" .$hours . "</td><td>
+        " .$over_time ."</td><td>" .$weekend ."</td><td>" .$kilometers ."</td><td>" . $km_description ."</tr></td>";
+        //return $_SESSION['addedRows'];
+        return "Rivi tallennettiin tietokantaan onnistuneesti:";
     } else {
-        return $sql;
+        return "Jotain meni pieleen. Yritä uudelleen";
     }
     
     //return $result;*/
@@ -46,7 +54,7 @@ function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, 
 
 
 function auth_failed(){
-     return "Kirjautuminen epäonnistui. Tarkasta käyttäjätunnus ja salasana";
+     return "Kirjautuminen epäonnistui. Tarkasta käyttäjätunnus";
 }
 
 
