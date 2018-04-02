@@ -13,13 +13,15 @@ function login($email, $pwd){
             $current_user = $row["sukunimi"]. ", " . $row["etunimet"]; 
             $sql_username=$row["ktunnus"];
             $sql_pwd=$row["salasana"];
+            $_SESSION['admin']=$row["admin"];
         }
         if($sql_username==$email && $sql_pwd==$pwd ){
             //"Kirjautuminen onnistui"
             $_SESSION['userid'] = $current_userid;
             $_SESSION['username'] = $current_user;
             $_SESSION['addedRows'] = "";
-            if($_SESSION['userid']!=20002){
+           
+            if($_SESSION['admin']!='1'){
                 header("Location: seuranta.php"); /* Redirect browser */
             }else{
                 header("Location: valikko.php"); /* Redirect browser */

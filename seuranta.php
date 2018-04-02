@@ -64,7 +64,7 @@ function check_if_float($floatInput){
     <div class="col-md-2"></div>
     <div class="col-md-8" style="background-color:#5158AC">
     <h2> Työaikaseuranta ja ajopäiväkirja: </h2> <br>
-    <?php echo "<h3 style='color:red'>".$_SESSION['username'] .":</h3>"; ?>
+    <?php echo "<h3 style='color:red'>".$_SESSION['username'] . $_SESSION['admin'] .":</h3>"; ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
   <div class="form-row">
