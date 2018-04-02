@@ -5,7 +5,7 @@ session_start();
 
 			header("Location: index.php"); /* Redirect browser */;
 	}elseif($_SESSION['userid']!=20002){
-		header("Location: index.php"); /* Redirect browser */;
+		header("Location: seuranta.php"); /* Redirect browser */;
 
 	}else{
 		echo "Tervetuloa " .$_SESSION['username'];
