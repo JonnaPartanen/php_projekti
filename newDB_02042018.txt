@@ -32,11 +32,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`henkilo` (
   `veronro` VARCHAR(15) NOT NULL,
   `ktunnus` VARCHAR(45) NOT NULL,
   `salasana` VARCHAR(20) NOT NULL,
+  `admin` BOOLEAN NOT NULL,
   PRIMARY KEY (`idhenkilo`),
   UNIQUE INDEX `idhenkilo_UNIQUE` (`idhenkilo` ASC),
   UNIQUE INDEX `tunnus_UNIQUE` (`ktunnus` ASC),
   UNIQUE INDEX `salasana_UNIQUE` (`salasana` ASC))
-ENGINE = InnoDB AUTO_INCREMENT=20000;
+ENGINE = InnoDB AUTO_INCREMENT=100;
 
 
 -- -----------------------------------------------------
@@ -74,8 +75,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mydb`;
-INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimet`, `sukunimi`, `syntymaaika`, `osoite`, `postinumero`, `kaupunki`, `puhnro`, `veronro`, `ktunnus`, `salasana`) VALUES (DEFAULT, 'Mika', 'Lindh', '1950-12-12', 'Harmokuja 6D111', '01200', 'Vantaa', '0505456359', '856813312382', 'miklin', 'root');
-INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimet`, `sukunimi`, `syntymaaika`, `osoite`, `postinumero`, `kaupunki`, `puhnro`, `veronro`, `ktunnus`, `salasana`) VALUES (DEFAULT, 'Jonna', 'Partanen', '1870-12-13', 'osoite ', '01300', 'Vantaa', '0455416168', '987613131232', 'jonna', 'jonna');
+INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimet`, `sukunimi`, `syntymaaika`, `osoite`, `postinumero`, `kaupunki`, `puhnro`, `veronro`, `ktunnus`, `salasana`, `admin`) VALUES (DEFAULT, 'Mika', 'Lindh', '1700-05-09', 'Jokukuja', '01200', 'Vantaa', '0505555559', '856813312382', 'mika.lindh@live.com', 'mika', 'true');
+INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimet`, `sukunimi`, `syntymaaika`, `osoite`, `postinumero`, `kaupunki`, `puhnro`, `veronro`, `ktunnus`, `salasana`, `admin`) VALUES (DEFAULT, 'Jonna', 'Partanen', '1715-05-25', 'Jokutie ', '01300', 'Vantaa', '0455432155', '987613131232', 'jonna.partanen@student.laurea.fi', 'jonna', 'false');
 
 COMMIT;
 
