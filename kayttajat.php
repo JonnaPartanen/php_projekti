@@ -22,11 +22,10 @@ session_start();
 	$phone=$_POST['puhnro'];
 	$email=$_POST['email'];
 	$pass=$_POST['salasana'];
-<<<<<<< HEAD
+
 	$admin='1';
-=======
 	$admin=$_POST['admin'];
->>>>>>> 955d799bf2b4f59846b9681999beb0ccd00f3e12
+
 	}
 }
 
@@ -35,7 +34,7 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Henkilon lisÃ¤ys</title>
+  <title>Henkilon lisäys</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -46,13 +45,13 @@ session_start();
 <body class ="mb-2 bg-primary text-white" >
 
 <div class="jumbotron text-center" style="background-color:inherit">
-  <h2 class="mb-2 bg-primary text-white">TimanttityÃ¶ Lindh Oy</h2>
+  <h2 class="mb-2 bg-primary text-white">Timanttityö Lindh Oy</h2>
   
 </div>
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8" style="background-color:#5158AC">
-    <h2> LisÃ¤Ã¤ tyÃ¶ntekijÃ¤tiedot: </h2>
+    <h2> Lisää työntekijätiedot: </h2>
 
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
   <div class="form-row">
@@ -66,7 +65,7 @@ session_start();
     </div>
     
     <div class="form-group col-md-3">
-      <label for="saika">SyntymÃ¤aika</label>
+      <label for="saika">Syntymäaika</label>
       <input type="date" class="form-control" id="date" name="saika" placeholder="MM/DD/YYYY">
     </div>
     
@@ -97,7 +96,7 @@ session_start();
     
     <div class="form-row">
     <div class="form-group col-md-4">
-      <label for="email">Email tai kÃ¤yttÃ¤jÃ¤tunnus</label>
+      <label for="email">Email tai käyttäjätunnus</label>
       <input type="text" id="email" name="email" class="form-control">
     </div>
     <div class="form-group col-md-3">
@@ -110,7 +109,7 @@ session_start();
       		<input type="radio" id="no" name="admin" value="0" checked>Ei
     	</label>
     	<label class="radio-inline">
-      		<input type="radio" id="yes" name="admin" value="1" >Kyll�
+      		<input type="radio" id="yes" name="admin" value="1" >Kyllä
     	</label>
      
   </div>

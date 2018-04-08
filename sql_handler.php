@@ -1,12 +1,13 @@
 <?php 
 //session_start();
-//require_once('prepare_test.php');
 require_once('connection.php');
+
 
 function login($email, $pwd){
     
-    $sql = "SELECT * FROM henkilo WHERE ktunnus = '$email'";
-    $result = get_database($sql);
+    $sql = ("SELECT idhenkilo, sukunimi , etunimet, ktunnus, salasana, admin FROM henkilo WHERE ktunnus ='$email'");
+    $result = execute_query($sql);
+
     if ($result->num_rows > 0) {
         // output data of each row
         while($row = $result->fetch_assoc()) {
@@ -43,8 +44,11 @@ function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$ph
         VALUES (?,?,?,?,?,?, ?,?,?,?,?)");
     $stmt->bind_param("ssssssssssi",$lname, $fname, $bdate, $veroNro, $address, $zipcode, $city, $phone, $email, $pass, $admin);
     $result = execute_prepared_query($stmt);
-    $result = execute_query($stmt);
-    return $stmt;
+    if ($result === TRUE) {
+        return "Käyttäjä tallennettu tietokantaan";
+    }else{
+        return "Jotain meni pieleen";
+    }
    
     
 }
@@ -62,8 +66,9 @@ function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, 
         $_SESSION['addedRows'] .= "<tr><td>" .$userid . "</td><td>". $date . "</td><td>" .$place ."</td><td>" .$hours . "</td><td>
         " .$over_time ."</td><td>" .$weekend ."</td><td>" .$kilometers ."</td><td>" . $km_description ."</tr></td>";
         //return $_SESSION['addedRows'];
-        return "Rivi tallennettiin tietokantaan onnistuneesti:";
-    } else {
+        return "Rivi tallennettiin tietokantaan onnistuneesti";
+    } 
+    else {
         return "Jotain meni pieleen. Yritä uudelleen";
     }
     
