@@ -22,7 +22,7 @@ session_start();
 	$phone=$_POST['puhnro'];
 	$email=$_POST['email'];
 	$pass=$_POST['salasana'];
-	$admin=1;
+	$admin='1';
 	}
 }
 

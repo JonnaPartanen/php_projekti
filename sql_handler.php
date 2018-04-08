@@ -38,10 +38,10 @@ function login($email, $pwd){
 
 function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$phone,$email,$pass, $admin) {
     $mysqli = get_database();
-    $stmt = $mysqli->prepare("INSERT INTO henkilo (sukunimi, etunimet, syntymaaika, osoite, postinumero, kaupunki, puhnro, veronro, ktunnus, salasana)
-        VALUES (?,?,?,?,?,?, ?,?,?,?)");
-    $stmt->bind_param("ssssssssss",$lname, $fname, $bdate, $veroNro, $address, $zipcode, $city, $phone, $email, $pass);
-    $result = execute_query($stmt);
+    $stmt = $mysqli->prepare("INSERT INTO henkilo (sukunimi, etunimet, syntymaaika, osoite, postinumero, kaupunki, puhnro, veronro, ktunnus, salasana, admin)
+        VALUES (?,?,?,?,?,?, ?,?,?,?,?)");
+    $stmt->bind_param("ssssssssssi",$lname, $fname, $bdate, $veroNro, $address, $zipcode, $city, $phone, $email, $pass, $admin);
+    $result = execute_prepared_query($stmt);
     return $stmt;
    
     
@@ -49,9 +49,12 @@ function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$ph
 
 function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, $km_description){
     $userid=$_SESSION["userid"];
-    $sql = "INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, viikonloppu, kilometrit, kmselite, henkilo_idhenkilo)
-	VALUES ('$date','$place','$hours','$over_time','$weekend','$kilometers','$km_description','$userid')";
-    $result = get_database($sql);
+    $mysqli = get_database();
+    $stmt = $mysqli->prepare("INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, viikonloppu, kilometrit, kmselite, henkilo_idhenkilo)
+	VALUES (?,?,?,?,?,?,?,?)");
+    $stmt->bind_param("ssssssss",$date, $place, $hours, $over_time, $weekend, $kilometers, $km_description, $userid);
+    $result = execute_prepared_query($stmt);
+    //return "onnstui!";
     
     if ($result === TRUE) {
         $_SESSION['addedRows'] .= "<tr><td>" .$userid . "</td><td>". $date . "</td><td>" .$place ."</td><td>" .$hours . "</td><td>
@@ -68,7 +71,7 @@ function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, 
 function getNames(){
     $_SESSION['populate_drop_down']="";
     $sql = "SELECT idhenkilo, sukunimi, etunimet FROM henkilo;";
-    $result = get_database($sql);
+    $result = execute_query($sql);
     
     if ($result->num_rows > 0) {
         // output data of each row

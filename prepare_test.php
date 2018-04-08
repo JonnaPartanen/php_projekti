@@ -17,7 +17,7 @@ function get_database(){
      return $mysqli;
     }
 }
-function execute_query($stmt){
+function execute_prepared_query($stmt){
     
    
     $result = $stmt-> execute();
@@ -26,8 +26,15 @@ function execute_query($stmt){
     return $result;
     
 }
-function get_mysqli(){
-    return $mysqli;
+
+function execute_query($sql_query) {
+    $mysqli = get_database();
+    $sql = $sql_query;
+    $result = $mysqli->query($sql);
+    
+    $mysqli->close();
+    return $result;
 }
+
 
 ?>
