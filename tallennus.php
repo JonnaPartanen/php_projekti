@@ -1,5 +1,25 @@
 ﻿<?php
-	$lname = $_POST['sukunimi'];
+$where = 'WHERE henkilo_idhenkilo ';
+$names = count($_POST['names']);
+
+if ($names == 0) {
+    return "Valitse ainakin yksi henkilö";
+    
+}elseif($names == 1){
+    $where .= " = " . $_POST['names'][0]. ";";
+    
+}else {
+    $where .= "IN (";
+    foreach ($_POST['names'] as $selectedNames){
+        $where .= $selectedNames. ", ";
+    }
+}
+    //echo count($_POST['names']);
+    //echo 50*'*';
+    //echo $selectedNames;
+    echo $where;
+    
+    $lname = $_POST['sel1'][0];
 	$fname = $_POST['etunimi'];
 	$bdate = $_POST['saika'];
 	$veroNro=$_POST['veronro'];
@@ -10,7 +30,7 @@
 	$email=$_POST['email'];
 	$pass=$_POST['salasana'];
 	
-	//SQL -starts here:
+/*	//SQL -starts here:
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
@@ -36,7 +56,7 @@
 
 	$conn->close();
 
-	
+	*/
 	echo ("<h3>Työntekijän tiedot:</h3>");
 	echo ("Sukunimi: " .$lname ."<br>");
 	echo ("Etunimi: " .$fname ."<br>");

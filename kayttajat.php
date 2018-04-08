@@ -10,9 +10,21 @@ session_start();
 	}else{
 		echo "Tervetuloa " .$_SESSION['username'];
 	}
-	
-
-	
+	if ($_SERVER['REQUEST_METHOD'] == 'POST'){	
+		if (isset($_POST['check'])){
+	$lname = $_POST['sukunimi'];
+	$fname = $_POST['etunimi'];
+	$bdate = $_POST['saika'];
+	$veroNro=$_POST['veronro'];
+	$address=$_POST['osoite'];
+	$zipcode = $_POST['postinro'];
+	$city=$_POST['kaupunki'];
+	$phone=$_POST['puhnro'];
+	$email=$_POST['email'];
+	$pass=$_POST['salasana'];
+	$admin=1;
+	}
+}
 
 ?>
 
@@ -38,7 +50,7 @@ session_start();
     <div class="col-md-6" style="background-color:#5158AC">
     <h2> Lisää työntekijätiedot: </h2>
 
-<form action="tallennus.php" method="post">
+<form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="sukunimi">Sukunimi</label>
@@ -92,11 +104,14 @@ session_start();
   </div>
  <div class="form-group col-md-5">
  <br>
- <button type="submit" class="btn btn-success btn-block" style="height:40px">Tallenna työntekijätiedot</button>
+ <button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">Tallenna työntekijätiedot</button>
  </div>
 </form>
 </div>
-
+<?php
+	if (isset($pass))
+		echo "<br><br><p align='center'>".$message=insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$phone,$email,$pass, $admin) ."</p>";
+?>
 
     <div class="col-md-3"></div>
 </div>
