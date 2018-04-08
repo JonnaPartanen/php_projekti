@@ -1,6 +1,7 @@
 <?php 
 //session_start();
-require_once('prepare_test.php');
+//require_once('prepare_test.php');
+require_once('connection.php');
 
 function login($email, $pwd){
     
@@ -42,6 +43,7 @@ function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$ph
         VALUES (?,?,?,?,?,?, ?,?,?,?,?)");
     $stmt->bind_param("ssssssssssi",$lname, $fname, $bdate, $veroNro, $address, $zipcode, $city, $phone, $email, $pass, $admin);
     $result = execute_prepared_query($stmt);
+    $result = execute_query($stmt);
     return $stmt;
    
     
