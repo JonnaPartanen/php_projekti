@@ -37,9 +37,9 @@ session_start();
   <div class="col-sm-4 text-center"><h3>Valitse toiminto:</h3>
 	<div class="btn-group-vertical">
 		<button type="button" class="btn btn-success" onclick="openKayttajat()">Lisää työntekijä</button>
-		<button type="button" class="btn btn-success">Raporttien haku ja tulostus</button>
+		<button type="button" class="btn btn-success" onclick="openRaportit()">Raporttien haku ja tulostus</button>
 		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tunti- ja ajopäiväkirjan täyttö</button>
-		<button type="button" class="btn btn-danger">Kirjaudu ulos ja sulje</button>
+		<button type="button" class="btn btn-danger" >Kirjaudu ulos ja sulje</button>
 		
 	</div> 
   </div>
