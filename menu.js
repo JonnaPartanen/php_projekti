@@ -8,3 +8,8 @@ function openSeuranta(){
 	
 	document.location="seuranta.php";
 }
+
+function openRaportit(){
+	
+	document.location="raportit.php";
+}
