@@ -1,6 +1,7 @@
 <?php 
 //session_start();
-require_once('prepare_test.php');
+//require_once('prepare_test.php');
+require_once('connection.php');
 
 function login($email, $pwd){
     
@@ -38,9 +39,9 @@ function login($email, $pwd){
 
 function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$phone,$email,$pass, $admin) {
     $mysqli = get_database();
-    $stmt = $mysqli->prepare("INSERT INTO henkilo (sukunimi, etunimet, syntymaaika, osoite, postinumero, kaupunki, puhnro, veronro, ktunnus, salasana)
-        VALUES (?,?,?,?,?,?, ?,?,?,?)");
-    $stmt->bind_param("ssssssssss",$lname, $fname, $bdate, $veroNro, $address, $zipcode, $city, $phone, $email, $pass);
+    $stmt = $mysqli->prepare("INSERT INTO henkilo (sukunimi, etunimet, syntymaaika, osoite, postinumero, kaupunki, puhnro, veronro, ktunnus, salasana, admin)
+        VALUES (?,?,?,?,?,?, ?,?,?,?,?)");
+    $stmt->bind_param("ssssssssssi",$lname, $fname, $bdate, $veroNro, $address, $zipcode, $city, $phone, $email, $pass, $admin);
     $result = execute_query($stmt);
     return $stmt;
    
