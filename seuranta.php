@@ -5,32 +5,45 @@ session_start();
 
 			header("Location: index.php"); /* Redirect browser */;
 	}
-	$dateErr = $hourErr = $genderErr = $websiteErr = "";
-	$name = $email = $gender = $comment = $website = "";
+	$dateErr = $hourErr = $Err = "";
+	$otErr = $wErr = $kmErr = "";
+	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		
 		if (isset($_POST['check'])){
 			
 			if(empty($_POST["pvm"])){
-				$dateErr = "Date is required";
+				$dateErr = "pvm on pakollinen tieto";
 			} else {
 				$date = $_POST["pvm"];
 			}
 
 			if(empty($_POST["tunnit"])){
-				$hourErr = "Hours is required";
+				$hourErr = "Tunnit on pakollinen tieto";
 			}
-			if (check_if_float($_POST["tunnit"]) == false) {
-				$hourErr = "Wrong input";
+				elseif (check_if_float($_POST["tunnit"]) == false) {
+					$hourErr = "Tarkista syöte";
 			} else {
 				$hours = str_replace(",", ".",$_POST["tunnit"]);
-				echo $hours;
 			}
-			$overtime = $_POST["ylityo"];
-			$weekend = $_POST["vkl"];
-			$place = $_POST["kohde"];
-			$kilometers = $_POST["km"];
-			$km_description = $_POST["selite"];
+			if (check_if_float($_POST["ylityo"]) == false && $_POST["ylityo"]!='' ) {
+				$otErr = "Tarkista syöte";
+			} elseif (check_if_float($_POST["ylityo"]) == true) {
+				$overtime = str_replace(",", ".",$_POST["ylityo"]);
+			}
+			if (check_if_float($_POST["vkl"]) == false && $_POST["vkl"]!='') {
+				$wErr = "Tarkista syöte";
+			} elseif (check_if_float($_POST["vkl"]) == true){
+				$weekend = str_replace(",", ".",$_POST["vkl"]);
+			}
+			if (check_if_float($_POST["km"]) == false && $_POST["km"]!='') {
+				$kmErr = "Tarkista syöte";
+			} elseif (check_if_float($_POST["km"]) == true) {
+				$kilometers = str_replace(",", ".",$_POST["km"]);
+			}
+			$place = filter_var($_POST["kohde"], FILTER_SANITIZE_STRING);
+			$km_description = filter_var($_POST["selite"], FILTER_SANITIZE_STRING);
+
 			
 		}
 	
@@ -64,40 +77,60 @@ function check_if_float($floatInput){
     <div class="col-md-2"></div>
     <div class="col-md-8" style="background-color:#5158AC">
     <h2> Työaikaseuranta ja ajopäiväkirja: </h2> <br>
-    <?php echo "<h3 style='color:red'>".$_SESSION['username'] . $_SESSION['admin'] .":</h3>"; ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
   <div class="form-row">
+  <?php 
+	if ($_SESSION['admin'] == true) {
+		echo "<div class='form-group col-md-4'>";
+  		echo "<label for='sel1'>Valitse työntekijä:</label>";
+  		echo "<select class='form-control' id='sel1'>";
+		echo $_SESSION['populate_drop_down'];
+		echo	"</select></div>";
+	} else {
+		echo "<h3 style='color:red'>".$_SESSION['username']."</h3>"; 
+	}
+?>
+	<div class='form-group col-md-10'> <h4>Työtunnit ja työkohde:</h4> <small class='danger'>(Päivämäärä ja perustunnit ovat pakollisia tietoja.)</small></div>
+	</div>
+	<div class="form-row">
 	<div class="form-group col-md-3">
-      <label for="pvm">Päivämäärä</label>
+      <label for="pvm">Päivämäärä (tunnit/km)</label>
       <input type="date" class="form-control" id="pvm" name="pvm" placeholder="MM/DD/YYYY">
       <span class="error">* <?php echo $dateErr;?></span>
     </div>
     <div class="form-group col-md-1">
-      <label for="tunnit">tunnit</label>
+      <label for="tunnit">Työtunnit</label>
       <input type="text" class="form-control" id="tunnit" name="tunnit" >
       <span class="error">* <?php echo $hourErr;?></span>
     </div>
     <div class="form-group col-md-1">
       <label for="ylityo">Ylityö</label>
       <input type="text" class="form-control" id="ylityo" name="ylityo">
+      <span class="error"> <?php echo $otErr;?></span>
     </div>
     <div class="form-group col-md-1">
       <label for="vkl">Vkl</label>
       <input type="text" class="form-control" id="vkl" name="vkl">
+       <span class="error"> <?php echo $wErr;?></span>
     </div>
   </div>
   
-  <div class="form-row">
   <div class="form-group col-md-6">
     <label for="kohde">Kohde</label>
     <input type="text" class="form-control" id="kohde" name="kohde" placeholder="kohde">
+    </div>
+  <div class="form-row">
+  <div class="form-group col-md-12">
+   <h4>Ajokilometrit ja selite:</h4> </div>
   </div>
+  <div class="form-row"> 
   <div class="form-group col-md-2">
       <label for="km">Kilometrit</label>
       <input type="text" class="form-control" id="km" name="km">
+       <span class="error"> <?php echo $kmErr;?></span>
   </div>
-  <div class="form-group col-md-6">
+  <div class="form-group col-md-10">
       <label for="selite">Km Selite</label>
       <input type="text" class="form-control" id="selite" name="selite">
     </div>
