@@ -34,8 +34,15 @@ session_start();
   
 </div>
 <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-9" style="background-color:#f2f2f2">
+    <div class="col-sm-3 text-center">
+    <div class="btn-group-vertical">
+		<button type="button" class="btn btn-success" onclick="openKayttajat()">Lisää työntekijä</button>
+		<button type="button" class="btn btn-success" onclick="openRaportit()">Raporttien haku ja tulostus</button>
+		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tunti- ja ajopäiväkirjan täyttö</button>
+		<button type="button" class="btn btn-danger" >Kirjaudu ulos ja sulje</button>
+		
+	</div> </div>
+    <div class="col-md-8" style="background-color:#f2f2f2">
     	<h2 class="text-primary">Työntekijäraportit: </h2>
     	<p class="text-info"> <small>(Shift tai CTRL nappi pohjassa voit valita useamman)</small></p>
 
@@ -79,16 +86,29 @@ session_start();
     		</div>
     		</div>
     	<div class="form-row">
-    	
-    	<div class="form-group col-md-4">
- 			<button type="submit" class="btn btn-danger btn-block" style="height:40px">Tallenna työntekijätiedot</button>
+    	<div class="form-group col-md-3">
+    	<label for = "aloituspvm" class="text-primary">Aloitus päivämäärä</label>
+    	<input type="date" class="form-control" id="alku" name="aloituspvm" placeholder="MM/DD/YYYY">
+    	</div>
+    	<div class="form-group col-md-3">
+    	<label for = "lopetuspvm" class="text-primary">Lopetus päivämäärä</label>
+    	<input type="date" class="form-control" id="loppu" name="lopetuspvm" placeholder="MM/DD/YYYY">
+    	</div>
+    	</div>
+    	<div class="form-row">
+    	<div class="form-group col-md-3"><br>
+    		<button type="submit" class="btn btn-success btn-block" style="height:40px">Tyhjennä</button>
+    	</div>
+    	<div class="form-group col-md-3"><br>
+ 			<button type="submit" class="btn btn-success btn-block" style="height:40px">Näytä Raportti</button>
 		</div>
 		</div>
+		
 	</form>
 	
 	
 </div>
-<div class="col-md-1"></div>
+
 
   
 </body>
