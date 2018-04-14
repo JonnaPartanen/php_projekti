@@ -17,7 +17,7 @@ function login($email, $pwd){
             $sql_pwd=$row["salasana"];
             $_SESSION['admin']=$row["admin"];
         }
-        if($sql_username==$email && $sql_pwd==$pwd ){
+        if($sql_username==$email && password_verify($pwd, $sql_pwd) == true){
             //"Kirjautuminen onnistui"
             $_SESSION['userid'] = $current_userid;
             $_SESSION['username'] = $current_user;

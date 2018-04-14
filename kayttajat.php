@@ -67,8 +67,8 @@ session_start();
 		        if(empty($_POST['salasana'])){
 		            $pwErr="Salasana puuttuu!";
 		        }else{
-		            //$pass= password_hash($_POST['salasana'], PASSWORD_BCRYPT);
-		            $pass = $_POST['salasana'];
+		            $pass= password_hash($_POST['salasana'], PASSWORD_BCRYPT);
+		            //$pass = $_POST['salasana'];
 		        }
 		        
 		       
