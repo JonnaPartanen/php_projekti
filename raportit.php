@@ -11,7 +11,6 @@ session_start();
 		echo "Tervetuloa " .$_SESSION['username'];
 	}
 	
-	//$_SESSION['populate_drop_down'] = 
 	getNames();
 	
 
@@ -51,7 +50,9 @@ session_start();
   
     		<div class="form-group col-md-4">
     		<label for="sel2"><h4 class="text-primary">Tulostettavat henkilötiedot:</h4>  <p class="text-info"> <small>(Työntekijätiedot)</small></p></label>
-      		<select multiple class="form-control" id="sel2">
+      		<select name="person_info[]" multiple class="form-control" id="sel2">
+      		<option value="'sukunimi'">Sukunimi</option>
+      		<option value="'etunimet'">Etunimi</option>
       		<option value="'syntymaaika'">Syntymäaika</option>
       		<option value="'osoite'">Osoite</option>
       		<option value="'postinumero'">PostiNro</option>
@@ -63,7 +64,7 @@ session_start();
     		</div>
     		<div class="form-group col-md-4">
     		<label for="sel3"><h4 class="text-primary"> Tulostettavat palkkatiedot: </h4> <p class="text-info"> <small>(Tunnit, kohteet, kilometrit)</small></p></label>
-      		<select multiple class="form-control" id="sel3">
+      		<select name= "other_info[]" multiple class="form-control" id="sel3">
       		
       		<option value="'idtuntiseuranta'">TapahtumaNro</option>
       		<option value="'pvm'">Päivämäärä</option>
