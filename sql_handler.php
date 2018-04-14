@@ -40,7 +40,7 @@ function login($email, $pwd){
 
 function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$phone,$email,$pass, $admin) {
     $mysqli = get_database();
-    $stmt = $mysqli->prepare("INSERT INTO henkilo (sukunimi, etunimet, syntymaaika, osoite, postinumero, kaupunki, puhnro, veronro, ktunnus, salasana, admin)
+    $stmt = $mysqli->prepare("INSERT INTO henkilo (sukunimi, etunimet, syntymaaika, veronro, osoite, postinumero, kaupunki, puhnro, ktunnus, salasana, admin)
         VALUES (?,?,?,?,?,?, ?,?,?,?,?)");
     $stmt->bind_param("ssssssssssi",$lname, $fname, $bdate, $veroNro, $address, $zipcode, $city, $phone, $email, $pass, $admin);
     $result = execute_prepared_query($stmt);

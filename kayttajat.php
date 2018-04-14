@@ -1,6 +1,8 @@
 <?php
 session_start();
 	require_once('sql_handler.php');
+	
+	$nameErr = $bdErr = $nroErr = $emailErr = $pwErr= $phoneErr = $zipErr ="";
 	if (empty($_SESSION['userid'])) {
 
 			header("Location: index.php"); /* Redirect browser */;
@@ -12,17 +14,69 @@ session_start();
 	}
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){	
 		if (isset($_POST['check'])){
-	$lname = $_POST['sukunimi'];
-	$fname = $_POST['etunimi'];
-	$bdate = $_POST['saika'];
-	$veroNro=$_POST['veronro'];
-	$address=$_POST['osoite'];
-	$zipcode = $_POST['postinro'];
-	$city=$_POST['kaupunki'];
-	$phone=$_POST['puhnro'];
-	$email=$_POST['email'];
-	$pass=$_POST['salasana'];
-
+		    
+		    if(empty($_POST["sukunimi"])||empty($_POST["etunimi"])){
+		        $nameErr="Nimi on pakollinen tieto";
+		    }
+		    else{
+		        $lname = filter_var($_POST['sukunimi'], FILTER_SANITIZE_STRING);
+		        $fname = filter_var($_POST['etunimi'], FILTER_SANITIZE_STRING);
+		        }
+		        
+		        if(empty($_POST["saika"])){
+		            $bdErr = "Syntymäaika on pakollinen tieto";
+		        }else{
+		            $bdate = $_POST['saika'];
+		         
+		        }
+		        
+		        
+		        if(empty($_POST['veronro'])){
+		            $nroErr = "Veronumero puuttuu!";
+		        }else {
+		            $veroNro=$_POST['veronro'];
+		        }
+		        
+		        $address=$_POST['osoite'];
+		        
+		        if(!preg_match('#[0-9]{5}#',$_POST['postinro'])){
+		            $zipErr = "Virheellinen postinumero";
+		        }else{
+		            $zipcode = $_POST['postinro'];
+		        }
+		        
+		        $city=$_POST['kaupunki'];
+		        
+		        if(empty($_POST["puhnro"])){
+		            $phoneErr="Puhelinnumero puuttuu!";
+		        }elseif(!is_numeric($_POST['puhnro'])){
+		            $phoneErr="Virheellinen puhelinnumero!";
+		        }else{
+		            $phone=filter_var($_POST['puhnro'], FILTER_SANITIZE_NUMBER_INT);
+		        }
+		         
+		        
+		        if(empty($_POST['email'])){
+		            $emailErr = "Sähköpostisoite on pakollinen!";
+		        }elseif(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)===false){
+		            $emailErr="Sähköposti osoite on virheellinen!";
+		        }else{
+		            $email=filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+		            }
+		        
+		        if(empty($_POST['salasana'])){
+		            $pwErr="Salasana puuttuu!";
+		        }else{
+		            //$pass= password_hash($_POST['salasana'], PASSWORD_BCRYPT);
+		            $pass = $_POST['salasana'];
+		        }
+		        
+		       
+		                
+		            
+		        
+		    
+	
 	$admin='1';
 	$admin=$_POST['admin'];
 
@@ -53,11 +107,12 @@ session_start();
     <div class="col-md-8" style="background-color:#5158AC">
     <h2> Lisää työntekijätiedot: </h2>
 
-<form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="sukunimi">Sukunimi</label>
       <input type="text" class="form-control" id="sukunimi" name="sukunimi" placeholder="Sukunimi">
+      <span class="error"> <?php echo $nameErr;?></span>
     </div>
     <div class="form-group col-md-2">
       <label for="etunimi">Etunimi</label>
@@ -67,11 +122,13 @@ session_start();
     <div class="form-group col-md-3">
       <label for="saika">Syntymäaika</label>
       <input type="date" class="form-control" id="date" name="saika" placeholder="MM/DD/YYYY">
+      <span class="error"> <?php echo $bdErr;?></span>
     </div>
     
     <div class="form-group col-md-3">
       <label for="inputPassword4">Veronumero</label>
       <input type="text" class="form-control" id="veronro" name="veronro" placeholder="VeroNro">
+      <span class="error"> <?php echo $nroErr;?></span>
     </div>
   </div>
   <div class="form-row">
@@ -82,6 +139,7 @@ session_start();
   <div class="form-group col-md-2">
       <label for="postiNro">Postinumero</label>
       <input type="text" class="form-control" id="postiNro" name="postinro">
+      <span class="error"> <?php echo $zipErr;?></span>
   </div>
   <div class="form-group col-md-2">
       <label for="kaupunki">City</label>
@@ -92,16 +150,20 @@ session_start();
     <div class="form-group col-md-3">
       <label for="puhNro">Puhelinnumero</label>
       <input type="text" class="form-control" id="puhNro" name="puhnro">
+      <span class="error"> <?php echo $phoneErr;?></span>
+      
     </div>
     
     <div class="form-row">
     <div class="form-group col-md-4">
       <label for="email">Email tai käyttäjätunnus</label>
       <input type="text" id="email" name="email" class="form-control">
+      <span class="error"> <?php echo $emailErr;?></span>
     </div>
     <div class="form-group col-md-3">
       <label for="password">Salasana</label>
       <input type="password" id="password" name="salasana" class="form-control">
+      <span class="error"> <?php echo $pwErr;?></span>
     </div>
     
     <label for="admin">Admin</label><br>

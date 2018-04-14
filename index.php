@@ -6,7 +6,8 @@
 		if (isset($_POST['check'])){
 			
 			$email = $_POST["email"];
-    		$pwd = $_POST["pwd"];
+    		//$pwd = password_hash($_POST["pwd"], PASSWORD_BCRYPT);
+			$pwd = $_POST["pwd"];
 			
 		}
 	
