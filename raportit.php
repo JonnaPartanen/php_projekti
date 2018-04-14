@@ -36,21 +36,21 @@ session_start();
 </div>
 <div class="row">
     <div class="col-md-2"></div>
-    <div class="col-md-8" style="background-color:#f2f2f2">
-    	<h2 class="text-primary"> Valitse henkilö: </h2>
+    <div class="col-md-9" style="background-color:#f2f2f2">
+    	<h2 class="text-primary">Työntekijäraportit: </h2>
+    	<p class="text-info"> <small>(Shift tai CTRL nappi pohjassa voit valita useamman)</small></p>
 
 	<form action="tallennus.php" method="post">
   		<div class="form-row">
-  	
     		<div class="form-group col-md-4">
-  				<label for="sel1"><h4 class="text-primary"> Valitse henkilö:</h4> <p class="text-info"> <small>(Shift tai CTRL nappi pohjassa voit valita useamman)</small></p></label>
+  				<label for="sel1"><h4 class="text-primary"> Valitse henkilö:</h4> <p class="text-info"> <small>(Haettava henkilö(t))</small></p></label>
       			<select name="names[]" multiple class="form-control" id="sel1">
         		<?php echo $_SESSION['populate_drop_down']?>
       			</select>
     		</div>
   
     		<div class="form-group col-md-4">
-    		<label for="sel2"><h4 class="text-primary">Valitse tulostettavat tiedot:</h4>  <p class="text-info"> <small>(Työntekijätiedot)</small></p></label>
+    		<label for="sel2"><h4 class="text-primary">Tulostettavat henkilötiedot:</h4>  <p class="text-info"> <small>(Työntekijätiedot)</small></p></label>
       		<select multiple class="form-control" id="sel2">
       		<option value="'syntymaaika'">Syntymäaika</option>
       		<option value="'osoite'">Osoite</option>
@@ -62,7 +62,7 @@ session_start();
       		</select>
     		</div>
     		<div class="form-group col-md-4">
-    		<label for="sel3"><h4 class="text-primary"> Valitse tulostettavat tiedot: </h4> <p class="text-info"> <small>(Tunnit, kohteet, kilometrit)</small></p></label>
+    		<label for="sel3"><h4 class="text-primary"> Tulostettavat palkkatiedot: </h4> <p class="text-info"> <small>(Tunnit, kohteet, kilometrit)</small></p></label>
       		<select multiple class="form-control" id="sel3">
       		
       		<option value="'idtuntiseuranta'">TapahtumaNro</option>
@@ -73,15 +73,21 @@ session_start();
       		<option value="'viikonloppu'">LA/SU työt</option>
       		<option value="'kilometrit'">Ajokilometrit</option>
       		<option value="'kmselite'">KM selite</option>
+      		<option value="'palkka'">Palkka</option>
+      		</select>
     		</div>
-    
- 			<button type="submit" class="btn btn-success btn-block" style="height:40px">Tallenna työntekijätiedot</button>
+    		</div>
+    	<div class="form-row">
+    	
+    	<div class="form-group col-md-4">
+ 			<button type="submit" class="btn btn-danger btn-block" style="height:40px">Tallenna työntekijätiedot</button>
+		</div>
 		</div>
 	</form>
-	</div>
-	</div>
+	
+	
 </div>
-<div class="col-md-2"></div>
+<div class="col-md-1"></div>
 
   
 </body>
