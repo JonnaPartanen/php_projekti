@@ -52,12 +52,27 @@ session_start();
     		<div class="form-group col-md-4">
     		<label for="sel2"><h4 class="text-primary">Valitse tulostettavat tiedot:</h4>  <p class="text-info"> <small>(Työntekijätiedot)</small></p></label>
       		<select multiple class="form-control" id="sel2">
+      		<option value="'syntymaaika'">Syntymäaika</option>
+      		<option value="'osoite'">Osoite</option>
+      		<option value="'postinumero'">PostiNro</option>
+      		<option value="'kaupunki'">Kaupunki</option>
+      		<option value="'puhnro'">Puhelinnumero</option>
+      		<option value="'veronro'">Veronumero</option>
+      		<option value="'ktunnus'">Email</option>
       		</select>
     		</div>
     		<div class="form-group col-md-4">
     		<label for="sel3"><h4 class="text-primary"> Valitse tulostettavat tiedot: </h4> <p class="text-info"> <small>(Tunnit, kohteet, kilometrit)</small></p></label>
       		<select multiple class="form-control" id="sel3">
-      		</select>
+      		
+      		<option value="'idtuntiseuranta'">TapahtumaNro</option>
+      		<option value="'pvm'">Päivämäärä</option>
+      		<option value="'tyokohde'">Työkohde</option>
+      		<option value="'tunnit'">Työtunnit</option>
+      		<option value="'ylityo'">Ylityöt</option>
+      		<option value="'viikonloppu'">LA/SU työt</option>
+      		<option value="'kilometrit'">Ajokilometrit</option>
+      		<option value="'kmselite'">KM selite</option>
     		</div>
     
  			<button type="submit" class="btn btn-success btn-block" style="height:40px">Tallenna työntekijätiedot</button>
