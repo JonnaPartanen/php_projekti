@@ -1,5 +1,6 @@
 <?php
 session_start();
+<<<<<<< HEAD
 	require_once('sql_handler.php');
 	if (empty($_SESSION['userid'])) {
 
@@ -45,6 +46,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	        
 	    }
 	}
+=======
+require_once('sql_handler.php');
+if (empty($_SESSION['userid'])) {
+    
+    header("Location: index.php"); /* Redirect browser */;
+}elseif($_SESSION['admin']!=true){
+    header("Location: seuranta.php"); /* Redirect browser */;
+    
+}else{
+    echo "Kirjautunut käyttäjä: " .$_SESSION['username'];
+}
+getNames();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if (isset($_POST['check'])){
+        
+        //$start_date = $_POST['start_date'];
+        //$end_date = $_POST['end_date'];
+        $tables=1;
+        
+        if (count($_POST['names']) == 0) {
+            echo "Valitse ainakin yksi henkilö";
+        }else {
+            $names = $_POST['names'];
+        }
+        if(count($_POST['person_info']) > 0 && count($_POST['other_info'])>0){
+            $arguments = array_merge($_POST['person_info'], $_POST['other_info']);
+            $tables ++;
+        } else if(count($_POST['person_info']) > 0 && count($_POST['other_info'])==0){
+            $arguments = array_merge($_POST['person_info']);
+            
+        } else{
+            echo "Valitse ainakin yksi näytettävä tieto henkilötaulusta";
+        }
+        
+        if($tables == 2){
+            if($_POST['start_date'] =='' || $_POST['end_date']=''){
+                echo "Valitse päivämääräväli (pakollinen tieto)";
+            } else if(date_diff($_POST['start_date'], $_POST['end_date']) < 0){
+                echo "Raportin aloituspvm ei voi olla isompi kuin lopetuspvm";
+            } else{
+                $start_date = $_POST['start_date'];
+                $end_date = $_POST['end_date'];
+                
+            }
+        }
+>>>>>>> 25687df29093cee75adb56a00e199d67965a5e2d
     }
 }
 ?>
