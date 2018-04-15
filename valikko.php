@@ -35,13 +35,15 @@ session_start();
   
 <div class="row">
   <div class="col-sm-4 text-center"><h3>Valitse toiminto:</h3>
+  <form action="logout.php" method="post">
 	<div class="btn-group-vertical">
 		<button type="button" class="btn btn-success" onclick="openKayttajat()">Lisää työntekijä</button>
 		<button type="button" class="btn btn-success" onclick="openRaportit()">Raporttien haku ja tulostus</button>
 		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tunti- ja ajopäiväkirjan täyttö</button>
-		<button type="button" class="btn btn-danger" >Kirjaudu ulos ja sulje</button>
+		<button type="submit" name="logout" class="btn btn-danger">Kirjaudu ulos ja sulje</button>
 		
 	</div> 
+	</form>
   </div>
   <div class="col-sm-8">.col-sm-4</div>
   
