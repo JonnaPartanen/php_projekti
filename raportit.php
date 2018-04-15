@@ -9,16 +9,16 @@ session_start();
 		header("Location: seuranta.php"); /* Redirect browser */;
 
 	}else{
-		echo "Kirjautunut käyttäjä: " .$_SESSION['username'];
+	    echo "Kirjautunut käyttäjä: " .$_SESSION['username'];
 	}
 	getNames();
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     if (isset($_POST['check'])){
-        
-        //$start_date = $_POST['start_date'];
-        //$end_date = $_POST['end_date'];
+        $today = date("Y-m-d");
+        $start_date = $_POST['start_date'];
+        $end_date = $_POST['end_date'];
         $tables=1;
         
         if (count($_POST['names']) == 0) {
@@ -37,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
         
         if($tables == 2){
-            if($_POST['start_date'] =='' || $_POST['end_date']=''){
-                echo "Valitse päivämääräväli (pakollinen tieto)";
-            } else{
-                $start_date = $_POST['start_date'];
-                $end_date = $_POST['end_date'];
+            if($start_date ==''){
+                $start_date = $today;
+            } 
+            if($end_date ==''){
+                $end_date = $today;
                 
             }
         }
@@ -143,8 +143,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	
 </div>
 <div class="row">
-
-<div class="col-md-12 text-center"> Testi
+<div class="col-md-2 text-center"></div>
+<div class="col-md-8 text-center"> Testi
 	<?php
 	if (isset($arguments) && isset($names) && isset($start_date) && isset($end_date)){
             
@@ -154,6 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         
     ?>
     </div>
+    <div class="col-md-2 text-center"></div>
     </div>
 </div>
   
