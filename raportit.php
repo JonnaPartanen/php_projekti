@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         }else {
             $names = $_POST['names'];
         }
-        if(count($_POST['person_info']) > 0 && count($_POST['other_info'])>0){
+        if($_POST['person_info'] !=false && $_POST['other_info']!=false){
             $arguments = array_merge($_POST['person_info'], $_POST['other_info']);
             $tables ++;
         } else if(count($_POST['person_info']) > 0 && count($_POST['other_info'])==0){
@@ -146,8 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <div class="col-md-2 text-center"></div>
 <div class="col-md-8 text-center"> Testi
 	<?php
-	if (isset($arguments) && isset($names) && isset($start_date) && isset($end_date)){
-            
+	if (isset($arguments) && isset($names) && isset($start_date) && isset($end_date) && $tables==2){   
 	    echo $html_table= get_personal_and_working_info($arguments, $names, $start_date, $end_date);
             //$html_table= get_personal_info($arguments, $names);
 	}
