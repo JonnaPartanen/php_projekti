@@ -26,13 +26,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         }else {
             $names = $_POST['names'];
         }
-        if($_POST['person_info'] !=false && $_POST['other_info']!=false){
+        if(isset($_POST['person_info']) && isset($_POST['other_info'])){
             $arguments = array_merge($_POST['person_info'], $_POST['other_info']);
             $tables ++;
-        } else if(count($_POST['person_info']) > 0 && count($_POST['other_info'])==0){
+        } else if (isset($_POST['person_info'])==true && isset($_POST['other_info'])==false){
             $arguments = array_merge($_POST['person_info']);
             
-        } else{
+        } else if (isset($_POST['person_info'])==false && isset($_POST['other_info'])==true){
+            $arguments = array_merge($_POST['other_info']);
+            $tables ++;
+        } else {
             echo "Valitse ainakin yksi näytettävä tieto henkilötaulusta";
         }
         
@@ -68,15 +71,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 </div>
 
 <div class="row">
-    <div class="col-sm-3 text-center">
+    <div class="col-sm-2 text-center">
     <form action="logout.php" method="post">
     <div class="btn-group-vertical">
 		<button type="button" class="btn btn-success" onclick="openKayttajat()">Lisää työntekijä</button>
 		<button type="button" class="btn btn-success" onclick="openRaportit()">Raporttien haku ja tulostus</button>
 		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tunti- ja ajopäiväkirjan täyttö</button>
 		<button type="submit" name="logout" class="btn btn-danger">Kirjaudu ulos ja sulje</button>
-		
-	</div> </form></div>
+	</div>	
+	</form>
+	</div>
     <div class="col-md-8" style="background-color:#f2f2f2">
     	<h2 class="text-primary">Työntekijäraportit: </h2>
     	<p class="text-info"> <small>(Shift tai CTRL nappi pohjassa voit valita useamman)</small></p>
@@ -91,46 +95,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     		</div>
   
     		<div class="form-group col-md-4">
-    		<label for="sel2"><h4 class="text-primary">Tulostettavat henkilötiedot:</h4>  <p class="text-info"> <small>(Työntekijätiedot)</small></p></label>
-      		<select name="person_info[]" multiple class="form-control" id="sel2" style="height:160px">
-      		<option value="'sukunimi'">Sukunimi</option>
-      		<option value="'etunimet'">Etunimi</option>
-      		<option value="'syntymaaika'">Syntymäaika</option>
-      		<option value="'osoite'">Osoite</option>
-      		<option value="'postinumero'">PostiNro</option>
-      		<option value="'kaupunki'">Kaupunki</option>
-      		<option value="'puhnro'">Puhelinnumero</option>
-      		<option value="'veronro'">Veronumero</option>
-      		<option value="'ktunnus'">Email</option>
-      		</select>
+    			<label for="sel2"><h4 class="text-primary">Tulostettavat henkilötiedot:</h4>  <p class="text-info"> <small>(Työntekijätiedot)</small></p></label>
+      			<select name="person_info[]" multiple class="form-control" id="sel2" style="height:160px">
+      			<option value="'sukunimi'">Sukunimi</option>
+      			<option value="'etunimet'">Etunimi</option>
+      			<option value="'syntymaaika'">Syntymäaika</option>
+      			<option value="'osoite'">Osoite</option>
+      			<option value="'postinumero'">PostiNro</option>
+      			<option value="'kaupunki'">Kaupunki</option>
+      			<option value="'puhnro'">Puhelinnumero</option>
+      			<option value="'veronro'">Veronumero</option>
+      			<option value="'palkka'">Tuntipalkka</option>
+      			<option value="'ktunnus'">Email</option>
+      			</select>
     		</div>
     		<div class="form-group col-md-4">
-    		<label for="sel3"><h4 class="text-primary"> Tulostettavat palkkatiedot: </h4> <p class="text-info"> <small>(Tunnit, kohteet, kilometrit)</small></p></label>
-      		<select name= "other_info[]" multiple class="form-control" id="sel3" style="height:160px">>
-      		
-      		<option value="'idtuntiseuranta'">TapahtumaNro</option>
-      		<option value="'pvm'">Päivämäärä</option>
-      		<option value="'tyokohde'">Työkohde</option>
-      		<option value="'tunnit'">Työtunnit</option>
-      		<option value="'ylityo'">Ylityöt</option>
-      		<option value="'viikonloppu'">LA/SU työt</option>
-      		<option value="'kilometrit'">Ajokilometrit</option>
-      		<option value="'kmselite'">KM selite</option>
-      		<option value="'palkka'">Palkka</option>
-      		</select>
+    			<label for="sel3"><h4 class="text-primary"> Tulostettavat palkkatiedot: </h4> <p class="text-info"> <small>(Tunnit, kohteet, kilometrit)</small></p></label>
+      			<select name= "other_info[]" multiple class="form-control" id="sel3" style="height:160px">>
+      			<option value="'pvm'">Päivämäärä</option>
+      			<option value="'tyokohde'">Työkohde</option>
+      			<option value="'tunnit'">Työtunnit</option>
+      			<option value="'ylityo'">Ylityöt</option>
+      			<option value="'viikonloppu'">LA/SU työt</option>
+      			<option value="'kilometrit'">Ajokilometrit</option>
+      			<option value="'kmselite'">KM selite</option>
+      			</select>
     		</div>
-    		</div>
+    	</div>
     	<div class="form-row">
     	<div class="form-group col-md-3">
-    	<label for = "aloituspvm" class="text-primary">Aloitus päivämäärä</label>
+    	<label for = "aloituspvm" class="text-primary">Jakson alku</label>
     	<input type="date" class="form-control" id="alku" name="start_date" placeholder="MM/DD/YYYY">
     	</div>
     	<div class="form-group col-md-3">
-    	<label for = "lopetuspvm" class="text-primary">Lopetus päivämäärä</label>
+    	<label for = "lopetuspvm" class="text-primary">Jakson loppu</label>
     	<input type="date" class="form-control" id="loppu" name="end_date" placeholder="MM/DD/YYYY">
     	</div>
-    	</div>
-    	<div class="form-row">
     	<div class="form-group col-md-3"><br>
     		<button type="submit" class="btn btn-success btn-block" style="height:40px">Tyhjennä</button>
     	</div>
@@ -138,17 +138,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
  			<button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">Näytä Raportti</button>
 		</div>
 		</div>
-		
 	</form>
-	
+</div>
+<div class="col-md-2 text-center"></div>
 </div>
 <div class="row">
+
 <div class="col-md-2 text-center"></div>
-<div class="col-md-8 text-center"> Testi
+<div class="col-md-8 text-center"> <br><br><br><br>
 	<?php
 	if (isset($arguments) && isset($names) && isset($start_date) && isset($end_date) && $tables==2){   
 	    echo $html_table= get_personal_and_working_info($arguments, $names, $start_date, $end_date);
             //$html_table= get_personal_info($arguments, $names);
+	} else if(isset($arguments) && isset($names) && $tables ==1){
+	    echo $html_table = get_personal_info($arguments, $names);
 	}
         
     ?>
