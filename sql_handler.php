@@ -76,20 +76,30 @@ function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, 
 }
 
 function get_personal_and_working_info($arguments, $names, $start_date, $end_date){
-    $html_table="";
+    $table_header="<table><thead><tr>";
+    for ($i=0; $i < count($arguments); $i++){
+        $table_header .= "<th>".str_replace("'", "", $arguments[$i]) ."</th>";
+    }
+    $table_header .= "</tr></thead>";
+    
+   
     $sql = ("SELECT ".str_replace("'","",implode(",", $arguments))." FROM henkilo join tuntiseuranta ON
         henkilo.idhenkilo = tuntiseuranta.henkilo_idhenkilo WHERE henkilo.idhenkilo IN (".implode(',',$names).")
         AND pvm BETWEEN '" .$start_date."' AND '". $end_date. "' ORDER BY henkilo.idhenkilo,pvm ");
     $result = execute_query($sql);
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
+            $table_row = "<tr>";
             foreach ($row as $item) {
-                echo $item;
+                $table_row .= "<td>". $item."</td>";
             }
+            $table_row .= "</tr>";
         }
-        return "Moi";
+      $html_table=$table_header. $table_row. "</table>";
+      return $html_table;
     } else {
-        return "Antamillasi hakuehdoilla ei löytynyt tuloksia";
+        return $sql;
+        //return "Antamillasi hakuehdoilla ei löytynyt tuloksia";
     }
 }
 

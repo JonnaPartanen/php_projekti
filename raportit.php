@@ -146,8 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <div class="col-md-12 text-center"> Testi
 	<?php
 	if (isset($arguments) && isset($names) && isset($start_date) && isset($end_date)){
-            echo "<p>Moi</p>";
-            $html_table= get_personal_and_working_info($arguments, $names, $start_date, $end_date);
+            
+	    echo $html_table= get_personal_and_working_info($arguments, $names, $start_date, $end_date);
             //$html_table= get_personal_info($arguments, $names);
 	}
         
