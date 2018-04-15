@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	if($tables == 2){
 	    if($_POST['start_date'] =='' || $_POST['end_date']=''){
 	        echo "Valitse päivämääräväli (pakollinen tieto)";
-	    } else if($_POST['start_date'] > $_POST['end_date']){
+	    } else if(date_diff($_POST['start_date'], $_POST['end_date']) < 0){
 	        echo "Raportin aloituspvm ei voi olla isompi kuin lopetuspvm";
 	    } else{
 	        $start_date = $_POST['start_date'];
