@@ -1,28 +1,28 @@
 ﻿<?php
-$where = 'WHERE henkilo_idhenkilo ';
+require_once('connection.php');
+
 $names = $_POST['names'];
 $p_info = $_POST['person_info'];
 $o_info = $_POST['other_info'];
+$start_date = $_POST['start_date'];
+$end_date = $_POST['end_date'];
 
-if ($names == 0) {
-    return "Valitse ainakin yksi henkilö";
-    
-}elseif($names == 1){
-    $where .= " = " . $_POST['names'][0]. ";";
-    
+if (count($names) == 0) {
+    return "Valitse ainakin yksi henkilö";     
 }else {
-    $where .= "IN (";
-    foreach ($_POST['names'] as $selectedNames){
-        $where .= $selectedNames. ", ";
-    }
+    $arguments = array_merge($p_info, $o_info);
 }
-    //echo count($_POST['names']);
-    //echo 50*'*';
-    //echo $selectedNames;
-echo implode("," , $p_info);
-$in = join(',', array_fill(0, count($names), '?'));
-echo $in
-  
- 
-	
-?>
+//$arguments = array_map('stripslashes',$arguments);
+$arguments = json_decode(stripslashes(json_encode($arguments)), true);
+//echo (implode(',', $arguments));
+$sql = ("SELECT ".str_replace("'","",implode(",", $arguments))." FROM henkilo join tuntiseuranta ON
+henkilo.idhenkilo = tuntiseuranta.henkilo_idhenkilo WHERE henkilo.idhenkilo IN (".implode(',',$names).")
+AND ORDER BY henkilo.idhenkilo,pvm ");
+echo $sql;
+$result = execute_query($sql);
+$row = $result->fetch_assoc();
+while($row = $result->fetch_assoc()) {
+foreach ($row as $item) {
+    echo '<br>'.$item;
+}
+}

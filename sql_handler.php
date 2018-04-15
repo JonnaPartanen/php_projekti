@@ -56,7 +56,7 @@ function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$ph
 function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, $km_description){
     $userid=$_SESSION["userid"];
     $mysqli = get_database();
-    $stmt = $mysqli->prepare("INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, viikonloppu, kilometrit, kmselite, henkilo_idhenkilo)
+    $sql = ("INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, viikonloppu, kilometrit, kmselite, henkilo_idhenkilo)
 	VALUES (?,?,?,?,?,?,?,?)");
     $stmt->bind_param("ssssssss",$date, $place, $hours, $over_time, $weekend, $kilometers, $km_description, $userid);
     $result = execute_prepared_query($stmt);
@@ -73,6 +73,11 @@ function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, 
     }
     
     //return $result;*/
+}
+
+function get_personal_info($attributes, $names){
+    $sql = ("SELECT idhenkilo,".implode("','", $attributes)." FROM henkilo WHERE idhenkilo IN (".implode(',',$names));
+    $result = execute_query($sql);
 }
 
 function getNames(){
