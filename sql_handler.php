@@ -56,7 +56,7 @@ function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$ph
 function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, $km_description){
     $userid=$_SESSION["userid"];
     $mysqli = get_database();
-    $sql = ("INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, viikonloppu, kilometrit, kmselite, henkilo_idhenkilo)
+    $stmt = $mysqli->prepare("INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, viikonloppu, kilometrit, kmselite, henkilo_idhenkilo)
 	VALUES (?,?,?,?,?,?,?,?)");
     $stmt->bind_param("ssssssss",$date, $place, $hours, $over_time, $weekend, $kilometers, $km_description, $userid);
     $result = execute_prepared_query($stmt);
@@ -75,9 +75,22 @@ function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, 
     //return $result;*/
 }
 
-function get_personal_info($attributes, $names){
-    $sql = ("SELECT idhenkilo,".implode("','", $attributes)." FROM henkilo WHERE idhenkilo IN (".implode(',',$names));
+function get_personal_and_working_info($arguments, $names, $start_date, $end_date){
+    $html_table="";
+    $sql = ("SELECT ".str_replace("'","",implode(",", $arguments))." FROM henkilo join tuntiseuranta ON
+        henkilo.idhenkilo = tuntiseuranta.henkilo_idhenkilo WHERE henkilo.idhenkilo IN (".implode(',',$names).")
+        AND pvm BETWEEN '" .$start_date."' AND '". $end_date. "' ORDER BY henkilo.idhenkilo,pvm ");
     $result = execute_query($sql);
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            foreach ($row as $item) {
+                echo $item;
+            }
+        }
+        return "Moi";
+    } else {
+        return "Antamillasi hakuehdoilla ei löytynyt tuloksia";
+    }
 }
 
 function getNames(){
@@ -98,7 +111,7 @@ function getNames(){
     }
 }
 function auth_failed(){
-     return "Kirjautuminen epäonnistui. Tarkasta käyttäjätunnus";
+    return "Antamillasi hakuehdoilla ei löytynyt tuloksia";
 }
 
 

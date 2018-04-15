@@ -8,12 +8,45 @@ session_start();
 		header("Location: seuranta.php"); /* Redirect browser */;
 
 	}else{
-		echo "Tervetuloa " .$_SESSION['username'];
+		echo "Kirjautunut käyttäjä: " .$_SESSION['username'];
+	}
+	getNames();
+    
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if (isset($_POST['check'])){
+	
+    //$start_date = $_POST['start_date'];
+	//$end_date = $_POST['end_date'];
+	$tables=1;
+	
+	if (count($_POST['names']) == 0) {
+	    echo "Valitse ainakin yksi henkilö";
+	}else {
+	    $names = $_POST['names'];
+	}
+	if(count($_POST['person_info']) > 0 && count($_POST['other_info'])>0){
+	    $arguments = array_merge($_POST['person_info'], $_POST['other_info']);
+	    $tables ++;
+	} else if(count($_POST['person_info']) > 0 && count($_POST['other_info'])==0){
+	    $arguments = array_merge($_POST['person_info']);
+	    
+	} else{
+	    echo "Valitse ainakin yksi näytettävä tieto henkilötaulusta";
 	}
 	
-	getNames();
-	
-
+	if($tables == 2){
+	    if($_POST['start_date'] =='' || $_POST['end_date']=''){
+	        echo "Valitse päivämääräväli (pakollinen tieto)";
+	    } else if($_POST['start_date'] > $_POST['end_date']){
+	        echo "Raportin aloituspvm ei voi olla isompi kuin lopetuspvm";
+	    } else{
+	        $start_date = $_POST['start_date'];
+	        $end_date = $_POST['end_date'];
+	        
+	    }
+	}
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,8 +64,8 @@ session_start();
 
 <div class="jumbotron text-center" style="background-color:inherit">
   <h2 class="mb-2 bg-primary text-white">Timanttityö Lindh Oy</h2>
-  
 </div>
+
 <div class="row">
     <div class="col-sm-3 text-center">
     <div class="btn-group-vertical">
@@ -46,7 +79,7 @@ session_start();
     	<h2 class="text-primary">Työntekijäraportit: </h2>
     	<p class="text-info"> <small>(Shift tai CTRL nappi pohjassa voit valita useamman)</small></p>
 
-	<form action="tallennus.php" method="post">
+	<form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
   		<div class="form-row">
     		<div class="form-group col-md-4">
   				<label for="sel1"><h4 class="text-primary"> Valitse henkilö:</h4> <p class="text-info"> <small>(Haettava henkilö(t))</small></p></label>
@@ -88,11 +121,11 @@ session_start();
     	<div class="form-row">
     	<div class="form-group col-md-3">
     	<label for = "aloituspvm" class="text-primary">Aloitus päivämäärä</label>
-    	<input type="date" class="form-control" id="alku" name="aloituspvm" placeholder="MM/DD/YYYY">
+    	<input type="date" class="form-control" id="alku" name="start_date" placeholder="MM/DD/YYYY">
     	</div>
     	<div class="form-group col-md-3">
     	<label for = "lopetuspvm" class="text-primary">Lopetus päivämäärä</label>
-    	<input type="date" class="form-control" id="loppu" name="lopetuspvm" placeholder="MM/DD/YYYY">
+    	<input type="date" class="form-control" id="loppu" name="end_date" placeholder="MM/DD/YYYY">
     	</div>
     	</div>
     	<div class="form-row">
@@ -100,16 +133,27 @@ session_start();
     		<button type="submit" class="btn btn-success btn-block" style="height:40px">Tyhjennä</button>
     	</div>
     	<div class="form-group col-md-3"><br>
- 			<button type="submit" class="btn btn-success btn-block" style="height:40px">Näytä Raportti</button>
+ 			<button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">Näytä Raportti</button>
 		</div>
 		</div>
 		
 	</form>
 	
-	
 </div>
+<div class="row">
 
-
+<div class="col-md-12 text-center"> Testi
+	<?php
+	if (isset($arguments) && isset($names) && isset($start_date) && isset($end_date)){
+            echo "<p>Moi</p>";
+            $html_table= get_personal_and_working_info($arguments, $names, $start_date, $end_date);
+            //$html_table= get_personal_info($arguments, $names);
+	}
+        
+    ?>
+    </div>
+    </div>
+</div>
   
 </body>
 </html>
