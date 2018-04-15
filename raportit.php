@@ -85,14 +85,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
   		<div class="form-row">
     		<div class="form-group col-md-4">
   				<label for="sel1"><h4 class="text-primary"> Valitse henkilö:</h4> <p class="text-info"> <small>(Haettava henkilö(t))</small></p></label>
-      			<select name="names[]" multiple class="form-control" id="sel1">
+      			<select name="names[]" multiple class="form-control" id="sel1" style="height:160px">>
         		<?php echo $_SESSION['populate_drop_down']?>
       			</select>
     		</div>
   
     		<div class="form-group col-md-4">
     		<label for="sel2"><h4 class="text-primary">Tulostettavat henkilötiedot:</h4>  <p class="text-info"> <small>(Työntekijätiedot)</small></p></label>
-      		<select name="person_info[]" multiple class="form-control" id="sel2">
+      		<select name="person_info[]" multiple class="form-control" id="sel2" style="height:160px">
       		<option value="'sukunimi'">Sukunimi</option>
       		<option value="'etunimet'">Etunimi</option>
       		<option value="'syntymaaika'">Syntymäaika</option>
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     		</div>
     		<div class="form-group col-md-4">
     		<label for="sel3"><h4 class="text-primary"> Tulostettavat palkkatiedot: </h4> <p class="text-info"> <small>(Tunnit, kohteet, kilometrit)</small></p></label>
-      		<select name= "other_info[]" multiple class="form-control" id="sel3">
+      		<select name= "other_info[]" multiple class="form-control" id="sel3" style="height:160px">>
       		
       		<option value="'idtuntiseuranta'">TapahtumaNro</option>
       		<option value="'pvm'">Päivämäärä</option>
