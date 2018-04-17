@@ -26,26 +26,46 @@ session_start();
 			} else {
 				$hours = str_replace(",", ".",$_POST["tunnit"]);
 			}
-			if (check_if_float($_POST["ylityo"]) == false && $_POST["ylityo"]!='' ) {
-				$otErr = "Tarkista syÃ¶te";
+			
+			if (isset($_POST["ylityo"])==true) {
+			     if (check_if_float($_POST["ylityo"]) == true) {
+				    $overtime = str_replace(",", ".",$_POST["ylityo"]);
+			     } else {
+			         $otErr = "Tarkista syÃ¶te";
+			     }
+			}else {
+			    $overtime=0;
 			}
-			if (check_if_float($_POST["ylityo"]) == true) {
-				$overtime = str_replace(",", ".",$_POST["ylityo"]);
+			if (isset($_POST["vkl"])==true && $_POST["vkl"]!='') {
+			    if (check_if_float($_POST["vkl"]) == false){
+				    $wErr = "Tarkista syÃ¶te";
+			    }
+			} else {
+			    $weekend=0;
 			}
-			if (check_if_float($_POST["vkl"]) == false && $_POST["vkl"]!='') {
-				$wErr = "Tarkista syÃ¶te";
-			} 
 			if (check_if_float($_POST["vkl"]) == true){
 				$weekend = str_replace(",", ".",$_POST["vkl"]);
 			}
-			if (check_if_float($_POST["km"]) == false && $_POST["km"]!='') {
+			if (isset($_POST["km"])){
+			 if (check_if_float($_POST["km"]) ==$_POST["km"]) {
 				$kmErr = "Tarkista syÃ¶te";
-			} 
+			 }
+			}else{
+			    $kilometers=0;
+			}
 			if (check_if_float($_POST["km"]) == true) {
 				$kilometers = str_replace(",", ".",$_POST["km"]);
+			} else {
+			    $kilometers=0;
 			}
 			$place = filter_var($_POST["kohde"], FILTER_SANITIZE_STRING);
 			$km_description = filter_var($_POST["selite"], FILTER_SANITIZE_STRING);
+			
+			if ($_POST['persons'] !=$_SESSION["userid"]){
+			    $userid=$_POST["persons"];
+			} else{
+			    $userid=$_SESSION["userid"];
+			}
 
 			
 		}
@@ -81,9 +101,9 @@ function check_if_float($floatInput){
 	<div class="col-sm-3 text-center">
     <form action="logout.php" method="post">
     <div class="btn-group-vertical">
-		<button type="button" class="btn btn-success" onclick="openKayttajat()">Lisää työntekijä</button>
+		<button type="button" class="btn btn-success" onclick="openKayttajat()">Lisï¿½ï¿½ tyï¿½ntekijï¿½</button>
 		<button type="button" class="btn btn-success" onclick="openRaportit()">Raporttien haku ja tulostus</button>
-		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tunti- ja ajopäiväkirjan täyttö</button>
+		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tunti- ja ajopï¿½ivï¿½kirjan tï¿½yttï¿½</button>
 		<button type="submit" name="logout" class="btn btn-danger">Kirjaudu ulos ja sulje</button>
 		
 	</div> </form></div>
@@ -97,8 +117,8 @@ function check_if_float($floatInput){
   <?php 
 	if ($_SESSION['admin'] == true) {
 		echo "<div class='form-group col-md-4'>";
-  		echo "<label for='sel1'>Valitse tyÃ¶ntekijÃ¤:</label>";
-  		echo "<select class='form-control' id='sel1'>";
+  		echo "<label for='persons'>Valitse tyÃ¶ntekijÃ¤:</label>";
+  		echo "<select class='form-control' name='persons' id='persons'>";
 		echo $_SESSION['populate_drop_down'];
 		echo	"</select></div>";
 	} else {
@@ -164,8 +184,8 @@ function check_if_float($floatInput){
 </div>
 
 <?php
-	if (isset($date))
-		echo "<br><br><p align='center'>".$message=insert_hours($date, $hours, $overtime, $weekend, $place, $kilometers, $km_description) ."</p>";
+if (isset($date) && isset($hours)&& isset($overtime)&& isset($weekend)&& isset($kilometers))
+		echo "<br><br><p align='center'>".$message=insert_hours($date, $hours, $overtime, $weekend, $place, $kilometers, $km_description, $userid) ."</p>";
 ?>
 <div class="col-md-2"></div>
     <div class="col-md-8">

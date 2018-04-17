@@ -53,8 +53,7 @@ function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$ph
     
 }
 
-function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, $km_description){
-    $userid=$_SESSION["userid"];
+function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, $km_description, $userid){
     $mysqli = get_database();
     $stmt = $mysqli->prepare("INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, viikonloppu, kilometrit, kmselite, henkilo_idhenkilo)
 	VALUES (?,?,?,?,?,?,?,?)");
