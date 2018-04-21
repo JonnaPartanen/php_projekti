@@ -27,37 +27,31 @@ session_start();
 				$hours = str_replace(",", ".",$_POST["tunnit"]);
 			}
 			
-			if (isset($_POST["ylityo"])==true) {
-			     if (check_if_float($_POST["ylityo"]) == true) {
-				    $overtime = str_replace(",", ".",$_POST["ylityo"]);
-			     } else {
-			         $otErr = "Tarkista syÃ¶te";
-			     }
-			}else {
+			if(empty($_POST["ylityo"])){
 			    $overtime=0;
-			}
-			if (isset($_POST["vkl"])==true && $_POST["vkl"]!='') {
-			    if (check_if_float($_POST["vkl"]) == false){
-				    $wErr = "Tarkista syÃ¶te";
-			    }
-			} else {
-			    $weekend=0;
-			}
-			if (check_if_float($_POST["vkl"]) == true){
-				$weekend = str_replace(",", ".",$_POST["vkl"]);
-			}
-			if (isset($_POST["km"])){
-			 if (check_if_float($_POST["km"]) ==$_POST["km"]) {
-				$kmErr = "Tarkista syÃ¶te";
-			 }
+			}elseif(check_if_float($_POST["ylityo"]) == false){
+			    $otErr = "Tarkista syöte";
+			    
 			}else{
-			    $kilometers=0;
+			    $overtime = str_replace(",", ".",$_POST["ylityo"]);
 			}
-			if (check_if_float($_POST["km"]) == true) {
-				$kilometers = str_replace(",", ".",$_POST["km"]);
-			} else {
-			    $kilometers=0;
+		
+			if(empty($_POST["vkl"])){
+			    $weekend=0;
+			}elseif(check_if_float($_POST["vkl"]) == false){
+			    $wErr = "Tarkista syöte";
+			}else{
+			    $weekend = str_replace(",", ".",$_POST["vkl"]);
 			}
+			
+			if(empty($_POST["km"])){
+			    $kilometers=0;
+			}elseif(check_if_float($_POST["km"]) == false){
+			    $kmErr = "Tarkista syöte";
+			}else{
+			    $kilometers = str_replace(",", ".",$_POST["km"]);
+			}
+			
 			$place = filter_var($_POST["kohde"], FILTER_SANITIZE_STRING);
 			$km_description = filter_var($_POST["selite"], FILTER_SANITIZE_STRING);
 			
