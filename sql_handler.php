@@ -40,14 +40,17 @@ function login($email, $pwd){
 
 function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$phone,$email,$pass, $admin) {
     $mysqli = get_database();
-    $stmt = $mysqli->prepare("INSERT INTO henkilo (sukunimi, etunimet, syntymaaika, veronro, osoite, postinumero, kaupunki, puhnro, ktunnus, salasana, admin)
-        VALUES (?,?,?,?,?,?, ?,?,?,?,?)");
-    $stmt->bind_param("ssssssssssi",$lname, $fname, $bdate, $veroNro, $address, $zipcode, $city, $phone, $email, $pass, $admin);
-    $result = execute_prepared_query($stmt);
-    if ($result === TRUE) {
+    if($stmt = $mysqli->prepare("INSERT INTO henkilo (sukunimi, etunimet, syntymaaika, veronro, osoite, postinumero, kaupunki, puhnro, ktunnus, salasana, admin)
+        VALUES (?,?,?,?,?,?, ?,?,?,?,?)")){
+        $stmt->bind_param("ssssssssssi",$lname, $fname, $bdate, $veroNro, $address, $zipcode, $city, $phone, $email, $pass, $admin);
+        //$result = execute_prepared_query($stmt);
+        $stmt->execute();
+        $stmt->close();
         return "Käyttäjä tallennettu tietokantaan";
+    
     }else{
-        return "Jotain meni pieleen";
+        return $mysqli->errno . ' ' . $mysqli->error;
+        $stmt->close();
     }
    
     
@@ -55,23 +58,21 @@ function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$ph
 
 function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, $km_description, $userid){
     $mysqli = get_database();
-    $stmt = $mysqli->prepare("INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, viikonloppu, kilometrit, kmselite, henkilo_idhenkilo)
-	VALUES (?,?,?,?,?,?,?,?)");
-    $stmt->bind_param("ssssssss",$date, $place, $hours, $over_time, $weekend, $kilometers, $km_description, $userid);
-    $result = execute_prepared_query($stmt);
-    //return "onnstui!";
     
-    if ($result === TRUE) {
-        $_SESSION['addedRows'] .= "<tr><td>" .$userid . "</td><td>". $date . "</td><td>" .$place ."</td><td>" .$hours . "</td><td>
+    if($stmt = $mysqli->prepare("INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, viikonloppu, kilometrit, kmselite, henkilo_idhenkilo)
+	VALUES (?,?,?,?,?,?,?,?);")){
+        $stmt->bind_param("sssssssi",$date, $place, $hours, $over_time, $weekend, $kilometers, $km_description, $userid);
+        $stmt->execute();
+        $id= $mysqli->insert_id;
+        $stmt->close();
+        $_SESSION['addedRows'] .= "<tr><td>" .$id . "</td><td>" .$userid . "</td><td>". $date . "</td><td>" .$place ."</td><td>" .$hours . "</td><td>
         " .$over_time ."</td><td>" .$weekend ."</td><td>" .$kilometers ."</td><td>" . $km_description ."</tr></td>";
-        //return $_SESSION['addedRows'];
-        return "Rivi tallennettiin tietokantaan onnistuneesti";
-    } 
-    else {
-        return "Jotain meni pieleen. Yritä uudelleen";
+        return "Rivi tallennettiin tietokantaan onnistuneesti ".$id;
+    }else{
+        return $mysqli->errno . ' ' . $mysqli->error;
+        $stmt->close();
     }
     
-    //return $result;*/
 }
 
 function get_personal_and_working_info($arguments, $names, $start_date, $end_date){

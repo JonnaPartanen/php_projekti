@@ -191,7 +191,7 @@ if (isset($date) && isset($hours)&& isset($overtime)&& isset($weekend)&& isset($
     <div class="col-md-8">
 <table class="table table-hover table-dark">
  <thead>
-<tr><th scope="col"> Id </th><th scope="col"> Pvm </th><th scope="col">Kohde</th><th scope="col">Tunnit</th><th scope="col">Ylityö</th><th scope="col">Viikonloppu</th><th scope="col">Kilometrit</th><th scope="col">Selite</th></tr>
+<tr><th scope="col"> Id </th><th scope="col"> HenkilöId </th><th scope="col"> Pvm </th><th scope="col">Kohde</th><th scope="col">Tunnit</th><th scope="col">Ylityö</th><th scope="col">Viikonloppu</th><th scope="col">Kilometrit</th><th scope="col">Selite</th></tr>
 </thead>
 <?php
 	if (isset($message))
