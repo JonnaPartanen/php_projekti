@@ -90,16 +90,30 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
         AND pvm BETWEEN '" .$start_date."' AND '".$end_date. "' ORDER BY henkilo.idhenkilo,pvm ");
     $result = execute_query($sql);
     $table_row="";
+    $file_row="";
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $table_row .= "<tr>";
             foreach ($row as $item) {
                 $table_row .= "<td>". $item."</td>";
+                $file_row .= "\t". $item;
             }
             $table_row .= "</tr>";
+            $file_row .= "\n";
         }
       $html_table=$table_header. $table_row. "</table>";
+      
+      $file = $file_row;
+      $myfile = fopen("C:\Users\User1\myfile.txt", "w") or die("Unable to open file!");
+      fwrite($myfile, $file);
+      
+      echo fread($myfile,filesize('C:\Users\User1\myfile.txt'));
+      fclose($myfile); 
+      
+      //exec("notepad.exe". "C:\Users\User1\myfile.txt");
+      
       return $html_table;
+      
     } else {
         //return "Antamillasi hakuehdoilla ei löytynyt tuloksia";
         return $sql;
