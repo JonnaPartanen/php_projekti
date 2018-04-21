@@ -30,7 +30,7 @@ session_start();
 			if(empty($_POST["ylityo"])){
 			    $overtime=0;
 			}elseif(check_if_float($_POST["ylityo"]) == false){
-			    $otErr = "Tarkista syöte";
+			    $otErr = "Tarkista syï¿½te";
 			    
 			}else{
 			    $overtime = str_replace(",", ".",$_POST["ylityo"]);
@@ -39,7 +39,7 @@ session_start();
 			if(empty($_POST["vkl"])){
 			    $weekend=0;
 			}elseif(check_if_float($_POST["vkl"]) == false){
-			    $wErr = "Tarkista syöte";
+			    $wErr = "Tarkista syï¿½te";
 			}else{
 			    $weekend = str_replace(",", ".",$_POST["vkl"]);
 			}
@@ -47,7 +47,7 @@ session_start();
 			if(empty($_POST["km"])){
 			    $kilometers=0;
 			}elseif(check_if_float($_POST["km"]) == false){
-			    $kmErr = "Tarkista syöte";
+			    $kmErr = "Tarkista syï¿½te";
 			}else{
 			    $kilometers = str_replace(",", ".",$_POST["km"]);
 			}
@@ -82,7 +82,7 @@ function check_if_float($floatInput){
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type='text/javascript' src="menu.js"></script>
+  
   
 </head>
 <body class ="mb-2 bg-primary text-white" >
@@ -194,7 +194,8 @@ if (isset($date) && isset($hours)&& isset($overtime)&& isset($weekend)&& isset($
 ?>
 </table>
  </div>
- <div class="col-md-2"></div> 
+ <div class="col-md-2"></div>
+ <script type='text/javascript' src="js/menu.js"></script> 
 </body>
 
 </html>
