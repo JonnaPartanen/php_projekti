@@ -63,12 +63,12 @@ function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, 
 	VALUES (?,?,?,?,?,?,?,?);")){
         $stmt->bind_param("sssssssi",$date, $place, $hours, $over_time, $weekend, $kilometers, $km_description, $userid);
         $stmt->execute();
-        $id= $mysqli->insert_id;
+        $id= 'aaa'.$mysqli->insert_id;
         $stmt->close();
-        $_SESSION['addedRows'] .= "<tr id ='$id'><td>" .$id . "</td><td>" .$userid . "</td><td>". $date . "</td><td>" .$place ."</td><td>" .$hours . "</td><td>
+        $_SESSION['addedRows'] .= "<tr id='$id'><td>" .$id . "</td><td>" .$userid . "</td><td>". $date . "</td><td>" .$place ."</td><td>" .$hours . "</td><td>
         " .$over_time ."</td><td>" .$weekend ."</td><td>" .$kilometers ."</td><td>" . $km_description ."</td>
-        <td><button type='button' class='btn btn-success' onclick='modifyRow(\"$id\")'>Muokkaa</button></td>
-        <td><button type='button' class='btn btn-danger' onclick='removeRow()'>Poista</button></td></tr>";
+        <td><button onClick=\"modifyRow('$id')\">Muokkaa</button></td>
+        <td><button type=\"button\" class=\"btn btn-success\" onclick=\"removeRow()\">Poista</button></td></tr>";
         return "Rivi tallennettiin tietokantaan onnistuneesti ".$id;
     }else{
         return $mysqli->errno . ' ' . $mysqli->error;
