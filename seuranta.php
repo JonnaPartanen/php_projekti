@@ -88,6 +88,7 @@ function check_if_float($floatInput){
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type='text/javascript' src="menu.js"></script>
   
 </head>
 <body class ="mb-2 bg-primary text-white" >
@@ -201,5 +202,5 @@ if (isset($date) && isset($hours)&& isset($overtime)&& isset($weekend)&& isset($
  </div>
  <div class="col-md-2"></div> 
 </body>
-<script type='text/javascript' src="menu.js"></script>
+
 </html>
