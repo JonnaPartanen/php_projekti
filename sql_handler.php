@@ -67,7 +67,7 @@ function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, 
         $stmt->close();
         $_SESSION['addedRows'] .= "<tr id ='$id'><td>" .$id . "</td><td>" .$userid . "</td><td>". $date . "</td><td>" .$place ."</td><td>" .$hours . "</td><td>
         " .$over_time ."</td><td>" .$weekend ."</td><td>" .$kilometers ."</td><td>" . $km_description ."</td>
-        <td><button type='button' class='btn btn-success' onclick=\"modifyRow()\">Muokkaa</button></td>
+        <td><button type='button' class='btn btn-success' onclick='modifyRow(\"$id\")'>Muokkaa</button></td>
         <td><button type='button' class='btn btn-danger' onclick='removeRow()'>Poista</button></td></tr>";
         return "Rivi tallennettiin tietokantaan onnistuneesti ".$id;
     }else{
