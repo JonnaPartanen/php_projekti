@@ -52,16 +52,28 @@ session_start();
 		        }else {
 		            $veroNro=$_POST['veronro'];
 		        }
+
 		        
-		        $address=$_POST['osoite'];
+		        if(empty($_POST['osoite'])){
+		            $address="Ei osoitetietoja";
+		        }else{
+		            $address=$_POST['osoite'];
+		        }
 		        
 		        if(!preg_match('#[0-9]{5}#',$_POST['postinro'])){
 		            $zipErr = "Virheellinen postinumero";
+		        }elseif(empty($_POST['postinro'])){
+		            $zipcode = "Ei osoitetietoja";
 		        }else{
 		            $zipcode = $_POST['postinro'];
 		        }
 		        
-		        $city=$_POST['kaupunki'];
+		        if(empty($_POST['kaupunki'])){
+		            $address="Ei osoitetietoja";
+		        }else{
+		            $address=$_POST['kaupunki'];
+		        }
+
 		        
 		        if(empty($_POST["puhnro"])){
 		            $phoneErr="Puhelinnumero puuttuu!";
