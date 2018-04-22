@@ -6,11 +6,21 @@ session_start();
 			header("Location: index.php"); /* Redirect browser */;
 	}
 	$dateErr = $hourErr = $Err = "";
-	$otErr = $wErr = $kmErr = "";
+	$otErr = $wErr = $kmErr = $eventId = "";
 	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+	    
+	    if(isset($_POST['remove'])){
+	        echo "Poistan kaiken";
+	    }
 		
 		if (isset($_POST['check'])){
+		    echo $_POST['tapid'] ."joo";
+		    if(isset($_POST['tapid'])){
+		        echo $_POST['tapid'];
+		        $eventId = $_POST['tapid'];
+		        echo $eventId;
+		    }
 			
 			if(empty($_POST["pvm"])){
 				$dateErr = "pvm on pakollinen tieto";
@@ -36,13 +46,6 @@ session_start();
 			    $overtime = str_replace(",", ".",$_POST["ylityo"]);
 			}
 		
-			if(empty($_POST["vkl"])){
-			    $weekend=0;
-			}elseif(check_if_float($_POST["vkl"]) == false){
-			    $wErr = "Tarkista sy�te";
-			}else{
-			    $weekend = str_replace(",", ".",$_POST["vkl"]);
-			}
 			
 			if(empty($_POST["km"])){
 			    $kilometers=0;
@@ -60,7 +63,7 @@ session_start();
 			} else{
 			    $userid=$_SESSION["userid"];
 			}
-
+			
 			
 		}
 	
@@ -93,7 +96,7 @@ function check_if_float($floatInput){
 </div>
 <div class="row">
 
-	<div class="col-sm-3 text-center">
+	<div class="col-sm-2 text-center" style="margin-left:15px";>
     <form action="logout.php" method="post">
     <div class="btn-group-vertical">
 		<button type="button" class="btn btn-success" onclick="openKayttajat()">Lis�� ty�ntekij�</button>
@@ -103,23 +106,29 @@ function check_if_float($floatInput){
 		
 	</div> </form></div>
 	
-    <div class="col-md-2"></div>
+  
     <div class="col-md-8" style="background-color:#5158AC">
     <h2> Työaikaseuranta ja ajopäiväkirja: </h2> <br>
-
+ 
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
   <div class="form-row">
   <?php 
+    echo '<div class="form-group col-md-3"><label id="tapidlabel" for="tapid" style="display:none">Tapahtuma ID</label>
+	<input readonly type="text" class="form-control" id="tapid" name="tapid" style="display:none" >';
 	if ($_SESSION['admin'] == true) {
-		echo "<div class='form-group col-md-4'>";
-  		echo "<label for='persons'>Valitse työntekijä:</label>";
+		
+  		echo "<label for='persons' id='personslabel'>Valitse työntekijä:</label>";
   		echo "<select class='form-control' name='persons' id='persons'>";
 		echo $_SESSION['populate_drop_down'];
-		echo	"</select></div>";
+		echo	"</select>";
 	} else {
 		echo "<h3 style='color:red'>".$_SESSION['username']."</h3>"; 
 	}
+	echo '</div>';
+	
 ?>
+	
+	
 	<div class='form-group col-md-10'> <h4>Työtunnit ja työkohde:</h4> <small class='danger'>(Päivämäärä ja perustunnit ovat pakollisia tietoja.)</small></div>
 	</div>
 	<div class="form-row">
@@ -134,18 +143,14 @@ function check_if_float($floatInput){
       <span class="error">* <?php echo $hourErr;?></span>
     </div>
     <div class="form-group col-md-1">
-      <label for="ylityo">Ylityö</label>
+      <label for="ylityo">Ylityö/VKL</label>
       <input type="text" class="form-control" id="ylityo" name="ylityo">
       <span class="error"> <?php echo $otErr;?></span>
     </div>
-    <div class="form-group col-md-1">
-      <label for="vkl">Vkl</label>
-      <input type="text" class="form-control" id="vkl" name="vkl">
-       <span class="error"> <?php echo $wErr;?></span>
-    </div>
+    
   </div>
   
-  <div class="form-group col-md-6">
+  <div class="form-group col-md-7">
     <label for="kohde">Kohde</label>
     <input type="text" class="form-control" id="kohde" name="kohde" placeholder="kohde">
     </div>
@@ -165,13 +170,12 @@ function check_if_float($floatInput){
     </div>
     </div>
 
-    
-
+  
  <div class="form-group col-md-5">
  <br>
  <button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">Tallenna tiedot</button>
+ <button type="submit" name="remove" class="btn btn-danger btn-block" style="height:40px; display:none;">Poista rivi</button>
  </div>
-</form>
 </div>
 
 
@@ -179,20 +183,24 @@ function check_if_float($floatInput){
 </div>
 
 <?php
-if (isset($date) && isset($hours)&& isset($overtime)&& isset($weekend)&& isset($kilometers))
-		echo "<br><br><p align='center'>".$message=insert_hours($date, $hours, $overtime, $weekend, $place, $kilometers, $km_description, $userid) ."</p>";
+if (isset($eventId) && $eventId !=""){
+    echo "<br><br><p align='center'>".$message=update_hoursrow($eventId, $date, $hours, $overtime, $place, $kilometers, $km_description, $userid)."</p>";
+} else if (isset($date) && isset($hours)&& isset($overtime)&& isset($kilometers) && $eventId ==""){
+    echo "<br><br><p align='center'>".$message=insert_hours($date, $hours, $overtime, $place, $kilometers, $km_description, $userid) ."</p>";
+}
 ?>
 <div class="col-md-2"></div>
     <div class="col-md-8">
 <table class="table table-hover table-dark">
  <thead>
-<tr><th scope="col"> Id </th><th scope="col"> HenkilöId </th><th scope="col"> Pvm </th><th scope="col">Kohde</th><th scope="col">Tunnit</th><th scope="col">Ylityö</th><th scope="col">Viikonloppu</th><th scope="col">Kilometrit</th><th scope="col">Selite</th></tr>
+<tr><th scope="col"> Id </th><th scope="col"> HenkilöId </th><th scope="col"> Pvm </th><th scope="col">Kohde</th><th scope="col">Tunnit</th><th scope="col">Ylityö/VKL</th><th scope="col">Kilometrit</th><th scope="col">Selite</th></tr>
 </thead>
 <?php
 	if (isset($message))
 		echo $_SESSION['addedRows'];
 ?>
 </table>
+</form>
  </div>
  <div class="col-md-2"></div>
  <script type='text/javascript' src="js/menu.js"></script> 

@@ -38,6 +38,24 @@ function login($email, $pwd){
     
 }
 
+function update_hoursrow($eventId, $date, $hours, $overtime, $place, $kilometers, $km_description, $userid){
+    $mysqli = get_database();
+    if($stmt = $mysqli->prepare("UPDATE tuntiseuranta SET pvm=?, tyokohde=?, tunnit=?, ylityo=?, kilometrit=?, kmselite=? WHERE idtuntiseuranta=?")){
+        $stmt->bind_param("ssssssi", $date, $place, $hours, $overtime, $kilometers, $km_description, $eventId);
+        $stmt->execute();
+        $stmt->close();
+        $_SESSION['addedRows'] = "<tr id='$eventId'><td>" .$eventId . "</td><td>" .$userid . "</td><td>". $date . "</td><td>" .$place ."</td><td>" .$hours . "</td><td>
+        " .$overtime ."</td><td>" .$kilometers ."</td><td>" . $km_description ."</td>
+        <td><button type=\"button\" class=\"btn btn-success\"onClick=\"modifyRow('$eventId')\">Muokkaa</button></td>
+        <td><button type=\"button\" class=\"btn btn-danger\" onclick=\"removeRow('$eventId')\">Poista</button></td></tr>";
+        return "Rivi on päivitetty";
+        
+    }else{
+        return $mysqli->errno . ' ' . $mysqli->error;
+        $stmt->close();
+    }
+}
+
 function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$phone,$email,$pass, $admin) {
     $mysqli = get_database();
     if($stmt = $mysqli->prepare("INSERT INTO henkilo (sukunimi, etunimet, syntymaaika, veronro, osoite, postinumero, kaupunki, puhnro, ktunnus, salasana, admin)
@@ -56,20 +74,20 @@ function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$ph
     
 }
 
-function insert_hours($date, $hours, $over_time, $weekend, $place, $kilometers, $km_description, $userid){
+function insert_hours($date, $hours, $overtime, $place, $kilometers, $km_description, $userid){
     $mysqli = get_database();
     
-    if($stmt = $mysqli->prepare("INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, viikonloppu, kilometrit, kmselite, henkilo_idhenkilo)
-	VALUES (?,?,?,?,?,?,?,?);")){
-        $stmt->bind_param("sssssssi",$date, $place, $hours, $over_time, $weekend, $kilometers, $km_description, $userid);
+    if($stmt = $mysqli->prepare("INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, kilometrit, kmselite, henkilo_idhenkilo)
+	VALUES (?,?,?,?,?,?,?);")){
+        $stmt->bind_param("ssssssi",$date, $place, $hours, $overtime, $kilometers, $km_description, $userid);
         $stmt->execute();
-        $id= 'aaa'.$mysqli->insert_id;
+        $id= $mysqli->insert_id;
         $stmt->close();
-        $_SESSION['addedRows'] .= "<tr id='$id'><td>" .$id . "</td><td>" .$userid . "</td><td>". $date . "</td><td>" .$place ."</td><td>" .$hours . "</td><td>
-        " .$over_time ."</td><td>" .$weekend ."</td><td>" .$kilometers ."</td><td>" . $km_description ."</td>
-        <td><button onClick=\"modifyRow('$id')\">Muokkaa</button></td>
-        <td><button type=\"button\" class=\"btn btn-success\" onclick=\"removeRow()\">Poista</button></td></tr>";
-        return "Rivi tallennettiin tietokantaan onnistuneesti ".$id;
+        $_SESSION['addedRows'] = "<tr id='$id'><td>" .$id . "</td><td>" .$userid . "</td><td>". $date . "</td><td>" .$place ."</td><td>" .$hours . "</td><td>
+        " .$overtime ."</td><td>" .$kilometers ."</td><td>" . $km_description ."</td>
+        <td><button type=\"button\" class=\"btn btn-success\"onClick=\"modifyRow('$id')\">Muokkaa</button></td>
+        <td> <button type=\"button\" name=\"remove\" class=\"btn btn-danger\"onClick=\"removeRow('$id')\">Poista</button></form></td></tr>";
+        return "Rivi tallennettiin tietokantaan onnistuneesti: ".$id;
     }else{
         return $mysqli->errno . ' ' . $mysqli->error;
         $stmt->close();
