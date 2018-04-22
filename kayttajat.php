@@ -3,6 +3,7 @@ session_start();
 	require_once('sql_handler.php');
 	
 	$nameErr = $bdErr = $nroErr = $emailErr = $pwErr= $phoneErr = $zipErr ="";
+	$state="";
 	if (empty($_SESSION['userid'])) {
 
 			header("Location: index.php"); /* Redirect browser */;
@@ -10,7 +11,7 @@ session_start();
 		header("Location: seuranta.php"); /* Redirect browser */;
 
 	}else{
-		echo "Tervetuloa " .$_SESSION['username'];
+		getNames();
 	}
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){	
 	    if(isset($_POST['modifyperson'])){
@@ -30,11 +31,15 @@ session_start();
 	        //$admin = $result['admin'];
 	    }
 	    if (isset($_POST['remove'])){
-	        echo $id ."mmmm";
-	        remove_person($_POST["persons"]);
+	        remove_person($_POST["personid"]);
+	        getNames();
 	    }
-		if (isset($_POST['check'])){
-		    
+	    if (isset($_POST['check'])||isset($_POST['modify'])){
+	        if (isset($_POST['modify'])){
+	            $state="update";
+	        }else{
+	            $state="insert";
+	        }
 		    if(empty($_POST["sukunimi"])||empty($_POST["etunimi"])){
 		        $nameErr="Nimi on pakollinen tieto";
 		    }
@@ -47,17 +52,14 @@ session_start();
 		            $bdErr = "Syntymäaika on pakollinen tieto";
 		        }else{
 		            $bdate = $_POST['saika'];
-		         
 		        }
-		        
-		        
+
 		        if(empty($_POST['veronro'])){
 		            $nroErr = "Veronumero puuttuu!";
 		        }else {
 		            $veroNro=$_POST['veronro'];
 		        }
 
-		        
 		        if(empty($_POST['osoite'])){
 		            $address="Ei osoitetietoja";
 		        }else{
@@ -78,7 +80,6 @@ session_start();
 		            $city=$_POST['kaupunki'];
 		        }
 
-		        
 		        if(empty($_POST["puhnro"])){
 		            $phoneErr="Puhelinnumero puuttuu!";
 		        }elseif(!is_numeric($_POST['puhnro'])){
@@ -86,8 +87,6 @@ session_start();
 		        }else{
 		            $phone=filter_var($_POST['puhnro'], FILTER_SANITIZE_NUMBER_INT);
 		        }
-		         
-		        
 		        if(empty($_POST['email'])){
 		            $emailErr = "Sähköpostisoite on pakollinen!";
 		        }elseif(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)===false){
@@ -100,20 +99,18 @@ session_start();
 		            $pwErr="Salasana puuttuu!";
 		        }else{
 		            $pass= password_hash($_POST['salasana'], PASSWORD_BCRYPT);
-		            //$pass = $_POST['salasana'];
 		        }
-		        
-		       
-		                
-		            
-		        
-		    
-	
-	$admin='1';
-	$admin=$_POST['admin'];
-
+		        $admin=$_POST['admin'];
+		        echo $admin;
+		        if ($state=="update"){
+		            $personid=$_POST["personid"];
+		            $message= update_personinfo($fname, $lname,$bdate,$address,$zipcode,$city,$phone,$veroNro,$pass,$email, $admin,$personid);
+		            echo $message;
+		        }
+		    }
 	}
-}
+
+
 
 ?>
 
@@ -166,10 +163,16 @@ session_start();
 	</div>
 	</div>
 	</form>
-    <h2> Lisää työntekijätiedot: </h2>
+    <h2> Lisää uusi työntekijä: </h2>
 
 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
-
+<div class="form-row">
+    <div class="form-group col-md-2">
+     <input readonly type="text" class="form-control" id="personid" name="personid" style="display:none;" value="<?php echo (isset($id)) ? $id: ''?>">
+     </div>
+     <div class="form-group col-md-10"></div>
+     <div class="form-group col-md-12"></div>
+ </div>
 <div class="form-row">
     <div class="form-group col-md-4">
       <label for="sukunimi">Sukunimi</label>
@@ -246,11 +249,14 @@ session_start();
  
 </form>
 </div>
+ <div class="col-md-1"></div>
+  <div class="col-md-2"></div>
+   <div class="col-md-8">
 <?php
-	if (isset($pass))
+if ($state=="insert" && isset($pass) && isset($lname) && isset($fname) && isset($bdate) && isset($veroNro) && isset($address) && isset($zipcode) && isset($city) && isset($phone) && isset($email) && isset($admin))
 		echo "<br><br><p align='center'>".$message=insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$phone,$email,$pass, $admin) ."</p>";
 ?>
-
+</div>
     <div class="col-md-2"></div>
 </div>
  <script type='text/javascript' src="js/menu.js"></script> 

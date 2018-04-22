@@ -58,11 +58,13 @@ function changeView(){
 		document.getElementsByTagName('h2')[2].innerText="Muokkaa tietoja tai poista henkilö";
 		document.getElementsByName('check')[0].style.display="none";
 		document.getElementsByName('modify')[0].style.display="block";
-		document.getElementsByName('remove')[0].style.display="block";	
+		document.getElementsByName('remove')[0].style.display="block";
+		document.getElementById('personid').style.display="block";
 	}
 	if(document.getElementById('persons').value==""){
 		return false;
 	}else{
+		document.getElementById('personid').style.display="block";
 		return true;
 	}
 	

@@ -81,6 +81,19 @@ function update_hoursrow($eventId, $date, $hours, $overtime, $place, $kilometers
         $stmt->close();
     }
 }
+function update_personinfo($fname, $lname,$bdate,$address,$zipcode,$city,$phone,$veroNro,$pass,$email, $admin,$personid){
+    $mysqli = get_database();
+    if($stmt = $mysqli->prepare("UPDATE henkilo SET etunimet=?, sukunimi=?, syntymaaika=?, osoite=?, postinumero=?, kaupunki=?, puhnro=?, veronro=?, salasana=?, ktunnus=?, admin=? WHERE idhenkilo=?")){
+        $stmt->bind_param("ssssssssssii", $fname, $lname,$bdate,$address,$zipcode,$city,$phone,$veroNro,$pass,$email, $admin,$personid);
+        $stmt->execute();
+        $stmt->close();
+        return "Rivi on päivitetty";
+        
+    }else{
+        return $mysqli->errno . ' ' . $mysqli->error;
+        $stmt->close();
+    }
+}
 
 function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$phone,$email,$pass, $admin) {
     $mysqli = get_database();
