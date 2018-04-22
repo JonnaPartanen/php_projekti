@@ -13,6 +13,11 @@ session_start();
 		echo "Tervetuloa " .$_SESSION['username'];
 	}
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){	
+	    if(isset($_POST['modifyperson'])){
+	        $result=getPerson($_POST["persons"]);
+	        //echo "<br>".$result['sukunimi'] . "mmmmm";
+	        $lastName = $result['sukunimi'];
+	    }
 		if (isset($_POST['check'])){
 		    
 		    if(empty($_POST["sukunimi"])||empty($_POST["etunimi"])){
@@ -116,13 +121,31 @@ session_start();
 	
     <div class="col-md-2"></div>
     <div class="col-md-8" style="background-color:#5158AC">
+    <h2> Valitse henkilö jonka tietoja haluat muokata:</h2>
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
+    <div class="form-row">
+ 	<div class="form-group col-md-12">
+ 	<div class="form-group col-md-4">
+		<?php
+		echo "<label for='persons' id='personslabel'>Valitse työntekijä:</label>";
+		echo "<select class='form-control' name='persons' id='persons'>";
+		echo $_SESSION['populate_drop_down'];
+		echo	"</select>";
+		?>
+	</div>
+	<div class="form-group col-md-3">
+	<button type="submit" name="modifyperson" class="btn btn-success btn-block" style="height:40px; margin-top:20px;">Muokkaa henkilöä</button></div>
+	</div>
+	</div>
+	</form>
     <h2> Lisää työntekijätiedot: </h2>
 
 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
-  <div class="form-row">
+
+<div class="form-row">
     <div class="form-group col-md-4">
       <label for="sukunimi">Sukunimi</label>
-      <input type="text" class="form-control" id="sukunimi" name="sukunimi" placeholder="Sukunimi">
+      <input type="text" class="form-control" id="sukunimi" name="sukunimi" placeholder="Sukunimi" value="<?php echo (isset($lastName)) ? $lastName: ''?>">
       <span class="error"> <?php echo $nameErr;?></span>
     </div>
     <div class="form-group col-md-2">
@@ -141,7 +164,7 @@ session_start();
       <input type="text" class="form-control" id="veronro" name="veronro" placeholder="VeroNro">
       <span class="error"> <?php echo $nroErr;?></span>
     </div>
-  </div>
+ </div>
   <div class="form-row">
   <div class="form-group col-md-5">
     <label for="inputAddress">Katuosoite</label>

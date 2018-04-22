@@ -180,6 +180,23 @@ function get_personal_info($arguments, $names){
     }
     
 }
+function getPerson($id){
+    $sql = "SELECT * FROM henkilo WHERE idhenkilo = '$id';";
+    $result = execute_query($sql);
+    $html_row="";
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+            $html_row=$row;
+       
+        }
+        return $html_row;
+    }
+    else {
+        return "SQL failure";
+    }
+}
+
 
 function getNames(){
     $_SESSION['populate_drop_down']="";
@@ -193,6 +210,7 @@ function getNames(){
             $current_user = $row["sukunimi"]. ", " . $row["etunimet"]; 
             $_SESSION['populate_drop_down'] .= '<option value="'.$current_userid.'">'.$current_user.'</option>';
         }
+        return $current_user;
     } 
     else {
         return "SQL failure";
