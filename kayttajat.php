@@ -17,6 +17,17 @@ session_start();
 	        $result=getPerson($_POST["persons"]);
 	        //echo "<br>".$result['sukunimi'] . "mmmmm";
 	        $lastName = $result['sukunimi'];
+	        $firstName = $result['etunimet'];
+	        $birthdate = $result['syntymaaika'];
+	        $mdf_address = $result['osoite'];
+	        $zcode = $result['postinumero'];
+	        $mdf_city = $result['kaupunki'];
+	        $phoneNro = $result['puhnro'];
+	        $taxNro = $result['veronro'];
+	        $user = $result['ktunnus'];
+	        $bdate = $result['syntymaaika'];
+	        $password = $result['salasana'];
+	        //$admin = $result['admin'];
 	    }
 		if (isset($_POST['check'])){
 		    
@@ -150,40 +161,40 @@ session_start();
     </div>
     <div class="form-group col-md-2">
       <label for="etunimi">Etunimi</label>
-      <input type="text" class="form-control" id="etunimi" name="etunimi" placeholder="Etunimi">
+      <input type="text" class="form-control" id="etunimi" name="etunimi" placeholder="Etunimi" value="<?php echo (isset($firstName)) ? $firstName: ''?>">
     </div>
     
     <div class="form-group col-md-3">
       <label for="saika">Syntymäaika</label>
-      <input type="date" class="form-control" id="date" name="saika" placeholder="MM/DD/YYYY">
+      <input type="date" class="form-control" id="date" name="saika" placeholder="MM/DD/YYYY" value="<?php echo (isset($birthdate)) ? $birthdate: ''?>">
       <span class="error"> <?php echo $bdErr;?></span>
     </div>
     
     <div class="form-group col-md-3">
-      <label for="inputPassword4">Veronumero</label>
-      <input type="text" class="form-control" id="veronro" name="veronro" placeholder="VeroNro">
+      <label for="inputTax">Veronumero</label>
+      <input type="text" class="form-control" id="veronro" name="veronro" placeholder="VeroNro" value="<?php echo (isset($taxNro)) ? $taxNro: ''?>">
       <span class="error"> <?php echo $nroErr;?></span>
     </div>
  </div>
   <div class="form-row">
   <div class="form-group col-md-5">
     <label for="inputAddress">Katuosoite</label>
-    <input type="text" class="form-control" id="address" name="osoite" placeholder="Tiekatu 123">
+    <input type="text" class="form-control" id="address" name="osoite" placeholder="Tiekatu 123" value="<?php echo (isset($mdf_address)) ? $mdf_address: ''?>">
   </div>
   <div class="form-group col-md-2">
       <label for="postiNro">Postinumero</label>
-      <input type="text" class="form-control" id="postiNro" name="postinro">
+      <input type="text" class="form-control" id="postiNro" name="postinro" value="<?php echo (isset($zcode)) ? $zcode: ''?>">
       <span class="error"> <?php echo $zipErr;?></span>
   </div>
   <div class="form-group col-md-2">
       <label for="kaupunki">City</label>
-      <input type="text" class="form-control" id="kaupunki" name="kaupunki">
+      <input type="text" class="form-control" id="kaupunki" name="kaupunki" value="<?php echo (isset($mdf_city)) ? $mdf_city: ''?>">
     </div>
     </div>
   
     <div class="form-group col-md-3">
       <label for="puhNro">Puhelinnumero</label>
-      <input type="text" class="form-control" id="puhNro" name="puhnro">
+      <input type="text" class="form-control" id="puhNro" name="puhnro" value="<?php echo (isset($phoneNro)) ? $phoneNro: ''?>">
       <span class="error"> <?php echo $phoneErr;?></span>
       
     </div>
@@ -191,12 +202,12 @@ session_start();
     <div class="form-row">
     <div class="form-group col-md-4">
       <label for="email">Email tai käyttäjätunnus</label>
-      <input type="text" id="email" name="email" class="form-control">
+      <input type="text" id="email" name="email" class="form-control" value="<?php echo (isset($user)) ? $user: ''?>">
       <span class="error"> <?php echo $emailErr;?></span>
     </div>
     <div class="form-group col-md-3">
       <label for="password">Salasana</label>
-      <input type="password" id="password" name="salasana" class="form-control">
+      <input type="password" id="password" name="salasana" class="form-control" value="<?php echo (isset($password)) ? $password: ''?>">
       <span class="error"> <?php echo $pwErr;?></span>
     </div>
     
