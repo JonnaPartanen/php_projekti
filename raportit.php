@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
   		<div class="form-row">
     		<div class="form-group col-md-4">
   				<label for="sel1"><h4 class="text-primary"> Valitse henkilö:</h4> <p class="text-info"> <small>(Haettava henkilö(t))</small></p></label>
-      			<select name="names[]" multiple class="form-control" id="sel1" style="height:160px">>
+      			<select name="names[]" multiple class="form-control" id="sel1" style="height:160px">
         		<?php echo $_SESSION['populate_drop_down']?>
       			</select>
     		</div>

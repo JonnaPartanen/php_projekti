@@ -15,7 +15,7 @@ session_start();
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){	
 	    if(isset($_POST['modifyperson'])){
 	        $result=getPerson($_POST["persons"]);
-	        //echo "<br>".$result['sukunimi'] . "mmmmm";
+	        $id = $result['idhenkilo'];
 	        $lastName = $result['sukunimi'];
 	        $firstName = $result['etunimet'];
 	        $birthdate = $result['syntymaaika'];
@@ -28,6 +28,10 @@ session_start();
 	        $bdate = $result['syntymaaika'];
 	        $password = $result['salasana'];
 	        //$admin = $result['admin'];
+	    }
+	    if (isset($_POST['remove'])){
+	        echo $id ."mmmm";
+	        remove_person($_POST["persons"]);
 	    }
 		if (isset($_POST['check'])){
 		    
@@ -69,9 +73,9 @@ session_start();
 		        }
 		        
 		        if(empty($_POST['kaupunki'])){
-		            $address="Ei osoitetietoja";
+		            $city="Ei osoitetietoja";
 		        }else{
-		            $address=$_POST['kaupunki'];
+		            $city=$_POST['kaupunki'];
 		        }
 
 		        
@@ -124,7 +128,7 @@ session_start();
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   
 </head>
-<body class ="mb-2 bg-primary text-white" >
+<body class ="mb-2 bg-primary text-white" onload="changeView()" >
 
 <div class="jumbotron text-center" style="background-color:inherit">
   <h2 class="mb-2 bg-primary text-white">Timanttityö Lindh Oy</h2>
@@ -145,19 +149,20 @@ session_start();
     <div class="col-md-2"></div>
     <div class="col-md-8" style="background-color:#5158AC">
     <h2> Valitse henkilö jonka tietoja haluat muokata:</h2>
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" onSubmit="return changeView()">
     <div class="form-row">
  	<div class="form-group col-md-12">
  	<div class="form-group col-md-4">
 		<?php
 		echo "<label for='persons' id='personslabel'>Valitse työntekijä:</label>";
 		echo "<select class='form-control' name='persons' id='persons'>";
+		echo "<option></option>";
 		echo $_SESSION['populate_drop_down'];
 		echo	"</select>";
 		?>
 	</div>
 	<div class="form-group col-md-3">
-	<button type="submit" name="modifyperson" class="btn btn-success btn-block" style="height:40px; margin-top:20px;">Muokkaa henkilöä</button></div>
+	<button name="modifyperson" class="btn btn-success btn-block" style="height:40px; margin-top:20px;">Muokkaa henkilöä</button></div>
 	</div>
 	</div>
 	</form>
@@ -188,7 +193,7 @@ session_start();
       <span class="error"> <?php echo $nroErr;?></span>
     </div>
  </div>
-  <div class="form-row">
+ <div class="form-row">
   <div class="form-group col-md-5">
     <label for="inputAddress">Katuosoite</label>
     <input type="text" class="form-control" id="address" name="osoite" placeholder="Tiekatu 123" value="<?php echo (isset($mdf_address)) ? $mdf_address: ''?>">
@@ -199,7 +204,7 @@ session_start();
       <span class="error"> <?php echo $zipErr;?></span>
   </div>
   <div class="form-group col-md-2">
-      <label for="kaupunki">City</label>
+      <label for="kaupunki">Kaupunki</label>
       <input type="text" class="form-control" id="kaupunki" name="kaupunki" value="<?php echo (isset($mdf_city)) ? $mdf_city: ''?>">
     </div>
     </div>
@@ -209,20 +214,20 @@ session_start();
       <input type="text" class="form-control" id="puhNro" name="puhnro" value="<?php echo (isset($phoneNro)) ? $phoneNro: ''?>">
       <span class="error"> <?php echo $phoneErr;?></span>
       
-    </div>
+   </div>
     
-    <div class="form-row">
+   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="email">Email tai käyttäjätunnus</label>
       <input type="text" id="email" name="email" class="form-control" value="<?php echo (isset($user)) ? $user: ''?>">
       <span class="error"> <?php echo $emailErr;?></span>
     </div>
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
       <label for="password">Salasana</label>
       <input type="password" id="password" name="salasana" class="form-control" value="<?php echo (isset($password)) ? $password: ''?>">
       <span class="error"> <?php echo $pwErr;?></span>
     </div>
-    
+     <div class="form-group col-md-2">
     <label for="admin">Admin</label><br>
     	<label class="radio-inline">
       		<input type="radio" id="no" name="admin" value="0" checked>Ei
@@ -230,12 +235,15 @@ session_start();
     	<label class="radio-inline">
       		<input type="radio" id="yes" name="admin" value="1" >Kyllä
     	</label>
-     
-  </div>
- <div class="form-group col-md-5">
+     </div>
+     <div class="form-group col-md-4">
  <br>
- <button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">Tallenna työntekijätiedot</button>
+ <button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">Lisää henkilö</button>
+ <button type="submit" name="modify" class="btn btn-success btn-block" style="height:40px;display:none;">Tallenna</button>
+ <button type="submit" name="remove" class="btn btn-danger btn-block" style="height:40px; display:none;">Poista henkilö</button>
  </div>
+  </div>
+ 
 </form>
 </div>
 <?php
@@ -245,7 +253,7 @@ session_start();
 
     <div class="col-md-2"></div>
 </div>
-  
+ <script type='text/javascript' src="js/menu.js"></script> 
 </body>
-<script type='text/javascript' src="menu.js"></script>
+
 </html>

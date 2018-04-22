@@ -37,6 +37,19 @@ function login($email, $pwd){
     }
     
 }
+function remove_person($id){
+    $mysqli = get_database();
+    if ($stmt = $mysqli ->prepare("DELETE FROM henkilo WHERE idhenkilo=?")){
+        $stmt->bind_param("i", $id );
+        $stmt->execute();
+        $stmt->close();
+        return "Rivi on poistettu";
+    }else{
+        return $mysqli->errno . ' ' . $mysqli->error;
+        $stmt->close();
+    }
+      
+}
 
 function remove_hoursRow($eventId){
     $mysqli = get_database();
@@ -188,7 +201,6 @@ function getPerson($id){
         // output data of each row
         while($row = $result->fetch_assoc()) {
             $html_row=$row;
-       
         }
         return $html_row;
     }
