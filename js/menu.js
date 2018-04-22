@@ -41,15 +41,7 @@ function removeRow(id){
 				formElem[i].style.display ="block"
 			}
 		}
-		/*var labels=document.getElementsByTagName('label');
-		for(var i=0; i<labels.length; ++i){
-			
-			if(labels[i].style.display !="none"){
-				labels[i].style.display = "none";
-			}else{
-				labels[i].style.display ="block"
-			}
-		}*/
+		
 		document.getElementById('tapid').value=rowId;
 		document.getElementsByTagName('h2')[1].innerText="Vahvista rivin poisto:";
 		return true;

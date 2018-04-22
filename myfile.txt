@@ -1,0 +1,14 @@
+**************************************************************************************************************
+Raportti ajalta: 2018-03-26 - 2018-04-22			 TTL Oy 
+HenkiloID	sukunimi	etunimet	pvm	tyokohde	tunnit	ylityo	viikonloppu	kilometrit	kmselite	
+**************************************************************************************************************
+100	Lindh	Mika	2018-04-06		7	0		0		
+100	Lindh	Mika	2018-04-06		7	0		0		
+100	Lindh	Mika	2018-04-06		7	0		0		
+100	Lindh	Mika	2018-04-06		7	0		0		
+100	Lindh	Mika	2018-04-06		7	0		0		
+100	Lindh	Mika	2018-04-06		5	0		0		
+100	Lindh	Mika	2018-04-06		5	0		0		
+100	Lindh	Mika	2018-04-06		5	0		0		
+100	Lindh	Mika	2018-04-06		5	0		0		
+100	Lindh	Mika	2018-04-07		5	0		0		

@@ -116,7 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
       			<option value="'tyokohde'">Työkohde</option>
       			<option value="'tunnit'">Työtunnit</option>
       			<option value="'ylityo'">Ylityöt</option>
-      			<option value="'viikonloppu'">LA/SU työt</option>
       			<option value="'kilometrit'">Ajokilometrit</option>
       			<option value="'kmselite'">KM selite</option>
       			</select>

@@ -110,12 +110,14 @@ function insert_hours($date, $hours, $overtime, $place, $kilometers, $km_descrip
 
 function get_personal_and_working_info($arguments, $names, $start_date, $end_date){
     $table_header="<table class='table table-hover table-dark'><thead><tr><th scope='col'>henkiloId";
-    
+    $file_header="**************************************************************************************************************\r\n" .
+        "Raportti ajalta: " .$start_date ." - " . $end_date . "\t\t\t TTL Oy \r\nHenkiloID\t";
     for ($i=0; $i < count($arguments); $i++){
         $table_header .= "<th scope='col'>".str_replace("'", "", $arguments[$i]) ."</th>";
+        $file_header .= str_replace("'", "", $arguments[$i]) ."\t";
     }
     $table_header .= "</tr></thead>";
-    
+    $file_header .= "\r\n**************************************************************************************************************\r\n";
     $sql = ("SELECT henkilo_idhenkilo,".str_replace("'","",implode(",", $arguments))." FROM henkilo join tuntiseuranta ON
         henkilo.idhenkilo = tuntiseuranta.henkilo_idhenkilo WHERE henkilo.idhenkilo IN (".implode(',',$names).")
         AND pvm BETWEEN '" .$start_date."' AND '".$end_date. "' ORDER BY henkilo.idhenkilo,pvm ");
@@ -127,19 +129,18 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
             $table_row .= "<tr>";
             foreach ($row as $item) {
                 $table_row .= "<td>". $item."</td>";
-                $file_row .= "\t". $item;
+                $file_row .= $item . "\t";
             }
             $table_row .= "</tr>";
-            $file_row .= "\n";
+            $file_row .= "\r\n";
         }
       $html_table=$table_header. $table_row. "</table>";
       
-      $file = $file_row;
-      $myfile = fopen("C:\Users\User1\myfile.txt", "w") or die("Unable to open file!");
+      $file = $file_header.$file_row;
+      $myfile = fopen("myfile.txt", "w") or die("Unable to open file!");
       fwrite($myfile, $file);
-      
-      echo fread($myfile,filesize('C:\Users\User1\myfile.txt'));
       fclose($myfile); 
+      var_dump(popen('notepad','r'));
       
       //exec("notepad.exe". "C:\Users\User1\myfile.txt");
       
