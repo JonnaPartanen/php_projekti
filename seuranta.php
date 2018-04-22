@@ -11,7 +11,7 @@ session_start();
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	    
 	    if(isset($_POST['remove'])){
-	        echo "Poistan kaiken";
+	        $removeEvent = ($_POST['tapid']);
 	    }
 		
 		if (isset($_POST['check'])){
@@ -176,6 +176,7 @@ function check_if_float($floatInput){
  <button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">Tallenna tiedot</button>
  <button type="submit" name="remove" class="btn btn-danger btn-block" style="height:40px; display:none;">Poista rivi</button>
  </div>
+ </form>
 </div>
 
 
@@ -187,6 +188,8 @@ if (isset($eventId) && $eventId !=""){
     echo "<br><br><p align='center'>".$message=update_hoursrow($eventId, $date, $hours, $overtime, $place, $kilometers, $km_description, $userid)."</p>";
 } else if (isset($date) && isset($hours)&& isset($overtime)&& isset($kilometers) && $eventId ==""){
     echo "<br><br><p align='center'>".$message=insert_hours($date, $hours, $overtime, $place, $kilometers, $km_description, $userid) ."</p>";
+} else if(isset($removeEvent)){
+    echo "<br><br><p align='center'>".$message=remove_hoursRow($removeEvent) ."</p>";
 }
 ?>
 <div class="col-md-2"></div>
@@ -200,7 +203,7 @@ if (isset($eventId) && $eventId !=""){
 		echo $_SESSION['addedRows'];
 ?>
 </table>
-</form>
+
  </div>
  <div class="col-md-2"></div>
  <script type='text/javascript' src="js/menu.js"></script> 

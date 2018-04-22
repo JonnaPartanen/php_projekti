@@ -38,6 +38,19 @@ function login($email, $pwd){
     
 }
 
+function remove_hoursRow($eventId){
+    $mysqli = get_database();
+    if ($stmt = $mysqli ->prepare("DELETE FROM tuntiseuranta WHERE idtuntiseuranta=?")){
+        $stmt->bind_param("i", $eventId );
+        $stmt->execute();
+        $stmt->close();
+        $_SESSION['addedRows']="";
+        return "Rivi on poistettu";
+    }else{
+        return $mysqli->errno . ' ' . $mysqli->error;
+        $stmt->close();
+    }
+}
 function update_hoursrow($eventId, $date, $hours, $overtime, $place, $kilometers, $km_description, $userid){
     $mysqli = get_database();
     if($stmt = $mysqli->prepare("UPDATE tuntiseuranta SET pvm=?, tyokohde=?, tunnit=?, ylityo=?, kilometrit=?, kmselite=? WHERE idtuntiseuranta=?")){

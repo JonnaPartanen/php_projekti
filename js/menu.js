@@ -30,25 +30,29 @@ function modifyRow(id){
 
 function removeRow(id){
 	var rowId = document.getElementById(id).childNodes[0].innerText;
-	console.log(rowId);
 	if(rowId !=""){
 		var formElem=document.getElementsByTagName('form')[1];
+		formElem= formElem.querySelectorAll('h4,small,label,input,button,span, select');
 		for(var i=0; i<formElem.length; ++i){
-			console.log(formElem[i]);
+	
 			if(formElem[i].style.display !="none"){
 				formElem[i].style.display = "none";
 			}else{
 				formElem[i].style.display ="block"
 			}
 		}
-		/*document.getElementById('persons').style.display="none";
-		document.getElementById('personslabel').style.display="none";
-		document.getElementById('tapid').style.display="block";
-		document.getElementsByName('remove')[0].style.display="block";
-		document.getElementsByName('check')[0].style.display="none";
-		document.getElementById('tapid').defaultValue=rowId;
+		/*var labels=document.getElementsByTagName('label');
+		for(var i=0; i<labels.length; ++i){
+			
+			if(labels[i].style.display !="none"){
+				labels[i].style.display = "none";
+			}else{
+				labels[i].style.display ="block"
+			}
+		}*/
+		document.getElementById('tapid').value=rowId;
 		document.getElementsByTagName('h2')[1].innerText="Vahvista rivin poisto:";
-		return true;*/
+		return true;
 	} else{
 		return false;
 	}
