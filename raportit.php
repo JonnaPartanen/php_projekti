@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	</div>	
 	</form>
 	</div>
-    <div class="col-md-8" style="background-color:#f2f2f2">
+    <div class="col-md-8" style="background-color:#f2f2f2" class="text-primary">
     	<h2 class="text-primary">Työntekijäraportit: </h2>
     	<p class="text-info"> <small>(Shift tai CTRL nappi pohjassa voit valita useamman)</small></p>
 

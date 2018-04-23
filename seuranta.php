@@ -88,12 +88,12 @@ function check_if_float($floatInput){
   
   
 </head>
-<body class ="mb-2 bg-primary text-white" >
+<body class ="mb-2 bg-primary text-white">
 
 <div class="jumbotron text-center" style="background-color:inherit">
   <h2 class="mb-2 bg-primary text-white">Timanttityö Lindh Oy</h2>
-  
 </div>
+
 <div class="row">
 
 	<div class="col-sm-2 text-center" style="margin-left:15px";>
@@ -107,8 +107,8 @@ function check_if_float($floatInput){
 	</div> </form></div>
 	
   
-    <div class="col-md-8" style="background-color:#5158AC">
-    <h2> Työaikaseuranta ja ajopäiväkirja: </h2> <br>
+    <div class="col-md-8 text-primary" style="background-color:#f2f2f2">
+    <h2 class="text-primary"> Työaikaseuranta ja ajopäiväkirja: </h2> <br>
  
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
   <div class="form-row">
@@ -129,15 +129,15 @@ function check_if_float($floatInput){
 ?>
 	
 	
-	<div class='form-group col-md-10'> <h4>Työtunnit ja työkohde:</h4> <small class='danger'>(Päivämäärä ja perustunnit ovat pakollisia tietoja.)</small></div>
+	<div class='form-group col-md-10'> <h4 class="text-primary">Työtunnit ja työkohde:</h4> <small class='danger'>(Päivämäärä ja perustunnit ovat pakollisia tietoja.)</small></div>
 	</div>
 	<div class="form-row">
 	<div class="form-group col-md-3">
-      <label for="pvm">Päivämäärä (tunnit/km)</label>
+      <label for="pvm" class="text-primary" >Päivämäärä (tunnit/km)</label>
       <input type="date" class="form-control" id="pvm" name="pvm" placeholder="MM/DD/YYYY">
       <span class="error">* <?php echo $dateErr;?></span>
     </div>
-    <div class="form-group col-md-1">
+    <div class="form-group col-md-1" class="text-primary">
       <label for="tunnit">Työtunnit</label>
       <input type="text" class="form-control" id="tunnit" name="tunnit" >
       <span class="error">* <?php echo $hourErr;?></span>

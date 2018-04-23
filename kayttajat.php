@@ -101,7 +101,7 @@ session_start();
 		            $pass= password_hash($_POST['salasana'], PASSWORD_BCRYPT);
 		        }
 		        $admin=$_POST['admin'];
-		        echo $admin;
+		       
 		        if ($state=="update"){
 		            $personid=$_POST["personid"];
 		            $message= update_personinfo($fname, $lname,$bdate,$address,$zipcode,$city,$phone,$veroNro,$pass,$email, $admin,$personid);
@@ -133,7 +133,7 @@ session_start();
 </div>
 <div class="row">
 
-	<div class="col-sm-3 text-center">
+	<div class="col-sm-2 text-center">
     <form action="logout.php" method="post">
     <div class="btn-group-vertical">
 		<button type="button" class="btn btn-success" onclick="openKayttajat()">Lisää työntekijä</button>
@@ -143,8 +143,7 @@ session_start();
 		
 	</div> </form></div>
 	
-    <div class="col-md-2"></div>
-    <div class="col-md-8" style="background-color:#5158AC">
+    <div class="col-md-8 text-primary" style="background-color:#f2f2f2">
     <h2> Valitse henkilö jonka tietoja haluat muokata:</h2>
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" onSubmit="return changeView()">
     <div class="form-row">
@@ -159,7 +158,7 @@ session_start();
 		?>
 	</div>
 	<div class="form-group col-md-3">
-	<button name="modifyperson" class="btn btn-success btn-block" style="height:40px; margin-top:20px;">Muokkaa henkilöä</button></div>
+	<button name="modifyperson" class="btn btn-primary btn-block" style="height:40px; margin-top:20px;">Muokkaa henkilöä</button></div>
 	</div>
 	</div>
 	</form>
