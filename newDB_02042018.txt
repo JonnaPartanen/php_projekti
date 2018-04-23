@@ -75,7 +75,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 START TRANSACTION;
 USE `mydb`;
 INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimi`, `sukunimi`, `syntaika`,`tuntipalkka`, `lahiosoite`, `postinro`, `kaupunki`, `puhnro`, `veronro`, `email`, `salasana`, `admin`) VALUES (DEFAULT, 'Mika', 'Lindh', '1700-05-09', '17.50', 'Jokukuja', '01200', 'Vantaa', '0505555559', '856813312382', 'mika.lindh@live.com', 'mika', 'true');
-INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimet`, `sukunimi`, `syntymaaika`, `osoite`, `postinumero`, `kaupunki`, `puhnro`, `veronro`, `ktunnus`, `salasana`, `admin`) VALUES (DEFAULT, 'Jonna', 'Partanen', '1715-05-25','18.50','Jokutie ', '01300', 'Vantaa', '0455432155', '987613131232', 'jonna.partanen@student.laurea.fi', 'jonna', 'false');
+INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimi`, `sukunimi`, `syntaika`,`tuntipalkka`, `lahiosoite`, `postinro`, `kaupunki`, `puhnro`, `veronro`, `email`, `salasana`, `admin`) VALUES (DEFAULT, 'Jonna', 'Partanen', '1715-05-25','18.50','Jokutie ', '01300', 'Vantaa', '0455432155', '987613131232', 'jonna.partanen@student.laurea.fi', 'jonna', 'false');
 
 COMMIT;
 
