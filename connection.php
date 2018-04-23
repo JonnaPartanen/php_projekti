@@ -2,12 +2,10 @@
 
 function get_database(){
     
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "mydb";
     
-    $mysqli = new mysqli($servername, $username, $password, $dbname);
+    $config = parse_ini_file('config.ini'); 
+    
+    $mysqli = new mysqli($config['servername'], $config['username'], $config['password'], $config['dbname']);
     
     // Check connection
     if ($mysqli->connect_error) {
