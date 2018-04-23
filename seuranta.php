@@ -168,14 +168,36 @@ function check_if_float($floatInput){
       <label for="selite">Km Selite</label>
       <input type="text" class="form-control" id="selite" name="selite">
     </div>
-    </div>
+</div>
 
-  
- <div class="form-group col-md-5">
- <br>
- <button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">Tallenna tiedot</button>
- <button type="submit" name="remove" class="btn btn-danger btn-block" style="height:40px; display:none;">Poista rivi</button>
+ <div class="form-row">
+ 	<div class="form-group col-md-3">
+ 		<br>
+ 		<button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">Tallenna tiedot</button>
+ 		<button type="submit" name="remove" class="btn btn-danger btn-block" style="height:40px; display:none;">Poista rivi</button>
+ 	</div>
+ 	<div class="form-group col-md-9"></div>
  </div>
+ 
+ 
+ <div class="form-row">
+ <div class="form-group col-md-12"></div>
+ <div class="form-group col-md-4"></div>
+  	<div class="form-group col-md-3">
+    	<label for = "aloituspvm" class="text-primary">Jakson alku</label>
+    	<input type="date" class="form-control" id="alku" name="start_date" placeholder="MM/DD/YYYY">
+  	</div>
+    <div class="form-group col-md-3">
+    	<label for = "lopetuspvm" class="text-primary">Jakson loppu</label>
+    	<input type="date" class="form-control" id="loppu" name="end_date" placeholder="MM/DD/YYYY">
+    </div>
+    <div class="form-group col-md-2"><br>
+ 			<button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">Näytä Raportti</button>
+	</div>
+    
+ </div><!-- päivämäärien form row loppuu -->
+ 
+ 
  </form>
 </div>
 
