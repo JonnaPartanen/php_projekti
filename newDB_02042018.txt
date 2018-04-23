@@ -22,21 +22,21 @@ DROP TABLE IF EXISTS `mydb`.`henkilo` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`henkilo` (
   `idhenkilo` INT NOT NULL AUTO_INCREMENT,
-  `etunimet` VARCHAR(20) NOT NULL,
+  `etunimi` VARCHAR(20) NOT NULL,
   `sukunimi` VARCHAR(30) NOT NULL,
-  `syntymaaika` DATE NOT NULL,
-  `osoite` VARCHAR(45) NOT NULL,
-  `postinumero` VARCHAR(5) NOT NULL,
+  `syntaika` DATE NOT NULL,
+  `tuntipalkka` VARCHAR(15) NOT NULL,
+  `lahiosoite` VARCHAR(45) NOT NULL,
+  `postinro` VARCHAR(5) NOT NULL,
   `kaupunki` VARCHAR(45) NOT NULL,
   `puhnro` VARCHAR(15) NULL,
   `veronro` VARCHAR(15) NOT NULL,
-  `ktunnus` VARCHAR(45) NOT NULL,
-  `salasana` VARCHAR(20) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `salasana` VARCHAR(100) NOT NULL,
   `admin` BOOLEAN NOT NULL,
   PRIMARY KEY (`idhenkilo`),
   UNIQUE INDEX `idhenkilo_UNIQUE` (`idhenkilo` ASC),
-  UNIQUE INDEX `tunnus_UNIQUE` (`ktunnus` ASC),
-  UNIQUE INDEX `salasana_UNIQUE` (`salasana` ASC))
+  UNIQUE INDEX `tunnus_UNIQUE` (`email` ASC))
 ENGINE = InnoDB AUTO_INCREMENT=100;
 
 
@@ -51,8 +51,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`tuntiseuranta` (
   `tyokohde` VARCHAR(80) NOT NULL,
   `tunnit` INT NOT NULL,
   `ylityo` INT NULL,
-  `viikonloppu` INT NULL,
-  `kilometrit` DOUBLE NULL,
+  `km` DOUBLE NULL,
   `kmselite` VARCHAR(200) NULL,
   `henkilo_idhenkilo` INT NOT NULL,
   PRIMARY KEY (`idtuntiseuranta`, `henkilo_idhenkilo`),
@@ -75,8 +74,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mydb`;
-INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimet`, `sukunimi`, `syntymaaika`, `osoite`, `postinumero`, `kaupunki`, `puhnro`, `veronro`, `ktunnus`, `salasana`, `admin`) VALUES (DEFAULT, 'Mika', 'Lindh', '1700-05-09', 'Jokukuja', '01200', 'Vantaa', '0505555559', '856813312382', 'mika.lindh@live.com', 'mika', 'true');
-INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimet`, `sukunimi`, `syntymaaika`, `osoite`, `postinumero`, `kaupunki`, `puhnro`, `veronro`, `ktunnus`, `salasana`, `admin`) VALUES (DEFAULT, 'Jonna', 'Partanen', '1715-05-25', 'Jokutie ', '01300', 'Vantaa', '0455432155', '987613131232', 'jonna.partanen@student.laurea.fi', 'jonna', 'false');
+INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimi`, `sukunimi`, `syntaika`,`tuntipalkka`, `lahiosoite`, `postinro`, `kaupunki`, `puhnro`, `veronro`, `email`, `salasana`, `admin`) VALUES (DEFAULT, 'Mika', 'Lindh', '1700-05-09', '17.50', 'Jokukuja', '01200', 'Vantaa', '0505555559', '856813312382', 'mika.lindh@live.com', 'mika', 'true');
+INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimet`, `sukunimi`, `syntymaaika`, `osoite`, `postinumero`, `kaupunki`, `puhnro`, `veronro`, `ktunnus`, `salasana`, `admin`) VALUES (DEFAULT, 'Jonna', 'Partanen', '1715-05-25','18.50','Jokutie ', '01300', 'Vantaa', '0455432155', '987613131232', 'jonna.partanen@student.laurea.fi', 'jonna', 'false');
 
 COMMIT;
 
