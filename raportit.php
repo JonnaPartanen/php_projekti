@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	</div>	
 	</form>
 	</div>
-    <div class="col-md-8" style="background-color:#f2f2f2" class="text-primary">
+    <div class="col-md-8" style="background-color:#f2f2f2" >
     	<h2 class="text-primary">Työntekijäraportit: </h2>
     	<p class="text-info"> <small>(Shift tai CTRL nappi pohjassa voit valita useamman)</small></p>
 
@@ -98,25 +98,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     			<label for="sel2"><h4 class="text-primary">Tulostettavat henkilötiedot:</h4>  <p class="text-info"> <small>(Työntekijätiedot)</small></p></label>
       			<select name="person_info[]" multiple class="form-control" id="sel2" style="height:160px">
       			<option value="'sukunimi'">Sukunimi</option>
-      			<option value="'etunimet'">Etunimi</option>
-      			<option value="'syntymaaika'">Syntymäaika</option>
-      			<option value="'osoite'">Osoite</option>
-      			<option value="'postinumero'">PostiNro</option>
+      			<option value="'etunimi'">Etunimi</option>
+      			<option value="'syntaika'">Syntymäaika</option>
+      			<option value="'tuntipalkka'">Tuntipalkka</option>
+      			<option value="'lahiosoite'">Osoite</option>
+      			<option value="'postinro'">PostiNro</option>
       			<option value="'kaupunki'">Kaupunki</option>
       			<option value="'puhnro'">Puhelinnumero</option>
       			<option value="'veronro'">Veronumero</option>
-      			<option value="'palkka'">Tuntipalkka</option>
-      			<option value="'ktunnus'">Email</option>
+      			<option value="'email'">Email</option>
       			</select>
     		</div>
     		<div class="form-group col-md-4">
-    			<label for="sel3"><h4 class="text-primary"> Tulostettavat palkkatiedot: </h4> <p class="text-info"> <small>(Tunnit, kohteet, kilometrit)</small></p></label>
+    			<label for="sel3"><h4 class="text-primary"> Tulostettavat palkkatiedot: </h4> <p class="text-info"> <small>(Tunnit, kohteet, km)</small></p></label>
       			<select name= "other_info[]" multiple class="form-control" id="sel3" style="height:160px">>
       			<option value="'pvm'">Päivämäärä</option>
       			<option value="'tyokohde'">Työkohde</option>
       			<option value="'tunnit'">Työtunnit</option>
       			<option value="'ylityo'">Ylityöt</option>
-      			<option value="'kilometrit'">Ajokilometrit</option>
+      			<option value="'km'">Ajokilometrit</option>
       			<option value="'kmselite'">KM selite</option>
       			</select>
     		</div>

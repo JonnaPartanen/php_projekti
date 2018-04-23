@@ -1,8 +1,9 @@
 <?php
 session_start();
 	require_once('sql_handler.php');
+	require_once('seuranta.php');
 	
-	$nameErr = $bdErr = $nroErr = $emailErr = $pwErr= $phoneErr = $zipErr ="";
+	$nameErr = $bdErr = $nroErr = $emailErr = $pwErr= $phoneErr = $zipErr = $salErr ="";
 	$state="";
 	if (empty($_SESSION['userid'])) {
 
@@ -18,15 +19,15 @@ session_start();
 	        $result=getPerson($_POST["persons"]);
 	        $id = $result['idhenkilo'];
 	        $lastName = $result['sukunimi'];
-	        $firstName = $result['etunimet'];
-	        $birthdate = $result['syntymaaika'];
-	        $mdf_address = $result['osoite'];
-	        $zcode = $result['postinumero'];
+	        $firstName = $result['etunimi'];
+	        $birthdate = $result['syntaika'];
+	        $mdf_address = $result['lahiosoite'];
+	        $zcode = $result['postinro'];
 	        $mdf_city = $result['kaupunki'];
 	        $phoneNro = $result['puhnro'];
 	        $taxNro = $result['veronro'];
-	        $user = $result['ktunnus'];
-	        $bdate = $result['syntymaaika'];
+	        $user = $result['email'];
+	        $bdate = $result['syntaika'];
 	        $password = $result['salasana'];
 	        //$admin = $result['admin'];
 	    }
@@ -53,6 +54,14 @@ session_start();
 		        }else{
 		            $bdate = $_POST['saika'];
 		        }
+		        if(empty($_POST["palkka"])){
+		            $salErr = "Tarkista syöte";
+		        }elseif(check_if_float($_POST["palkka"]) == false){
+		            $salErr = "Tarkista syöte";
+		            
+		        }else{
+		            $salary = str_replace(",", ".",$_POST["salary"]);
+		        }
 
 		        if(empty($_POST['veronro'])){
 		            $nroErr = "Veronumero puuttuu!";
@@ -60,22 +69,22 @@ session_start();
 		            $veroNro=$_POST['veronro'];
 		        }
 
-		        if(empty($_POST['osoite'])){
-		            $address="Ei osoitetietoja";
+		        if(empty($_POST['lahiosoite'])){
+		            $address="Ei lahiosoitetietoja";
 		        }else{
-		            $address=$_POST['osoite'];
+		            $address=$_POST['lahiosoite'];
 		        }
 		        
 		        if(!preg_match('#[0-9]{5}#',$_POST['postinro'])){
-		            $zipErr = "Virheellinen postinumero";
+		            $zipErr = "Virheellinen postinro";
 		        }elseif(empty($_POST['postinro'])){
-		            $zipcode = "Ei osoitetietoja";
+		            $zipcode = "Ei lahiosoitetietoja";
 		        }else{
 		            $zipcode = $_POST['postinro'];
 		        }
 		        
 		        if(empty($_POST['kaupunki'])){
-		            $city="Ei osoitetietoja";
+		            $city="Ei lahiosoitetietoja";
 		        }else{
 		            $city=$_POST['kaupunki'];
 		        }
@@ -90,7 +99,7 @@ session_start();
 		        if(empty($_POST['email'])){
 		            $emailErr = "Sähköpostisoite on pakollinen!";
 		        }elseif(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)===false){
-		            $emailErr="Sähköposti osoite on virheellinen!";
+		            $emailErr="Sähköposti lahiosoite on virheellinen!";
 		        }else{
 		            $email=filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 		            }
@@ -104,7 +113,7 @@ session_start();
 		       
 		        if ($state=="update"){
 		            $personid=$_POST["personid"];
-		            $message= update_personinfo($fname, $lname,$bdate,$address,$zipcode,$city,$phone,$veroNro,$pass,$email, $admin,$personid);
+		            $message= update_personinfo($fname, $lname,$bdate,$salary,$address,$zipcode,$city,$phone,$veroNro,$pass,$email, $admin,$personid);
 		            echo $message;
 		        }
 		    }
@@ -173,7 +182,7 @@ session_start();
      <div class="form-group col-md-12"></div>
  </div>
 <div class="form-row">
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-3">
       <label for="sukunimi">Sukunimi</label>
       <input type="text" class="form-control" id="sukunimi" name="sukunimi" placeholder="Sukunimi" value="<?php echo (isset($lastName)) ? $lastName: ''?>">
       <span class="error"> <?php echo $nameErr;?></span>
@@ -188,8 +197,13 @@ session_start();
       <input type="date" class="form-control" id="date" name="saika" placeholder="MM/DD/YYYY" value="<?php echo (isset($birthdate)) ? $birthdate: ''?>">
       <span class="error"> <?php echo $bdErr;?></span>
     </div>
+    <div class="form-group col-md-2">
+      <label for="saika">Tuntipalkka</label>
+      <input type="text" class="form-control" id="palkka" name="palkka" value="<?php echo (isset($salary)) ? $salary: ''?>">
+      <span class="error"> <?php echo $salErr;?></span>
+    </div>
     
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
       <label for="inputTax">Veronumero</label>
       <input type="text" class="form-control" id="veronro" name="veronro" placeholder="VeroNro" value="<?php echo (isset($taxNro)) ? $taxNro: ''?>">
       <span class="error"> <?php echo $nroErr;?></span>
@@ -197,11 +211,11 @@ session_start();
  </div>
  <div class="form-row">
   <div class="form-group col-md-5">
-    <label for="inputAddress">Katuosoite</label>
-    <input type="text" class="form-control" id="address" name="osoite" placeholder="Tiekatu 123" value="<?php echo (isset($mdf_address)) ? $mdf_address: ''?>">
+    <label for="inputAddress">Katulahiosoite</label>
+    <input type="text" class="form-control" id="address" name="lahiosoite" placeholder="Tiekatu 123" value="<?php echo (isset($mdf_address)) ? $mdf_address: ''?>">
   </div>
   <div class="form-group col-md-2">
-      <label for="postiNro">Postinumero</label>
+      <label for="postiNro">postinro</label>
       <input type="text" class="form-control" id="postiNro" name="postinro" value="<?php echo (isset($zcode)) ? $zcode: ''?>">
       <span class="error"> <?php echo $zipErr;?></span>
   </div>
@@ -252,8 +266,8 @@ session_start();
   <div class="col-md-2"></div>
    <div class="col-md-8">
 <?php
-if ($state=="insert" && isset($pass) && isset($lname) && isset($fname) && isset($bdate) && isset($veroNro) && isset($address) && isset($zipcode) && isset($city) && isset($phone) && isset($email) && isset($admin))
-		echo "<br><br><p align='center'>".$message=insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$phone,$email,$pass, $admin) ."</p>";
+if ($state=="insert" && isset($pass) && isset($lname) && isset($fname) && isset($bdate) && isset($salary) && isset($veroNro) && isset($address) && isset($zipcode) && isset($city) && isset($phone) && isset($email) && isset($admin))
+    echo "<br><br><p align='center'>".$message=insert_person($lname,$fname,$bdate,$salary,$veroNro,$address,$zipcode,$city,$phone,$email,$pass, $admin) ."</p>";
 ?>
 </div>
     <div class="col-md-2"></div>

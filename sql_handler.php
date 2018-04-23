@@ -5,15 +5,15 @@ require_once('connection.php');
 
 function login($email, $pwd){
     
-    $sql = ("SELECT idhenkilo, sukunimi , etunimet, ktunnus, salasana, admin FROM henkilo WHERE ktunnus ='$email'");
+    $sql = ("SELECT idhenkilo, sukunimi , etunimi, email, salasana, admin FROM henkilo WHERE email ='$email'");
     $result = execute_query($sql);
 
     if ($result->num_rows > 0) {
         // output data of each row
         while($row = $result->fetch_assoc()) {
             $current_userid=$row["idhenkilo"];
-            $current_user = $row["sukunimi"]. ", " . $row["etunimet"]; 
-            $sql_username=$row["ktunnus"];
+            $current_user = $row["sukunimi"]. ", " . $row["etunimi"]; 
+            $sql_username=$row["email"];
             $sql_pwd=$row["salasana"];
             $_SESSION['admin']=$row["admin"];
         }
@@ -66,7 +66,7 @@ function remove_hoursRow($eventId){
 }
 function update_hoursrow($eventId, $date, $hours, $overtime, $place, $kilometers, $km_description, $userid){
     $mysqli = get_database();
-    if($stmt = $mysqli->prepare("UPDATE tuntiseuranta SET pvm=?, tyokohde=?, tunnit=?, ylityo=?, kilometrit=?, kmselite=? WHERE idtuntiseuranta=?")){
+    if($stmt = $mysqli->prepare("UPDATE tuntiseuranta SET pvm=?, tyokohde=?, tunnit=?, ylityo=?, km=?, kmselite=? WHERE idtuntiseuranta=?")){
         $stmt->bind_param("ssssssi", $date, $place, $hours, $overtime, $kilometers, $km_description, $eventId);
         $stmt->execute();
         $stmt->close();
@@ -81,10 +81,10 @@ function update_hoursrow($eventId, $date, $hours, $overtime, $place, $kilometers
         $stmt->close();
     }
 }
-function update_personinfo($fname, $lname,$bdate,$address,$zipcode,$city,$phone,$veroNro,$pass,$email, $admin,$personid){
+function update_personinfo($fname, $lname,$bdate,$salary,$address,$zipcode,$city,$phone,$veroNro,$pass,$email, $admin,$personid){
     $mysqli = get_database();
-    if($stmt = $mysqli->prepare("UPDATE henkilo SET etunimet=?, sukunimi=?, syntymaaika=?, osoite=?, postinumero=?, kaupunki=?, puhnro=?, veronro=?, salasana=?, ktunnus=?, admin=? WHERE idhenkilo=?")){
-        $stmt->bind_param("ssssssssssii", $fname, $lname,$bdate,$address,$zipcode,$city,$phone,$veroNro,$pass,$email, $admin,$personid);
+    if($stmt = $mysqli->prepare("UPDATE henkilo SET etunimi=?, sukunimi=?, syntaika=?, tuntipalkka=?, postinro=?, postinro=?, kaupunki=?, puhnro=?, veronro=?, salasana=?, email=?, admin=? WHERE idhenkilo=?")){
+        $stmt->bind_param("sssdsssssssii", $fname, $lname,$bdate,$salary,$address,$zipcode,$city,$phone,$veroNro,$pass,$email, $admin,$personid);
         $stmt->execute();
         $stmt->close();
         return "Rivi on päivitetty";
@@ -95,11 +95,11 @@ function update_personinfo($fname, $lname,$bdate,$address,$zipcode,$city,$phone,
     }
 }
 
-function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$phone,$email,$pass, $admin) {
+function insert_person($lname,$fname,$bdate,$salary,$veroNro,$address,$zipcode,$city,$phone,$email,$pass, $admin) {
     $mysqli = get_database();
-    if($stmt = $mysqli->prepare("INSERT INTO henkilo (sukunimi, etunimet, syntymaaika, veronro, osoite, postinumero, kaupunki, puhnro, ktunnus, salasana, admin)
-        VALUES (?,?,?,?,?,?, ?,?,?,?,?)")){
-        $stmt->bind_param("ssssssssssi",$lname, $fname, $bdate, $veroNro, $address, $zipcode, $city, $phone, $email, $pass, $admin);
+    if($stmt = $mysqli->prepare("INSERT INTO henkilo (sukunimi, etunimi, syntaika, tuntipalkka, veronro, lahiosoite, postinro, kaupunki, puhnro, email, salasana, admin)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")){
+        $stmt->bind_param("sssdsssssssi",$lname, $fname, $bdate,$salary,$veroNro, $address, $zipcode, $city, $phone, $email, $pass, $admin);
         //$result = execute_prepared_query($stmt);
         $stmt->execute();
         $stmt->close();
@@ -116,7 +116,7 @@ function insert_person($lname,$fname,$bdate,$veroNro,$address,$zipcode,$city,$ph
 function insert_hours($date, $hours, $overtime, $place, $kilometers, $km_description, $userid){
     $mysqli = get_database();
     
-    if($stmt = $mysqli->prepare("INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, kilometrit, kmselite, henkilo_idhenkilo)
+    if($stmt = $mysqli->prepare("INSERT INTO tuntiseuranta (pvm, tyokohde, tunnit, ylityo, km, kmselite, henkilo_idhenkilo)
 	VALUES (?,?,?,?,?,?,?);")){
         $stmt->bind_param("ssssssi",$date, $place, $hours, $overtime, $kilometers, $km_description, $userid);
         $stmt->execute();
@@ -225,14 +225,14 @@ function getPerson($id){
 
 function getNames(){
     $_SESSION['populate_drop_down']="";
-    $sql = "SELECT idhenkilo, sukunimi, etunimet FROM henkilo;";
+    $sql = "SELECT idhenkilo, sukunimi, etunimi FROM henkilo;";
     $result = execute_query($sql);
     
     if ($result->num_rows > 0) {
         // output data of each row
         while($row = $result->fetch_assoc()) {
             $current_userid=$row["idhenkilo"];
-            $current_user = $row["sukunimi"]. ", " . $row["etunimet"]; 
+            $current_user = $row["sukunimi"]. ", " . $row["etunimi"]; 
             $_SESSION['populate_drop_down'] .= '<option value="'.$current_userid.'">'.$current_user.'</option>';
         }
         return $current_user;

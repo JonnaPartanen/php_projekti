@@ -156,11 +156,11 @@ function check_if_float($floatInput){
     </div>
   <div class="form-row">
   <div class="form-group col-md-12">
-   <h4>Ajokilometrit ja selite:</h4> </div>
+   <h4>Ajokm ja selite:</h4> </div>
   </div>
   <div class="form-row"> 
   <div class="form-group col-md-2">
-      <label for="km">Kilometrit</label>
+      <label for="km">km</label>
       <input type="text" class="form-control" id="km" name="km">
        <span class="error"> <?php echo $kmErr;?></span>
   </div>
@@ -196,7 +196,7 @@ if (isset($eventId) && $eventId !=""){
     <div class="col-md-8">
 <table class="table table-hover table-dark">
  <thead>
-<tr><th scope="col"> Id </th><th scope="col"> HenkilöId </th><th scope="col"> Pvm </th><th scope="col">Kohde</th><th scope="col">Tunnit</th><th scope="col">Ylityö/VKL</th><th scope="col">Kilometrit</th><th scope="col">Selite</th></tr>
+<tr><th scope="col"> Id </th><th scope="col"> HenkilöId </th><th scope="col"> Pvm </th><th scope="col">Kohde</th><th scope="col">Tunnit</th><th scope="col">Ylityö/VKL</th><th scope="col">km</th><th scope="col">Selite</th></tr>
 </thead>
 <?php
 	if (isset($message))
