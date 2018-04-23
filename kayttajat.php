@@ -1,7 +1,6 @@
 <?php
 session_start();
 	require_once('sql_handler.php');
-	require_once('seuranta.php');
 	
 	$nameErr = $bdErr = $nroErr = $emailErr = $pwErr= $phoneErr = $zipErr = $salErr ="";
 	$state="";
@@ -14,6 +13,7 @@ session_start();
 	}else{
 		getNames();
 	}
+	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){	
 	    if(isset($_POST['modifyperson'])){
 	        $result=getPerson($_POST["persons"]);
@@ -60,7 +60,7 @@ session_start();
 		            $salErr = "Tarkista syöte";
 		            
 		        }else{
-		            $salary = str_replace(",", ".",$_POST["salary"]);
+		            $salary = str_replace(",", ".",$_POST["palkka"]);
 		        }
 
 		        if(empty($_POST['veronro'])){
@@ -211,8 +211,8 @@ session_start();
  </div>
  <div class="form-row">
   <div class="form-group col-md-5">
-    <label for="inputAddress">Katulahiosoite</label>
-    <input type="text" class="form-control" id="address" name="lahiosoite" placeholder="Tiekatu 123" value="<?php echo (isset($mdf_address)) ? $mdf_address: ''?>">
+    <label for="inputAddress">Katuosoite</label>
+    <input type="text" class="form-control" id="lahiosoite" name="lahiosoite" placeholder="Tiekatu 123" value="<?php echo (isset($mdf_address)) ? $mdf_address: ''?>">
   </div>
   <div class="form-group col-md-2">
       <label for="postiNro">postinro</label>

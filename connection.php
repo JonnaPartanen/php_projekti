@@ -17,14 +17,6 @@ function get_database(){
 }
 
 
-function execute_query($sql_query) {
-    $mysqli = get_database();
-    $sql = $sql_query;
-    $result = $mysqli->query($sql);
-    
-    $mysqli->close();
-    return $result;
-}
 
 
 ?>

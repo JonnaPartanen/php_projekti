@@ -58,7 +58,7 @@ session_start();
 			$place = filter_var($_POST["kohde"], FILTER_SANITIZE_STRING);
 			$km_description = filter_var($_POST["selite"], FILTER_SANITIZE_STRING);
 			
-			if ($_POST['persons'] !=$_SESSION["userid"]){
+			if (isset($_POST['persons']) && $_POST['persons'] !=$_SESSION["userid"]){
 			    $userid=$_POST["persons"];
 			} else{
 			    $userid=$_SESSION["userid"];
@@ -69,10 +69,6 @@ session_start();
 	
 	 }
 
-function check_if_float($floatInput){
-	$bln= filter_var(str_replace(",", ".", $floatInput), FILTER_VALIDATE_FLOAT);
-	return $bln;
-}
 
 ?>
 

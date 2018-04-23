@@ -28,6 +28,11 @@ function login($email, $pwd){
             }else{
                 header("Location: valikko.php"); /* Redirect browser */
             }
+        }else if($sql_username==$email && $pwd == $sql_pwd){
+            $pass= password_hash($sql_pwd, PASSWORD_BCRYPT);
+            $sql = "UPDATE henkilo SET salasana = '$pass' WHERE idhenkilo ='$current_userid';";
+            $result = execute_query($sql);
+            return "Salasana suojattu. Yritä uudelleen";
         }else{
             //header("Location: index.html");
             return "Tarkista käyttäjänimi ja salasana";
@@ -83,7 +88,7 @@ function update_hoursrow($eventId, $date, $hours, $overtime, $place, $kilometers
 }
 function update_personinfo($fname, $lname,$bdate,$salary,$address,$zipcode,$city,$phone,$veroNro,$pass,$email, $admin,$personid){
     $mysqli = get_database();
-    if($stmt = $mysqli->prepare("UPDATE henkilo SET etunimi=?, sukunimi=?, syntaika=?, tuntipalkka=?, postinro=?, postinro=?, kaupunki=?, puhnro=?, veronro=?, salasana=?, email=?, admin=? WHERE idhenkilo=?")){
+    if($stmt = $mysqli->prepare("UPDATE henkilo SET etunimi=?, sukunimi=?, syntaika=?, tuntipalkka=?, lahiosoite=?, postinro=?, kaupunki=?, puhnro=?, veronro=?, salasana=?, email=?, admin=? WHERE idhenkilo=?")){
         $stmt->bind_param("sssdsssssssii", $fname, $lname,$bdate,$salary,$address,$zipcode,$city,$phone,$veroNro,$pass,$email, $admin,$personid);
         $stmt->execute();
         $stmt->close();
@@ -243,6 +248,18 @@ function getNames(){
 }
 function auth_failed(){
     return "Antamillasi hakuehdoilla ei löytynyt tuloksia";
+}
+function execute_query($sql_query) {
+    $mysqli = get_database();
+    $sql = $sql_query;
+    $result = $mysqli->query($sql);
+    
+    $mysqli->close();
+    return $result;
+}
+function check_if_float($floatInput){
+    $bln= filter_var(str_replace(",", ".", $floatInput), FILTER_VALIDATE_FLOAT);
+    return $bln;
 }
 
 
