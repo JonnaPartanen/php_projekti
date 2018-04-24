@@ -59,13 +59,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
   <title>Henkilon lisäys</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   
 </head>
-<body class ="mb-2 bg-primary text-white" >
-
+<body>
+<div class="mb-2 bg-primary text-white"> <!-- container -->
 <div class="jumbotron text-center" style="background-color:inherit">
   <h2 class="mb-2 bg-primary text-white">Timanttityö Lindh Oy</h2>
 </div>
@@ -143,8 +144,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 </div>
 <div class="row">
 
-<div class="col-md-2 text-center"></div>
-<div class="col-md-8 text-center"> <br><br><br><br>
+<div class="col-md-1 text-center"></div>
+<div class="col-md-10 text-center"> <br><br><br><br>
 	<?php
 	if (isset($arguments) && isset($names) && isset($start_date) && isset($end_date) && $tables==2){   
 	    echo $html_table= get_personal_and_working_info($arguments, $names, $start_date, $end_date);
@@ -155,10 +156,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         
     ?>
     </div>
-    <div class="col-md-2 text-center"></div>
+    <div class="col-md-1 text-center"></div>
     </div>
 </div>
-  
+ <div> <!-- container --> 
 </body>
-<script type='text/javascript' src="menu.js"></script>
+<script type='text/javascript' src="js/menu.js"></script>
 </html>

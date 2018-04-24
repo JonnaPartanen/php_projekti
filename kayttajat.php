@@ -129,9 +129,10 @@ session_start();
   <title>Henkilon lisäys</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   
 </head>
 <body class ="mb-2 bg-primary text-white" onload="changeView()" >
@@ -156,7 +157,7 @@ session_start();
     <h2> Valitse henkilö jonka tietoja haluat muokata:</h2>
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" onSubmit="return changeView()">
     <div class="form-row">
- 	<div class="form-group col-md-12">
+ 	
  	<div class="form-group col-md-4">
 		<?php
 		echo "<label for='persons' id='personslabel'>Valitse työntekijä:</label>";
@@ -167,8 +168,8 @@ session_start();
 		?>
 	</div>
 	<div class="form-group col-md-3">
-	<button name="modifyperson" class="btn btn-primary btn-block" style="height:40px; margin-top:20px;">Muokkaa henkilöä</button></div>
-	</div>
+	<button name="modifyperson" class="btn btn-primary btn-block" style="height:40px; margin-top:30px;">Muokkaa henkilöä</button></div>
+	
 	</div>
 	</form>
     <h2> Lisää uusi työntekijä: </h2>

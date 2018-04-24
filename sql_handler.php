@@ -140,7 +140,7 @@ function insert_hours($date, $hours, $overtime, $place, $kilometers, $km_descrip
 }
 
 function get_personal_and_working_info($arguments, $names, $start_date, $end_date){
-    $table_header="<table class='table table-hover table-dark'><thead><tr><th scope='col'>henkiloId";
+    $table_header="<table class='table table-sm table-dark'><thead><tr><th class='thead-dark' scope='col'>henkiloId";
     $file_header="**************************************************************************************************************\r\n" .
         "Raportti ajalta: " .$start_date ." - " . $end_date . "\t\t\t TTL Oy \r\nHenkiloID\t";
     for ($i=0; $i < count($arguments); $i++){
@@ -168,10 +168,13 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
       $html_table=$table_header. $table_row. "</table>";
       
       $file = $file_header.$file_row;
-      $myfile = fopen("myfile.txt", "w") or die("Unable to open file!");
-      fwrite($myfile, $file);
-      fclose($myfile); 
-      var_dump(popen('notepad','r'));
+      //$myfile = fopen("myfile.txt", "w") or die("Unable to open file!");
+      //fwrite($myfile, $file);
+      //fclose($myfile);
+      header('Content-type: text/plain');
+      header('Content-Disposition: attachment; filename="myfile.txt"');
+      echo $file;
+      
       
       //exec("notepad.exe". "C:\Users\User1\myfile.txt");
       
