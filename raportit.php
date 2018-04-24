@@ -15,6 +15,8 @@ session_start();
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    
+    
     if (isset($_POST['check'])){
         $today = date("Y-m-d");
         $start_date = $_POST['start_date'];
@@ -77,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     <div class="btn-group-vertical">
 		<button type="button" class="btn btn-success" onclick="openKayttajat()">Lisää työntekijä</button>
 		<button type="button" class="btn btn-success" onclick="openRaportit()">Raporttien haku ja tulostus</button>
-		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tunti- ja ajopäiväkirjan täyttö</button>
+		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tuntiseuranta ja ajopäiväkirja</button>
 		<button type="submit" name="logout" class="btn btn-danger">Kirjaudu ulos ja sulje</button>
 	</div>	
 	</form>

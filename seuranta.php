@@ -10,6 +10,22 @@ session_start();
 	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	    
+	    if(isset($_POST['report'])){
+	        $today = date("Y-m-d");
+	        $start_date = $_POST['start_date'];
+	        $end_date = $_POST['end_date'];
+	        if($start_date ==''){
+	            $start_date = $today;
+	        }
+	        if($end_date ==''){
+	            $end_date = $today;     
+	        }
+	        $arguments=array("idtuntiseuranta","sukunimi", "etunimi", "pvm", "tyokohde", "tunnit", "ylityo", "km", "kmselite");
+	        $names=array($_SESSION["userid"]);
+	        $html_table = get_personal_and_working_info($arguments, $names, $start_date, $end_date);
+	        
+	    }
+	    
 	    if(isset($_POST['remove'])){
 	        $removeEvent = ($_POST['tapid']);
 	    }
@@ -85,23 +101,23 @@ session_start();
   
   
 </head>
-<body class ="mb-2 bg-primary text-white">
-
+<body>
+<div class="mb-2 bg-primary text-white"> <!-- container-->
 <div class="jumbotron text-center" style="background-color:inherit">
-  <h2 class="mb-2 bg-primary text-white">Timanttityö Lindh Oy</h2>
+  <h1 class="mb-2 bg-primary text-white">Timanttityö Lindh Oy</h1>
 </div>
 
 <div class="row">
-
-	<div class="col-sm-2 text-center" style="margin-left:15px";>
+	<div class="col-sm-2 text-center">
     <form action="logout.php" method="post">
     <div class="btn-group-vertical">
-		<button type="button" class="btn btn-success" onclick="openKayttajat()">Lis�� ty�ntekij�</button>
+		<button type="button" class="btn btn-success" onclick="openKayttajat()">Lisää työntekijä</button>
 		<button type="button" class="btn btn-success" onclick="openRaportit()">Raporttien haku ja tulostus</button>
-		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tunti- ja ajop�iv�kirjan t�ytt�</button>
+		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tuntiseuranta ja ajopäiväkirja</button>
 		<button type="submit" name="logout" class="btn btn-danger">Kirjaudu ulos ja sulje</button>
-		
-	</div> </form></div>
+	</div>
+	</form>	
+	</div> 
 	
   
     <div class="col-md-8 text-primary" style="background-color:#f2f2f2">
@@ -124,10 +140,10 @@ session_start();
 	echo '</div>';
 	
 ?>
+</div>	
 	
+<div class='form-group col-md-12'> <h4 class="text-primary">Työtunnit ja työkohde:</h4> <small class='danger'>(Päivämäärä ja perustunnit ovat pakollisia tietoja.)</small></div>
 	
-	<div class='form-group col-md-10'> <h4 class="text-primary">Työtunnit ja työkohde:</h4> <small class='danger'>(Päivämäärä ja perustunnit ovat pakollisia tietoja.)</small></div>
-	</div>
 	<div class="form-row">
 	<div class="form-group col-md-3">
       <label for="pvm" class="text-primary" >Päivämäärä (tunnit/km)</label>
@@ -145,15 +161,16 @@ session_start();
       <span class="error"> <?php echo $otErr;?></span>
     </div>
     
-  </div>
+  
   
   <div class="form-group col-md-7">
     <label for="kohde">Kohde</label>
     <input type="text" class="form-control" id="kohde" name="kohde" placeholder="kohde">
     </div>
+  </div>
   <div class="form-row">
   <div class="form-group col-md-12">
-   <h4>Ajokm ja selite:</h4> </div>
+   <h4>Ajokilometrit ja selite:</h4> </div>
   </div>
   <div class="form-row"> 
   <div class="form-group col-md-2">
@@ -168,17 +185,18 @@ session_start();
 </div>
 
  <div class="form-row">
+ <div class="form-group col-md-9"></div>
  	<div class="form-group col-md-3">
  		<br>
- 		<button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">Tallenna tiedot</button>
+ 		<button type="submit" name="check" class="btn btn-success btn-block" style="height:40px;">Tallenna tiedot</button>
  		<button type="submit" name="remove" class="btn btn-danger btn-block" style="height:40px; display:none;">Poista rivi</button>
  	</div>
- 	<div class="form-group col-md-9"></div>
+ 	
  </div>
  
  
- <div class="form-row">
  <div class="form-group col-md-12"></div>
+ <div class="form-row">
  <div class="form-group col-md-4"></div>
   	<div class="form-group col-md-3">
     	<label for = "aloituspvm" class="text-primary">Jakson alku</label>
@@ -189,18 +207,14 @@ session_start();
     	<input type="date" class="form-control" id="loppu" name="end_date" placeholder="MM/DD/YYYY">
     </div>
     <div class="form-group col-md-2"><br>
- 			<button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">N�yt� Raportti</button>
+ 			<button type="submit" name="report" class="btn btn-primary btn-block" style="height:40px; margin-top:8px;">Näytä Raportti</button>
 	</div>
-    
+    </form> 
  </div><!-- p�iv�m��rien form row loppuu -->
  
+
+
  
- </form>
-</div>
-
-
-    <div class="col-md-2"></div>
-</div>
 
 <?php
 if (isset($eventId) && $eventId !=""){
@@ -211,12 +225,16 @@ if (isset($eventId) && $eventId !=""){
     echo "<br><br><p align='center'>".$message=remove_hoursRow($removeEvent) ."</p>";
 }
 ?>
-<div class="col-md-2"></div>
-    <div class="col-md-8">
-<table class="table table-hover table-dark">
- <thead>
-<tr><th scope="col"> Id </th><th scope="col"> HenkilöId </th><th scope="col"> Pvm </th><th scope="col">Kohde</th><th scope="col">Tunnit</th><th scope="col">Ylityö/VKL</th><th scope="col">km</th><th scope="col">Selite</th></tr>
-</thead>
+</div>
+<div class="col-md-12 text-center"><h3>Viimeksi syötetty rivi:</h3></div>
+
+
+<div class="col-md-1"></div>
+    <div class="col-md-10">
+	<table class="table table-hover table-dark">
+ 	<thead>
+	<tr><th scope="col"> HenkilöId </th><th scope="col">Rivi </th><th scope="col"> Pvm </th><th scope="col">Kohde</th><th scope="col">Tunnit</th><th scope="col">Ylityö/VKL</th><th scope="col">km</th><th scope="col">Selite</th></tr>
+	</thead>
 <?php
 	if (isset($message))
 		echo $_SESSION['addedRows'];
@@ -224,8 +242,19 @@ if (isset($eventId) && $eventId !=""){
 </table>
 
  </div>
- <div class="col-md-2"></div>
+ <div class="col-md-1"></div>
+ <div class="col-md-1"></div>
+    <div class="col-md-10">
+    <?php
+    if (isset($html_table))
+        echo $html_table;
+    ?>
+    </div>
+    <div class="col-md-1"></div>
  <script type='text/javascript' src="js/menu.js"></script> 
+ </div>
+ 
+ </div>
 </body>
 
 </html>

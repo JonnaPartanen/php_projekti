@@ -3,8 +3,8 @@ function modifyRow(id){
 	var row = document.getElementById(id);
 	
 	
-	var rowId = row.childNodes[0].innerText;
-	var personId= row.childNodes[1].innerText;
+	var personId = row.childNodes[0].innerText;
+	var rowId= row.childNodes[1].innerText;
 	var date= row.childNodes[2].innerText;
 	var project= row.childNodes[3].innerText;
 	var hours= row.childNodes[4].innerText;
@@ -29,7 +29,7 @@ function modifyRow(id){
 };
 
 function removeRow(id){
-	var rowId = document.getElementById(id).childNodes[0].innerText;
+	var rowId = document.getElementById(id).childNodes[1].innerText;
 	if(rowId !=""){
 		var formElem=document.getElementsByTagName('form')[1];
 		formElem= formElem.querySelectorAll('h4,small,label,input,button,span, select');

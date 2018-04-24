@@ -127,10 +127,10 @@ function insert_hours($date, $hours, $overtime, $place, $kilometers, $km_descrip
         $stmt->execute();
         $id= $mysqli->insert_id;
         $stmt->close();
-        $_SESSION['addedRows'] = "<tr id='$id'><td>" .$id . "</td><td>" .$userid . "</td><td>". $date . "</td><td>" .$place ."</td><td>" .$hours . "</td><td>
+        $_SESSION['addedRows'] = "<tr id='$id'><td>" .$userid . "</td><td>" .$id . "</td><td>". $date . "</td><td>" .$place ."</td><td>" .$hours . "</td><td>
         " .$overtime ."</td><td>" .$kilometers ."</td><td>" . $km_description ."</td>
-        <td><button type=\"button\" class=\"btn btn-success\"onClick=\"modifyRow('$id')\">Muokkaa</button></td>
-        <td> <button type=\"button\" name=\"remove\" class=\"btn btn-danger\"onClick=\"removeRow('$id')\">Poista</button></form></td></tr>";
+        <td><button type=\"button\" class=\"btn btn-success\" style=\"width:90px;\" onClick=\"modifyRow('$id')\">Muokkaa</button></td>
+        <td> <button type=\"button\" name=\"remove\" class=\"btn btn-danger\" style=\"width:90px;\" onClick=\"removeRow('$id')\">Poista</button></form></td></tr>";
         return "Rivi tallennettiin tietokantaan onnistuneesti: ".$id;
     }else{
         return $mysqli->errno . ' ' . $mysqli->error;
@@ -140,7 +140,8 @@ function insert_hours($date, $hours, $overtime, $place, $kilometers, $km_descrip
 }
 
 function get_personal_and_working_info($arguments, $names, $start_date, $end_date){
-    $table_header="<table class='table table-sm table-dark'><thead><tr><th class='thead-dark' scope='col'>henkiloId";
+    $table_header="<table class='table table-sm table-dark'><thead>
+    <tr><th class='thead-dark' scope='col'>henkiloId";
     $file_header="**************************************************************************************************************\r\n" .
         "Raportti ajalta: " .$start_date ." - " . $end_date . "\t\t\t TTL Oy \r\nHenkiloID\t";
     for ($i=0; $i < count($arguments); $i++){
@@ -157,12 +158,15 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
     $file_row="";
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            $table_row .= "<tr>";
+            $id=$row['idtuntiseuranta'];
+            $table_row .= "<tr id='$id'>";
             foreach ($row as $item) {
+                
                 $table_row .= "<td>". $item."</td>";
                 $file_row .= $item . "\t";
             }
-            $table_row .= "</tr>";
+            $table_row .= "<td><button type=\"button\" class=\"btn btn-success\" style=\"width:90px;\" onClick=\"modifyRow('$id')\">Muokkaa</button></td>
+        <td> <button type=\"button\" name=\"remove\" class=\"btn btn-danger\" style=\"width:90px;\" onClick=\"removeRow('$id')\">Poista</button></form></td></tr>";
             $file_row .= "\r\n";
         }
       $html_table=$table_header. $table_row. "</table>";
@@ -171,9 +175,9 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
       //$myfile = fopen("myfile.txt", "w") or die("Unable to open file!");
       //fwrite($myfile, $file);
       //fclose($myfile);
-      header('Content-type: text/plain');
-      header('Content-Disposition: attachment; filename="myfile.txt"');
-      echo $file;
+      //header('Content-type: text/plain');
+      //header('Content-Disposition: attachment; filename="myfile.txt"');
+      //echo $file;
       
       
       //exec("notepad.exe". "C:\Users\User1\myfile.txt");
