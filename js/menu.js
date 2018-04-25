@@ -22,7 +22,7 @@ function modifyRow(id){
 	document.getElementById('personslabel').style.display="none";
 	document.getElementById('tapid').style.display="block";
 	document.getElementById('tapidlabel').style.display="block";
-	document.getElementById('tapid').defaultValue=rowId;
+	document.getElementById('tapid').value=rowId;
 	document.getElementsByTagName('h2')[1].innerText="Muokkaa tapahtumaa:";
 	document.getElementsByName('check')[0].innerText= "Tallenna muutokset";
 	

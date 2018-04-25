@@ -1,6 +1,7 @@
 <?php
 session_start();
 	require_once('sql_handler.php');
+	require_once('validation.php');
 	
 	$nameErr = $bdErr = $nroErr = $emailErr = $pwErr= $phoneErr = $zipErr = $salErr ="";
 	$state="";

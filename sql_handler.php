@@ -139,7 +139,8 @@ function insert_hours($date, $hours, $overtime, $place, $kilometers, $km_descrip
     
 }
 
-function get_personal_and_working_info($arguments, $names, $start_date, $end_date){
+
+function get_personal_and_working_info($arguments, $names, $start_date, $end_date, $removable){
     $table_header="<table class='table table-sm table-dark'><thead>
     <tr><th class='thead-dark' scope='col'>henkiloId";
     $file_header="**************************************************************************************************************\r\n" .
@@ -158,15 +159,26 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
     $file_row="";
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            $id=$row['idtuntiseuranta'];
-            $table_row .= "<tr id='$id'>";
-            foreach ($row as $item) {
-                
-                $table_row .= "<td>". $item."</td>";
-                $file_row .= $item . "\t";
+            if($removable==1){
+                $id=$row['idtuntiseuranta'];
+                $table_row .= "<tr id='$id'>";
+            }else{
+                $table_row .= "<tr>";
             }
-            $table_row .= "<td><button type=\"button\" class=\"btn btn-success\" style=\"width:90px;\" onClick=\"modifyRow('$id')\">Muokkaa</button></td>
-        <td> <button type=\"button\" name=\"remove\" class=\"btn btn-danger\" style=\"width:90px;\" onClick=\"removeRow('$id')\">Poista</button></form></td></tr>";
+            foreach ($row as $item) {
+                if($removable==1 && $item != $row['sukunimi'] && $item!= $row['etunimi']){
+                    $table_row .= "<td>". $item."</td>";
+                }else {
+                    $table_row .= "<td>". $item."</td>";
+                    $file_row .= $item . "\t";
+                }
+            }
+            if($removable==1){
+                $table_row .= "<td><button type=\"button\" class=\"btn btn-success\" style=\"width:90px;\" onClick=\"modifyRow('$id')\">Muokkaa</button></td>
+                                <td> <button type=\"button\" name=\"remove\" class=\"btn btn-danger\" style=\"width:90px;\" onClick=\"removeRow('$id')\">Poista</button></form></td></tr>";
+            }else{
+                $table_row .= "</tr>";
+            }
             $file_row .= "\r\n";
         }
       $html_table=$table_header. $table_row. "</table>";
@@ -264,10 +276,7 @@ function execute_query($sql_query) {
     $mysqli->close();
     return $result;
 }
-function check_if_float($floatInput){
-    $bln= filter_var(str_replace(",", ".", $floatInput), FILTER_VALIDATE_FLOAT);
-    return $bln;
-}
+
 
 
 ?>

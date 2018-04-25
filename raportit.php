@@ -2,6 +2,8 @@
 session_start();
 
 	require_once('sql_handler.php');
+	require_once('validation.php');
+	
 	if (empty($_SESSION['userid'])) {
 
 			header("Location: index.php"); /* Redirect browser */;
@@ -18,9 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     
     
     if (isset($_POST['check'])){
-        $today = date("Y-m-d");
-        $start_date = $_POST['start_date'];
-        $end_date = $_POST['end_date'];
+       
+        $start_date = set_date($_POST['start_date']);
+        $end_date = set_date($_POST['end_date']);
         $tables=1;
         
         if (count($_POST['names']) == 0) {
@@ -149,8 +151,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <div class="col-md-1 text-center"></div>
 <div class="col-md-10 text-center"> <br><br><br><br>
 	<?php
-	if (isset($arguments) && isset($names) && isset($start_date) && isset($end_date) && $tables==2){   
-	    echo $html_table= get_personal_and_working_info($arguments, $names, $start_date, $end_date);
+	if (isset($arguments) && isset($names) && isset($start_date) && isset($end_date) && $tables==2){ 
+	    $removable=0;
+	    echo $html_table= get_personal_and_working_info($arguments, $names, $start_date, $end_date, $removable);
             //$html_table= get_personal_info($arguments, $names);
 	} else if(isset($arguments) && isset($names) && $tables ==1){
 	    echo $html_table = get_personal_info($arguments, $names);

@@ -1,6 +1,8 @@
 <?php
 session_start();
 	require_once('sql_handler.php');
+	require_once('validation.php');
+	
 	if (empty($_SESSION['userid'])) {
 
 			header("Location: index.php"); /* Redirect browser */;
@@ -11,18 +13,14 @@ session_start();
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	    
 	    if(isset($_POST['report'])){
-	        $today = date("Y-m-d");
-	        $start_date = $_POST['start_date'];
-	        $end_date = $_POST['end_date'];
-	        if($start_date ==''){
-	            $start_date = $today;
-	        }
-	        if($end_date ==''){
-	            $end_date = $today;     
-	        }
-	        $arguments=array("idtuntiseuranta","sukunimi", "etunimi", "pvm", "tyokohde", "tunnit", "ylityo", "km", "kmselite");
-	        $names=array($_SESSION["userid"]);
-	        $html_table = get_personal_and_working_info($arguments, $names, $start_date, $end_date);
+	       
+	        $start_date = set_date($_POST['start_date']);
+	        $end_date = set_date($_POST['end_date']);
+	        $id=set_userid();
+	        $arguments=array("sukunimi","etunimi","idtuntiseuranta", "pvm", "tyokohde", "tunnit", "ylityo", "km", "kmselite");
+	        $names=array($id);
+	        $removable=1;
+	        $html_table = get_personal_and_working_info($arguments, $names, $start_date, $end_date, $removable);
 	        
 	    }
 	    
@@ -31,11 +29,8 @@ session_start();
 	    }
 		
 		if (isset($_POST['check'])){
-		    echo $_POST['tapid'] ."joo";
 		    if(isset($_POST['tapid'])){
-		        echo $_POST['tapid'];
-		        $eventId = $_POST['tapid'];
-		        echo $eventId;
+		        $eventId = $_POST['tapid'];   
 		    }
 			
 			if(empty($_POST["pvm"])){
@@ -66,7 +61,7 @@ session_start();
 			if(empty($_POST["km"])){
 			    $kilometers=0;
 			}elseif(check_if_float($_POST["km"]) == false){
-			    $kmErr = "Tarkista sy�te";
+			    $kmErr = "Tarkista syöte";
 			}else{
 			    $kilometers = str_replace(",", ".",$_POST["km"]);
 			}
@@ -74,11 +69,9 @@ session_start();
 			$place = filter_var($_POST["kohde"], FILTER_SANITIZE_STRING);
 			$km_description = filter_var($_POST["selite"], FILTER_SANITIZE_STRING);
 			
-			if (isset($_POST['persons']) && $_POST['persons'] !=$_SESSION["userid"]){
-			    $userid=$_POST["persons"];
-			} else{
-			    $userid=$_SESSION["userid"];
-			}
+			
+		    $userid=set_userid();
+			
 			
 			
 		}
