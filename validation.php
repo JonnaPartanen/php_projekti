@@ -1,7 +1,6 @@
 <?php 
 
     function set_userid(){
-
 		if(isset($_POST['persons']) && $_POST['persons'] !=$_SESSION["userid"]){
 			   return $_POST["persons"];
 		}else{
@@ -15,8 +14,12 @@
             return $today;
         }else {
             return $date;
-        }
-        
+        }  
+    }
+    
+    function check_if_float($floatInput){
+        $bln= filter_var(str_replace(",", ".", $floatInput), FILTER_VALIDATE_FLOAT);
+        return $bln;
     }
     
     
