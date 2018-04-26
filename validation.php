@@ -22,11 +22,7 @@
         return $bln;
     }
     
-    function check_if_float($floatInput){
-        $bln= filter_var(str_replace(",", ".", $floatInput), FILTER_VALIDATE_FLOAT);
-        return $bln;
-    }
-    
+   
     
     
 ?>

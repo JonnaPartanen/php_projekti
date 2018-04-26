@@ -166,7 +166,7 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
                 $table_row .= "<tr>";
             }
             foreach ($row as $item) {
-                if($removable==1 && $item != $row['sukunimi'] && $item!= $row['etunimi']){
+                if($removable==1 && $item != \"$row['sukunimi']\" && $item!= \"$row['etunimi']\"){
                     $table_row .= "<td>". $item."</td>";
                 }else {
                     $table_row .= "<td>". $item."</td>";
