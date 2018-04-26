@@ -141,12 +141,21 @@ function insert_hours($date, $hours, $overtime, $place, $kilometers, $km_descrip
 
 
 function get_personal_and_working_info($arguments, $names, $start_date, $end_date, $removable){
+
     $table_header="<table class='table table-sm table-dark'><thead>
     <tr><th class='thead-dark' scope='col'>henkiloId";
     $file_header="**************************************************************************************************************\r\n" .
         "Raportti ajalta: " .$start_date ." - " . $end_date . "\t\t\t TTL Oy \r\nHenkiloID\t";
     for ($i=0; $i < count($arguments); $i++){
-        $table_header .= "<th scope='col'>".str_replace("'", "", $arguments[$i]) ."</th>";
+        
+       
+        if($removable==1){
+            if($arguments[$i] != 'sukunimi' && $arguments[$i] != 'etunimi'){
+                $table_header .= "<th scope='col'>".str_replace("'", "", $arguments[$i]) ."</th>";
+            }
+        }else{
+            $table_header .= "<th scope='col'>".str_replace("'", "", $arguments[$i]) ."</th>";
+        }
         $file_header .= str_replace("'", "", $arguments[$i]) ."\t";
     }
     $table_header .= "</tr></thead>";
@@ -155,10 +164,24 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
         henkilo.idhenkilo = tuntiseuranta.henkilo_idhenkilo WHERE henkilo.idhenkilo IN (".implode(',',$names).")
         AND pvm BETWEEN '" .$start_date."' AND '".$end_date. "' ORDER BY henkilo.idhenkilo,pvm ");
     $result = execute_query($sql);
+    
     $table_row="";
     $file_row="";
+    $lastname="";
+    $firstname="";
+    $salary="";
+    $sumHours="";
+    $sumOvertime="";
+    $sumKm="";
+    
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
+            $lastname="";
+            $firstname="";
+            $sumHours="";
+            $sumOvertime="";
+            $sumKm="";
+            
             if($removable==1){
                 $id=$row['idtuntiseuranta'];
                 $table_row .= "<tr id='$id'>";
@@ -166,8 +189,10 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
                 $table_row .= "<tr>";
             }
             foreach ($row as $item) {
-                if($removable==1 && $item != \"$row['sukunimi']\" && $item!= \"$row['etunimi']\"){
-                    $table_row .= "<td>". $item."</td>";
+                if($removable==1){
+                    if($item != $row['sukunimi'] && $item != $row['etunimi']){
+                        $table_row .= "<td>". $item."</td>";
+                    }
                 }else {
                     $table_row .= "<td>". $item."</td>";
                     $file_row .= $item . "\t";
