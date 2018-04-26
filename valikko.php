@@ -1,17 +1,17 @@
 <?php
-session_start();
+//session_start();
 	require_once('sql_handler.php');
-	if (empty($_SESSION['userid'])) {
+	include('session.php');
+	/*if (empty($_SESSION['userid'])) {
 
 			header("Location: index.php"); /* Redirect browser */;
-	}elseif($_SESSION['admin']!=true){
+	/*}elseif($_SESSION['admin']!=true){
 		header("Location: seuranta.php"); /* Redirect browser */;
 
-	}else{
+	/*}else{
 		echo "Tervetuloa " .$_SESSION['username'];
-	}
-	
-
+	}*/
+	echo "Tervetuloa " .$_SESSION['username'];
 	
 
 ?>
