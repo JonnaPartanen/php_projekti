@@ -1,19 +1,22 @@
 <?php
-session_start();
+//session_start();
 	require_once('sql_handler.php');
 	require_once('validation.php');
+	include('session.php');
 	
 	$nameErr = $bdErr = $nroErr = $emailErr = $pwErr= $phoneErr = $zipErr = $salErr ="";
 	$state="";
-	if (empty($_SESSION['userid'])) {
+	
+	getNames();
+	/*if (empty($_SESSION['userid'])) {
 
-			header("Location: index.php"); /* Redirect browser */;
+			header("Location: index.php"); /* Redirect browser ;
 	}elseif($_SESSION['admin']!=true){
-		header("Location: seuranta.php"); /* Redirect browser */;
+		header("Location: seuranta.php"); /* Redirect browser ;
 
 	}else{
 		getNames();
-	}
+	}*/
 	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){	
 	    if(isset($_POST['modifyperson'])){
