@@ -169,19 +169,30 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
     $file_row="";
     $lastname="";
     $firstname="";
-    $salary="";
-    $sumHours="";
-    $sumOvertime="";
-    $sumKm="";
+    $salary=0;
+    $sumHours=0;
+    $sumOvertime=0;
+    $sumKm=0;
     
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            $lastname="";
-            $firstname="";
-            $sumHours="";
-            $sumOvertime="";
-            $sumKm="";
+            if (isset($row['sukunimi'])){
+                $lastname = $row['sukunimi'];
+            }
+            if (isset($row['etunimi'])){
+                $firstname = $row['etunimi'];
+            }
+            if (isset($row['tunnit'])){
+                $sumHours += $row['tunnit'];
+            }
+            if (isset($row['ylityo'])){
+                $sumOvertime += $row['ylityo'];
+            }
+            if (isset($row['km'])){
+                $sumKm += $row['km'];
+            }
             
+
             if($removable==1){
                 $id=$row['idtuntiseuranta'];
                 $table_row .= "<tr id='$id'>";
@@ -206,6 +217,9 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
             }
             $file_row .= "\r\n";
         }
+        $table_row .="<tr><td>Yhteenveto<br>" . str_replace("'","", $lastname).", ".str_replace("'","", $firstname) . "</td>
+        <td>ajalta: <br>". str_replace("'","", $start_date) ."-<br>".str_replace("'","", $end_date)."</td><td></td>
+        <td></td><td></td><td></td><td></td><td>Perustunnit yht: ".str_replace("'","", $sumHours)."h, Ylityö: ".str_replace("'","", $sumOvertime)."h, Kilometrit: ".str_replace("'","", $sumKm)."km </td>Y</tr>";
       $html_table=$table_header. $table_row. "</table>";
       
       $file = $file_header.$file_row;

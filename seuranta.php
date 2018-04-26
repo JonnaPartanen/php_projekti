@@ -204,10 +204,13 @@ session_start();
 	</div>
     </form> 
  </div><!-- p�iv�m��rien form row loppuu -->
- 
 
-
- 
+</div>
+<div class='col-md-2'></div>
+</div>
+<div class='row'>
+<div class='col-md-2'></div>
+<div class='col-md-8'> 
 
 <?php
 if (isset($eventId) && $eventId !=""){
@@ -219,23 +222,25 @@ if (isset($eventId) && $eventId !=""){
 }
 ?>
 </div>
-<div class="col-md-12 text-center"><h3>Viimeksi syötetty rivi:</h3></div>
-
-
-<div class="col-md-1"></div>
-    <div class="col-md-10">
-	<table class="table table-hover table-dark">
- 	<thead>
-	<tr><th scope="col"> HenkilöId </th><th scope="col">Rivi </th><th scope="col"> Pvm </th><th scope="col">Kohde</th><th scope="col">Tunnit</th><th scope="col">Ylityö/VKL</th><th scope="col">km</th><th scope="col">Selite</th></tr>
-	</thead>
+<div class='col-md-2'></div>
+</div>
+    
 <?php
-	if (isset($message))
+if (isset($message) && $message !=''){
+        
+	    echo "<div class='col-md-12 text-center'><h3>Viimeksi syötetty rivi:</h3></div><div class='col-md-1'>";
+	    echo "<div class='row'>";
+	    echo "<div class='col-md-12 text-center'><table class='table table-hover table-dark'>
+ 	      <thead><tr><th scope='col'> HenkilöId </th><th scope='col'>Rivi </th><th scope='col'> Pvm 
+        </th><th scope='col'>Kohde</th><th scope='col'>Tunnit</th><th scope='col'>Ylityö/VKL</th>
+        <th scope='col'>km</th><th scope='col'>Selite</th></tr>
+	       </thead>";
 		echo $_SESSION['addedRows'];
+	    echo "</table></div><div class='col-md-1'></div></div>";
+}
 ?>
-</table>
 
- </div>
- <div class="col-md-1"></div>
+ 
  <div class="col-md-1"></div>
     <div class="col-md-10">
     <?php

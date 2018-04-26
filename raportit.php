@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	if (isset($arguments) && isset($names) && isset($start_date) && isset($end_date) && $tables==2){ 
 	    $removable=0;
 	    echo $html_table= get_personal_and_working_info($arguments, $names, $start_date, $end_date, $removable);
-            //$html_table= get_personal_info($arguments, $names);
+  
 	} else if(isset($arguments) && isset($names) && $tables ==1){
 	    echo $html_table = get_personal_info($arguments, $names);
 	}
