@@ -228,9 +228,9 @@ if (isset($eventId) && $eventId !=""){
 <?php
 if (isset($message) && $message !=''){
         
-	    echo "<div class='col-md-12 text-center'><h3>Viimeksi syötetty rivi:</h3></div><div class='col-md-1'>";
+	    echo "<div class='col-md-12 text-center'><h3>Viimeksi syötetty rivi:</h3></div><div class='col-md-1'></div>";
 	    echo "<div class='row'>";
-	    echo "<div class='col-md-12 text-center'><table class='table table-hover table-dark'>
+	    echo "<div class='col-md-1'></div><div class='col-md-10 text-center'><table class='table table-hover table-dark'>
  	      <thead><tr><th scope='col'> HenkilöId </th><th scope='col'>Rivi </th><th scope='col'> Pvm 
         </th><th scope='col'>Kohde</th><th scope='col'>Tunnit</th><th scope='col'>Ylityö/VKL</th>
         <th scope='col'>km</th><th scope='col'>Selite</th></tr>
@@ -240,15 +240,16 @@ if (isset($message) && $message !=''){
 }
 ?>
 
- 
+<div class='row'> 
  <div class="col-md-1"></div>
     <div class="col-md-10">
     <?php
     if (isset($html_table))
-        echo $html_table;
+        echo "<h3> Työntekijäraportti: </h3> " .$html_table;
     ?>
     </div>
     <div class="col-md-1"></div>
+ </div>
  <script type='text/javascript' src="js/menu.js"></script> 
  </div>
  

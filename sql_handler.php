@@ -217,10 +217,12 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
             }
             $file_row .= "\r\n";
         }
-        $table_row .="<tr><td>Yhteenveto<br>" . str_replace("'","", $lastname).", ".str_replace("'","", $firstname) . "</td>
-        <td>ajalta: <br>". str_replace("'","", $start_date) ."-<br>".str_replace("'","", $end_date)."</td><td></td>
-        <td></td><td></td><td></td><td></td><td>Perustunnit yht: ".str_replace("'","", $sumHours)."h, Ylityö: ".str_replace("'","", $sumOvertime)."h, Kilometrit: ".str_replace("'","", $sumKm)."km </td>Y</tr>";
-      $html_table=$table_header. $table_row. "</table>";
+       if($removable==1){
+            $table_row .="<tr><td>Yhteenveto:<br>" . str_replace("'","", $lastname).", ".str_replace("'","", $firstname) . "</td>
+            <td></td><td></td><td>Aikajakso: <br>". str_replace("'","", $start_date) ."-<br>".str_replace("'","", $end_date)."</td><td></td>
+            <td></td><td></td><td>Perustunnit yht: ".str_replace("'","", $sumHours)."h, Ylityö: ".str_replace("'","", $sumOvertime)."h, Kilometrit: ".str_replace("'","", $sumKm)."km </td></tr>";
+       }
+      $html_table=$table_header. $table_row . "</table>";
       
       $file = $file_header.$file_row;
       //$myfile = fopen("myfile.txt", "w") or die("Unable to open file!");
