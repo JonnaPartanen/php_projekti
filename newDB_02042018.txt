@@ -74,8 +74,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mydb`;
-INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimi`, `sukunimi`, `syntaika`,`tuntipalkka`, `lahiosoite`, `postinro`, `kaupunki`, `puhnro`, `veronro`, `email`, `salasana`, `admin`) VALUES (DEFAULT, 'Mika', 'Lindh', '1700-05-09', '17.50', 'Jokukuja', '01200', 'Vantaa', '0505555559', '856813312382', 'mika.lindh@live.com', 'mika', 'true');
-INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimi`, `sukunimi`, `syntaika`,`tuntipalkka`, `lahiosoite`, `postinro`, `kaupunki`, `puhnro`, `veronro`, `email`, `salasana`, `admin`) VALUES (DEFAULT, 'Jonna', 'Partanen', '1715-05-25','18.50','Jokutie ', '01300', 'Vantaa', '0455432155', '987613131232', 'jonna.partanen@student.laurea.fi', 'jonna', 'false');
-
+INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimi`, `sukunimi`, `syntaika`,`tuntipalkka`, `lahiosoite`, `postinro`, `kaupunki`, `puhnro`, `veronro`, `email`, `salasana`, `admin`) VALUES (DEFAULT, 'Jukka-Pekka', 'Lindh', '1977-09-09', '20.00', 'Jokukuja', '01450', 'Vantaa', '0400415627', '856813312382', 'posti@timanttityolindh.fi', 'admin', '1');
+INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimi`, `sukunimi`, `syntaika`,`tuntipalkka`, `lahiosoite`, `postinro`, `kaupunki`, `puhnro`, `veronro`, `email`, `salasana`, `admin`) VALUES (DEFAULT, 'Teppo', 'Testihenkilö', '1980-05-25','15.50','Jokutie ', '01300', 'Vantaa', '0455432155', '987613131232', 'teppo@testihenkilo.fi', 'tepi', '0');
 COMMIT;
 

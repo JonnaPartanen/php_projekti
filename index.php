@@ -1,13 +1,24 @@
 <?php
 	session_start();
+	
+	if ($_SESSION['userid'] !='') {
+        
+        if ($_SESSION['admin']!=1){
+            	header("Location: seuranta.php");
+        }else{
+			header("Location: valikko.php"); /* Redirect browser */;
+        }
+	}
+
+
 	require_once('sql_handler.php');
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		
 		if (isset($_POST['check'])){
-			
+
 			$email = $_POST["email"];
-    		//$pwd = password_hash($_POST["pwd"], PASSWORD_BCRYPT);
 			$pwd = $_POST["pwd"];
+			$message=login($email, $pwd);
 			
 		}
 	
@@ -67,8 +78,8 @@
   </div>
 </div>
 <?php
-	if (isset($email))
-		echo "<br><br><p align='center'>".$message=login($email, $pwd) ."</p>";
+	if (isset($message))
+		echo "<br><br><p align='center'>".$message ."</p>";
 ?>
 
 </body>

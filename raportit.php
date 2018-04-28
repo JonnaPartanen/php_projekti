@@ -114,6 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
       			<option value="'ylityo'">Ylityöt</option>
       			<option value="'km'">Ajokilometrit</option>
       			<option value="'kmselite'">KM selite</option>
+      			<option value="'tuntipalkka'">Palkkakertymä</option>
       			</select>
     		</div>
     	</div>

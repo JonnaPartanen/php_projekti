@@ -7,12 +7,13 @@ function login($email, $pwd){
     
     $sql = ("SELECT idhenkilo, sukunimi , etunimi, email, salasana, admin FROM henkilo WHERE email ='$email'");
     $result = execute_query($sql);
-
+    
     if ($result->num_rows > 0) {
+        
         // output data of each row
         while($row = $result->fetch_assoc()) {
             $current_userid=$row["idhenkilo"];
-            $current_user = $row["sukunimi"]. ", " . $row["etunimi"]; 
+            $current_user = $row["sukunimi"]. ", " . $row["etunimi"];
             $sql_username=$row["email"];
             $sql_pwd=$row["salasana"];
             $_SESSION['admin']=$row["admin"];
@@ -22,11 +23,13 @@ function login($email, $pwd){
             $_SESSION['userid'] = $current_userid;
             $_SESSION['username'] = $current_user;
             $_SESSION['addedRows'] = "";
-           
-            if($_SESSION['admin']!=true){
+            
+            if($_SESSION['admin']!=1){
                 header("Location: seuranta.php"); /* Redirect browser */
+                exit;
             }else{
                 header("Location: valikko.php"); /* Redirect browser */
+                exit;
             }
         }else if($sql_username==$email && $pwd == $sql_pwd){
             $pass= password_hash($sql_pwd, PASSWORD_BCRYPT);
