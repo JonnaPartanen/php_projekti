@@ -38,7 +38,7 @@
   <div class="col-sm-4 text-center"><h3>Valitse toiminto:</h3>
   <form action="logout.php" method="post">
 	<div class="btn-group-vertical">
-		<button type="button" class="btn btn-success" onclick="openKayttajat()">Lisää työntekijä</button>
+		<button type="button" class="btn btn-success" onclick="openKayttajat()">Muokkaa ja lisää henkilöitä</button>
 		<button type="button" class="btn btn-success" onclick="openRaportit()">Raporttien haku ja tulostus</button>
 		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tuntiseuranta ja ajopäiväkirja</button>
 		<button type="submit" name="logout" class="btn btn-danger">Kirjaudu ulos ja sulje</button>

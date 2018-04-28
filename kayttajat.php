@@ -150,7 +150,7 @@
 	<div class="col-sm-2 text-center">
     <form action="logout.php" method="post">
     <div class="btn-group-vertical">
-		<button type="button" class="btn btn-success" onclick="openKayttajat()">Lisää työntekijä</button>
+		<button type="button" class="btn btn-success" onclick="openKayttajat()">Muokkaa ja lisää henkilöitä</button>
 		<button type="button" class="btn btn-success" onclick="openRaportit()">Raporttien haku ja tulostus</button>
 		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tuntiseuranta ja ajopäiväkirjaö</button>
 		<button type="submit" name="logout" class="btn btn-danger">Kirjaudu ulos ja sulje</button>
