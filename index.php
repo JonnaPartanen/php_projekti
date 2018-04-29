@@ -84,8 +84,11 @@
   </div>
 </div>
 <?php
-	if (isset($message))
+	if (isset($message)){
+		echo "<h3 class='mb-2 bg-transparent text-danger'>";
 		echo "<br><br><p align='center'>".$message ."</p>";
+		echo "</h3>";
+	}
 ?>
 
 </body>
