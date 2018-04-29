@@ -51,7 +51,6 @@ function removeRow(id){
 }
 
 function changeView(){
-	console.log("Moi");
 	var inputElems=document.querySelectorAll('input');
 	
 	if(inputElems[1].value!='' && inputElems[2].value !='' && inputElems[3].value!='') {

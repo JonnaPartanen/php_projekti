@@ -2,9 +2,9 @@
 
 	require_once('sql_handler.php');
 	include('session.php');
-	//populating dropdowns for admin user
+
 	getNames();
-	
+
 	echo "Tervetuloa " .$_SESSION['username'];
 	
 

@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     
     if (isset($_POST['check'])){
        
-        //post returns two to three arrays, which is used as parameters for sql query
         $start_date = set_date($_POST['start_date']);
         $end_date = set_date($_POST['end_date']);
         $tables=1;
@@ -22,24 +21,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         }else {
             $names = $_POST['names'];
         }
-        // need information from both tables.. merge them for one first..
         if(isset($_POST['person_info']) && isset($_POST['other_info'])){
             $arguments = array_merge($_POST['person_info'], $_POST['other_info']);
             $tables ++;
-            
-         //user needs information only from henkilo table
         } else if (isset($_POST['person_info'])==true && isset($_POST['other_info'])==false){
             $arguments = array_merge($_POST['person_info']);
-        
-          //user needs information from tuntiseuranta only..
+            
         } else if (isset($_POST['person_info'])==false && isset($_POST['other_info'])==true){
             $arguments = array_merge($_POST['other_info']);
             $tables ++;
-            //user has to pick atleast one person.. return error
         } else {
             echo "Valitse ainakin yksi näytettävä tieto henkilötaulusta";
         }
-        //if user uses tuntiseuranta table, date fields has to be filled. if not, date is today.
+        
         if($tables == 2){
             if($start_date ==''){
                 $start_date = $today;

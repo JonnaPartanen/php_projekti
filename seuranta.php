@@ -7,14 +7,13 @@ session_start();
 
 			header("Location: index.php"); /* Redirect browser */;
 	}
-	//error messages if form is wrongly filled
 	$dateErr = $hourErr = $Err = "";
 	$otErr = $wErr = $kmErr = $eventId = "";
 	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	    
 	    if(isset($_POST['report'])){
-	       //prints report for user.. if dates are not set, then date is this day
+	       
 	        $start_date = set_date($_POST['start_date']);
 	        $end_date = set_date($_POST['end_date']);
 	        $id=set_userid();
@@ -24,20 +23,16 @@ session_start();
 	        $html_table = get_personal_and_working_info($arguments, $names, $start_date, $end_date, $removable);
 	        
 	    }
-	    //user wants to remove some row..
+	    
 	    if(isset($_POST['remove'])){
 	        $removeEvent = ($_POST['tapid']);
 	    }
 		
-	    //new row is added or user updates formerly added row
 		if (isset($_POST['check'])){
-		    
-		    //if 'tapid' element exist, we know that user is updating..
 		    if(isset($_POST['tapid'])){
 		        $eventId = $_POST['tapid'];   
 		    }
 			
-		    //check that all fields are ok:
 			if(empty($_POST["pvm"])){
 				$dateErr = "pvm on pakollinen tieto";
 			} else {
@@ -56,7 +51,7 @@ session_start();
 			if(empty($_POST["ylityo"])){
 			    $overtime=0;
 			}elseif(check_if_float($_POST["ylityo"]) == false){
-			    $otErr = "Tarkista syöte";
+			    $otErr = "Tarkista sy�te";
 			    
 			}else{
 			    $overtime = str_replace(",", ".",$_POST["ylityo"]);
@@ -223,13 +218,10 @@ session_start();
 <div class='col-md-8'> 
 
 <?php
-//if eventid is set, do update..
 if (isset($eventId) && $eventId !=""){
     echo "<br><br><p align='center'>".$message=update_hoursrow($eventId, $date, $hours, $overtime, $place, $kilometers, $km_description, $userid)."</p>";
-// if not, its a new row..    
 } else if (isset($date) && isset($hours)&& isset($overtime)&& isset($kilometers) && $eventId ==""){
     echo "<br><br><p align='center'>".$message=insert_hours($date, $hours, $overtime, $place, $kilometers, $km_description, $userid) ."</p>";
- //remove..
 } else if(isset($removeEvent)){
     echo "<br><br><p align='center'>".$message=remove_hoursRow($removeEvent) ."</p>";
 }

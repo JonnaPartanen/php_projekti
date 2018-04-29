@@ -1,8 +1,8 @@
 <?php 
-
+//session_start();
 require_once('connection.php');
 
-//Login.. if login is ok, redirect user to another page.. Admin to valikko and basic user to seuranta.. Error msg if login fails
+
 function login($email, $pwd){
     
     $sql = ("SELECT idhenkilo, sukunimi , etunimi, email, salasana, admin FROM henkilo WHERE email ='$email'");
@@ -44,8 +44,6 @@ function login($email, $pwd){
     }
     
 }
-
-//remove user from henkilo -table
 function remove_person($id){
     $mysqli = get_database();
     if ($stmt = $mysqli ->prepare("DELETE FROM henkilo WHERE idhenkilo=?")){
@@ -60,7 +58,6 @@ function remove_person($id){
       
 }
 
-//remove working hours and driving diary -row from tuntiseuranta table
 function remove_hoursRow($eventId){
     $mysqli = get_database();
     if ($stmt = $mysqli ->prepare("DELETE FROM tuntiseuranta WHERE idtuntiseuranta=?")){
@@ -74,8 +71,6 @@ function remove_hoursRow($eventId){
         $stmt->close();
     }
 }
-
-//update row to tuntiseuranta
 function update_hoursrow($eventId, $date, $hours, $overtime, $place, $kilometers, $km_description, $userid){
     $mysqli = get_database();
     if($stmt = $mysqli->prepare("UPDATE tuntiseuranta SET pvm=?, tyokohde=?, tunnit=?, ylityo=?, km=?, kmselite=? WHERE idtuntiseuranta=?")){
@@ -93,8 +88,6 @@ function update_hoursrow($eventId, $date, $hours, $overtime, $place, $kilometers
         $stmt->close();
     }
 }
-
-//update user..
 function update_personinfo($fname, $lname,$bdate,$salary,$address,$zipcode,$city,$phone,$veroNro,$pass,$email, $admin,$personid){
     $mysqli = get_database();
     if($stmt = $mysqli->prepare("UPDATE henkilo SET etunimi=?, sukunimi=?, syntaika=?, tuntipalkka=?, lahiosoite=?, postinro=?, kaupunki=?, puhnro=?, veronro=?, salasana=?, email=?, admin=? WHERE idhenkilo=?")){
@@ -108,7 +101,7 @@ function update_personinfo($fname, $lname,$bdate,$salary,$address,$zipcode,$city
         $stmt->close();
     }
 }
-//add user
+
 function insert_person($lname,$fname,$bdate,$salary,$veroNro,$address,$zipcode,$city,$phone,$email,$pass, $admin) {
     $mysqli = get_database();
     if($stmt = $mysqli->prepare("INSERT INTO henkilo (sukunimi, etunimi, syntaika, tuntipalkka, veronro, lahiosoite, postinro, kaupunki, puhnro, email, salasana, admin)
@@ -126,7 +119,7 @@ function insert_person($lname,$fname,$bdate,$salary,$veroNro,$address,$zipcode,$
    
     
 }
-//add working hours and kilometers to tuntiseuranta table.. Creates html row with modify and remove buttons.
+
 function insert_hours($date, $hours, $overtime, $place, $kilometers, $km_description, $userid){
     $mysqli = get_database();
     
@@ -140,7 +133,7 @@ function insert_hours($date, $hours, $overtime, $place, $kilometers, $km_descrip
         " .$overtime ."</td><td>" .$kilometers ."</td><td>" . $km_description ."</td>
         <td><button type=\"button\" class=\"btn btn-success\" style=\"width:90px;\" onClick=\"modifyRow('$id')\">Muokkaa</button></td>
         <td> <button type=\"button\" name=\"remove\" class=\"btn btn-danger\" style=\"width:90px;\" onClick=\"removeRow('$id')\">Poista</button></form></td></tr>";
-        return "Rivi tallennettiin tietokantaan onnistuneesti: ";
+        return "Rivi tallennettiin tietokantaan onnistuneesti: ".$id;
     }else{
         return $mysqli->errno . ' ' . $mysqli->error;
         $stmt->close();
@@ -148,8 +141,7 @@ function insert_hours($date, $hours, $overtime, $place, $kilometers, $km_descrip
     
 }
 
-//returns information from certain time period.. Returns html -table and writes text file.. Stupid solution. Files and tables
-//will be create in target file later on and this only return result, but there wasnt time to fix this now..
+
 function get_personal_and_working_info($arguments, $names, $start_date, $end_date, $removable){
 
     $table_header="<table class='table table-sm table-dark'><thead>
@@ -265,12 +257,11 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
       return $html_table;
       
     } else {
-        return "Antamillasi hakuehdoilla ei löytynyt tuloksia";
-        
+        //return "Antamillasi hakuehdoilla ei löytynyt tuloksia";
+        return $sql;
     }
 }
 
-//returns user information added to hmtl table..
 function get_personal_info($arguments, $names){
     $table_header="<table class='table table-hover table-dark'><thead><tr><th scope='col'>henkiloId";
     
@@ -299,7 +290,6 @@ function get_personal_info($arguments, $names){
     }
     
 }
-//returns user info to modified or removed
 function getPerson($id){
     $sql = "SELECT * FROM henkilo WHERE idhenkilo = '$id';";
     $result = execute_query($sql);
@@ -316,7 +306,7 @@ function getPerson($id){
     }
 }
 
-//populates drop downs for admin user
+
 function getNames(){
     $_SESSION['populate_drop_down']="";
     $sql = "SELECT idhenkilo, sukunimi, etunimi FROM henkilo;";
