@@ -1,5 +1,6 @@
 <?php 
-
+//some validation here.. this whole structure is still under construction and lots of stuff done in other files already 
+//(almost all variable setting work for example..)
     function set_userid(){
 		if(isset($_POST['persons']) && $_POST['persons'] !=$_SESSION["userid"]){
 			   return $_POST["persons"];

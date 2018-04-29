@@ -1,16 +1,10 @@
 <?php
-//session_start();
+
 	require_once('sql_handler.php');
 	include('session.php');
-	/*if (empty($_SESSION['userid'])) {
-
-			header("Location: index.php"); /* Redirect browser */;
-	/*}elseif($_SESSION['admin']!=true){
-		header("Location: seuranta.php"); /* Redirect browser */;
-
-	/*}else{
-		echo "Tervetuloa " .$_SESSION['username'];
-	}*/
+	//populating dropdowns for admin user
+	getNames();
+	
 	echo "Tervetuloa " .$_SESSION['username'];
 	
 

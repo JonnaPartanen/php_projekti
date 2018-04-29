@@ -1,6 +1,8 @@
 <?php
 	session_start();
-	
+	require_once('sql_handler.php');
+
+//if user is already logged while navigate to index.page then redirect..
 	if (isset($_SESSION['userid'])) {
         
         if ($_SESSION['admin']!=1){
@@ -11,16 +13,18 @@
 	}
 
 
-	require_once('sql_handler.php');
-	//require_once('connection.php');
+	
+	//calling login function..
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		
 		if (isset($_POST['check'])){
 
 			$email = $_POST["email"];
 			$pwd = $_POST["pwd"];
+
+			//error message if login fails
 			$message=login($email, $pwd);
-			//$message=get_database();
+		
 
 		}
 	

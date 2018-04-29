@@ -1,5 +1,5 @@
 <?php
-
+//returns db connection
 function get_database(){
     
     
