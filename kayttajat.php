@@ -8,15 +8,7 @@
 	$state="";
 	
 	getNames();
-	/*if (empty($_SESSION['userid'])) {
 
-			header("Location: index.php"); /* Redirect browser ;
-	}elseif($_SESSION['admin']!=true){
-		header("Location: seuranta.php"); /* Redirect browser ;
-
-	}else{
-		getNames();
-	}*/
 	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){	
 	    if(isset($_POST['modifyperson'])){
@@ -33,7 +25,7 @@
 	        $user = $result['email'];
 	        $bdate = $result['syntaika'];
 	        $password = $result['salasana'];
-	        //$admin = $result['admin'];
+	     //$admin = $result['admin'];
 	    }
 	    if (isset($_POST['remove'])){
 	        remove_person($_POST["personid"]);
