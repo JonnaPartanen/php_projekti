@@ -94,14 +94,14 @@ session_start();
   
   
 </head>
-<body>
-<div class="mb-2 bg-primary text-white"> <!-- container-->
-<div class="jumbotron text-center" style="background-color:inherit">
-  <h1 class="mb-2 bg-primary text-white">Timanttityö Lindh Oy</h1>
+<body style= "background: url('img/bg.jpg') no-repeat center center fixed;background-size: cover;">
+<div class="mb-2 bg-transparent text-white"> <!-- container-->
+<div class="jumbotron text-center" style="background-color:black; opacity:0.7;">
+  <h1 class="mb-2 bg-transparent text-white">Timanttityö Lindh Oy</h1>
 </div>
 
 <div class="row">
-	<div class="col-sm-2 text-center">
+	<div class="col-sm-3 text-center">
     <form action="logout.php" method="post">
     <div class="btn-group-vertical">
 		<button type="button" class="btn btn-success" onclick="openKayttajat()">Muokkaa ja lisää henkilöitä</button>
@@ -113,7 +113,7 @@ session_start();
 	</div> 
 	
   
-    <div class="col-md-8 text-primary" style="background-color:#f2f2f2">
+    <div class="col-md-7 text-primary" style="background-color:#f2f2f2">
     <h2 class="text-primary"> Työaikaseuranta ja ajopäiväkirja: </h2> <br>
  
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
@@ -133,9 +133,12 @@ session_start();
 	echo '</div>';
 	
 ?>
+<div class='form-group col-md-1'></div>
+<div class='form-group col-md-8'> <h4 class="text-primary"><br> Työtunnit ja työkohde:</h4>
+<small class='danger'>(Päivämäärä ja perustunnit ovat pakollisia tietoja.)</small></div>
 </div>	
 	
-<div class='form-group col-md-12'> <h4 class="text-primary">Työtunnit ja työkohde:</h4> <small class='danger'>(Päivämäärä ja perustunnit ovat pakollisia tietoja.)</small></div>
+<!--<div class='form-group col-md-12'> <h4 class="text-primary">Työtunnit ja työkohde:</h4> <small class='danger'>(Päivämäärä ja perustunnit ovat pakollisia tietoja.)</small></div>-->
 	
 	<div class="form-row">
 	<div class="form-group col-md-3">
@@ -156,7 +159,7 @@ session_start();
     
   
   
-  <div class="form-group col-md-7">
+  <div class="form-group col-md-6">
     <label for="kohde">Kohde</label>
     <input type="text" class="form-control" id="kohde" name="kohde" placeholder="kohde">
     </div>
@@ -202,12 +205,14 @@ session_start();
     <div class="form-group col-md-2"><br>
  			<button type="submit" name="report" class="btn btn-primary btn-block" style="height:40px; margin-top:8px;">Näytä Raportti</button>
 	</div>
+	</div><!-- p�iv�m��rien form row loppuu -->
     </form> 
- </div><!-- p�iv�m��rien form row loppuu -->
 
-</div>
+  </div>
 <div class='col-md-2'></div>
 </div>
+ </div>
+
 <div class='row'>
 <div class='col-md-2'></div>
 <div class='col-md-8'> 

@@ -3,7 +3,7 @@
 function get_database(){
     
     
-    $config = parse_ini_file('config.ini'); 
+    $config = parse_ini_file('./config/config.ini'); 
     
     $mysqli = new mysqli($config['servername'], $config['username'], $config['password'], $config['dbname']);
     
