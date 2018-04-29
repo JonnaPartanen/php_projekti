@@ -60,14 +60,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   
 </head>
-<body>
-<div class="mb-2 bg-primary text-white"> <!-- container -->
-<div class="jumbotron text-center" style="background-color:inherit">
-  <h2 class="mb-2 bg-primary text-white">Timanttityö Lindh Oy</h2>
+<body style= "background: url('img/bg.jpg') no-repeat center center fixed;background-size: cover;">
+<div class="mb-2 bg-transparent text-white"> <!-- container -->
+<div class="jumbotron text-center" style="background-color:black; opacity:0.7;">
+  <h1 class="mb-2 bg-transparent text-white">Timanttityö Lindh Oy</h1>
 </div>
 
 <div class="row">
-    <div class="col-sm-2 text-center">
+    <div class="col-sm-3 text-center">
     <form action="logout.php" method="post">
     <div class="btn-group-vertical">
 		<button type="button" class="btn btn-success" onclick="openKayttajat()">Muokkaa ja lisää henkilöitä</button>
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	</div>	
 	</form>
 	</div>
-    <div class="col-md-8" style="background-color:#f2f2f2" >
+    <div class="col-md-6" style="background-color:#f2f2f2" >
     	<h2 class="text-primary">Työntekijäraportit: </h2>
     	<p class="text-info"> <small>(Shift tai CTRL nappi pohjassa voit valita useamman)</small></p>
 
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     		</div>
   
     		<div class="form-group col-md-4">
-    			<label for="sel2"><h4 class="text-primary">Tulostettavat henkilötiedot:</h4>  <p class="text-info"> <small>(Työntekijätiedot)</small></p></label>
+    			<label for="sel2"><h4 class="text-primary">Henkilötiedot:</h4>  <p class="text-info"> <small>(Työntekijätiedot)</small></p></label>
       			<select name="person_info[]" multiple class="form-control" id="sel2" style="height:160px">
       			<option value="'sukunimi'">Sukunimi</option>
       			<option value="'etunimi'">Etunimi</option>
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
       			</select>
     		</div>
     		<div class="form-group col-md-4">
-    			<label for="sel3"><h4 class="text-primary"> Tulostettavat palkkatiedot: </h4> <p class="text-info"> <small>(Tunnit, kohteet, km)</small></p></label>
+    			<label for="sel3"><h4 class="text-primary"> Palkkatiedot: </h4> <p class="text-info"> <small>(Tunnit, kohteet, km)</small></p></label>
       			<select name= "other_info[]" multiple class="form-control" id="sel3" style="height:160px">>
       			<option value="'pvm'">Päivämäärä</option>
       			<option value="'tyokohde'">Työkohde</option>
@@ -127,15 +127,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     	<input type="date" class="form-control" id="loppu" name="end_date" placeholder="MM/DD/YYYY">
     	</div>
     	<div class="form-group col-md-3"><br>
-    		<button type="submit" class="btn btn-success btn-block" style="height:40px">Tyhjennä</button>
+    		<button type="submit" class="btn btn-info btn-block" style="height:40px; margin-top:7px" >Tyhjennä</button>
     	</div>
     	<div class="form-group col-md-3"><br>
- 			<button type="submit" name="check" class="btn btn-success btn-block" style="height:40px">Näytä Raportti</button>
+ 			<button type="submit" name="check" class="btn btn-primary btn-block" style="height:40px; margin-top:7px">Näytä Raportti</button>
 		</div>
 		</div>
 	</form>
 </div>
-<div class="col-md-2 text-center"></div>
+<div class="col-md-3 text-center"></div>
 </div>
 <div class="row">
 

@@ -24,6 +24,7 @@
 	        $taxNro = $result['veronro'];
 	        $user = $result['email'];
 	        $bdate = $result['syntaika'];
+	        $salary = $result['tuntipalkka'];
 	        $password = $result['salasana'];
 	     //$admin = $result['admin'];
 	    }
@@ -131,25 +132,25 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   
 </head>
-<body class ="mb-2 bg-primary text-white" onload="changeView()" >
+<body style= "background: url('img/bg.jpg') no-repeat center center fixed;background-size: cover;" onload="changeView()" >
 
-<div class="jumbotron text-center" style="background-color:inherit">
-  <h2 class="mb-2 bg-primary text-white">Timanttityö Lindh Oy</h2>
+<div class="jumbotron text-center" style="background-color:transparent; background-color:black; opacity:0.7;">
+  <h1 class="mb-2 bg-transparent text-white">Timanttityö Lindh Oy</h1>
   
 </div>
 <div class="row">
 
-	<div class="col-sm-2 text-center">
+	<div class="col-sm-3 text-center">
     <form action="logout.php" method="post">
     <div class="btn-group-vertical">
 		<button type="button" class="btn btn-success" onclick="openKayttajat()">Muokkaa ja lisää henkilöitä</button>
 		<button type="button" class="btn btn-success" onclick="openRaportit()">Raporttien haku ja tulostus</button>
-		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tuntiseuranta ja ajopäiväkirjaö</button>
+		<button type="button" class="btn btn-success" onclick="openSeuranta()">Tuntiseuranta ja ajopäiväkirja</button>
 		<button type="submit" name="logout" class="btn btn-danger">Kirjaudu ulos ja sulje</button>
 		
 	</div> </form></div>
 	
-    <div class="col-md-8 text-primary" style="background-color:#f2f2f2">
+    <div class="col-md-6 text-primary" style="background-color:#f2f2f2">
     <h2> Valitse henkilö jonka tietoja haluat muokata:</h2>
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" onSubmit="return changeView()">
     <div class="form-row">
@@ -220,13 +221,13 @@
       <label for="kaupunki">Kaupunki</label>
       <input type="text" class="form-control" id="kaupunki" name="kaupunki" value="<?php echo (isset($mdf_city)) ? $mdf_city: ''?>">
     </div>
-    </div>
+    
   
     <div class="form-group col-md-3">
       <label for="puhNro">Puhelinnumero</label>
       <input type="text" class="form-control" id="puhNro" name="puhnro" value="<?php echo (isset($phoneNro)) ? $phoneNro: ''?>">
       <span class="error"> <?php echo $phoneErr;?></span>
-      
+     </div> 
    </div>
     
    <div class="form-row">
@@ -259,7 +260,7 @@
  
 </form>
 </div>
- <div class="col-md-1"></div>
+ <div class="col-md-3"></div>
   <div class="col-md-2"></div>
    <div class="col-md-8">
 <?php

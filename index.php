@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	
-	if ($_SESSION['userid'] !='') {
+	if (isset($_SESSION['userid'])) {
         
         if ($_SESSION['admin']!=1){
             	header("Location: seuranta.php");
@@ -21,6 +21,7 @@
 			$pwd = $_POST["pwd"];
 			$message=login($email, $pwd);
 			//$message=get_database();
+
 		}
 	
 	 }
@@ -43,34 +44,34 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
-<body class ="mb-2 bg-primary text-white" >
+<body style= "background: url('img/bg.jpg') no-repeat center center fixed;background-size: cover;">
 
-<div class="jumbotron text-center" style="background-color:inherit">
-  <h2 class="mb-2 bg-primary text-white">Timanttityö Lindh Oy</h2>
+<div class="jumbotron text-center" style="background-color:black; opacity:0.7;">
+  <h1 class="mb-2 bg-transparent text-white">Timanttityö Lindh Oy</h1>
   
 </div>
   
-<div class="container">
+<div class="mb-2 bg-transparent text-white">
   <div class="row">
     <div class="col-sm-4">
       
       
     </div>
-    <div class="col-sm-4">
-      <h3>Kirjaudu sisään:</h3>
+    <div class="col-sm-4 text-primary" style="background-color:#f2f2f2; opacity: 1; border:solid 5px white; border-radius:5px;  height: 500px;">
+      <h2><br>Kirjaudu sisään:</h2><br>
       <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+      <input type="email" class="form-control" id="email" placeholder="Email" name="email">
     </div>
     <div class="form-group">
       <label for="pwd">Password:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+      <input type="password" class="form-control" id="pwd" placeholder="Salasana" name="pwd">
     </div>
     <div class="checkbox">
-      <label><input type="checkbox" name="remember"> Remember me</label>
-    </div>
-    <button type="submit" name="check" class="btn btn-default">Submit</button>
+      <label><input type="checkbox" name="remember"> Muista minut</label>
+    </div><br>
+    <button type="submit" name="check" class="btn btn-success">Kirjaudu sisään</button>
   </form>
     </div>
     <div class="col-sm-4">
