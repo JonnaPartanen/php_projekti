@@ -9,7 +9,7 @@ function get_database(){
     
     // Check connection
     if ($mysqli->connect_error) {
-        return ("Connection failed: " . $myqli->connect_error);
+        return ("Connection failed: " . $mysqli->connect_error);
     }else{
         //return "Connected successfully" . "<br>";
         return $mysqli;

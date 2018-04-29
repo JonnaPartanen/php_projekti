@@ -7,7 +7,6 @@ function login($email, $pwd){
     
     $sql = ("SELECT idhenkilo, sukunimi , etunimi, email, salasana, admin FROM henkilo WHERE email ='$email'");
     $result = execute_query($sql);
-    
     if ($result->num_rows > 0) {
         
         // output data of each row

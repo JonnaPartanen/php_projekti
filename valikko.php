@@ -19,7 +19,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Valikko</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -50,9 +50,13 @@
 
 	</form>
   </div>
+<<<<<<< HEAD
   <div class="col-sm-4">
   <img src="img/hole.jpg" alt="hole" style="width:100%; border:solid 4px white; border-radius:250px">
   </div>
+=======
+  <div class="col-sm-8"></div>
+>>>>>>> 3829c32017b59ac73bb90ce98c24654ac464fb38
   
 </div> 
 </div>

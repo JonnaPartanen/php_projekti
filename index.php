@@ -12,6 +12,7 @@
 
 
 	require_once('sql_handler.php');
+	//require_once('connection.php');
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		
 		if (isset($_POST['check'])){
@@ -20,7 +21,10 @@
 			$pwd = $_POST["pwd"];
 			$message=login($email, $pwd);
 			//$message=get_database();
+<<<<<<< HEAD
 			
+=======
+>>>>>>> 3829c32017b59ac73bb90ce98c24654ac464fb38
 		}
 	
 	 }
