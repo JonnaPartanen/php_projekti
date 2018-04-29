@@ -5,22 +5,22 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema localdb
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
+DROP SCHEMA IF EXISTS `localdb` ;
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema localdb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `localdb` DEFAULT CHARACTER SET utf8 ;
+USE `localdb` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`henkilo`
+-- Table `localdb`.`henkilo`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`henkilo` ;
+DROP TABLE IF EXISTS `localdb`.`henkilo` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`henkilo` (
+CREATE TABLE IF NOT EXISTS `localdb`.`henkilo` (
   `idhenkilo` INT NOT NULL AUTO_INCREMENT,
   `etunimi` VARCHAR(20) NOT NULL,
   `sukunimi` VARCHAR(30) NOT NULL,
@@ -41,11 +41,11 @@ ENGINE = InnoDB AUTO_INCREMENT=100;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`tuntiseuranta`
+-- Table `localdb`.`tuntiseuranta`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`tuntiseuranta` ;
+DROP TABLE IF EXISTS `localdb`.`tuntiseuranta` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`tuntiseuranta` (
+CREATE TABLE IF NOT EXISTS `localdb`.`tuntiseuranta` (
   `idtuntiseuranta` INT NOT NULL AUTO_INCREMENT,
   `pvm` DATE NOT NULL,
   `tyokohde` VARCHAR(80) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`tuntiseuranta` (
   INDEX `fk_tuntiseuranta_henkilo_idx` (`henkilo_idhenkilo` ASC),
   CONSTRAINT `fk_tuntiseuranta_henkilo`
     FOREIGN KEY (`henkilo_idhenkilo`)
-    REFERENCES `mydb`.`henkilo` (`idhenkilo`)
+    REFERENCES `localdb`.`henkilo` (`idhenkilo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -70,12 +70,12 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
--- Data for table `mydb`.`henkilo`
+-- Data for table `localdb`.`henkilo`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `mydb`;
-INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimi`, `sukunimi`, `syntaika`,`tuntipalkka`, `lahiosoite`, `postinro`, `kaupunki`, `puhnro`, `veronro`, `email`, `salasana`, `admin`) VALUES (DEFAULT, 'Mika', 'Lindh', '1700-05-09', '17.50', 'Jokukuja', '01200', 'Vantaa', '0505555559', '856813312382', 'mika.lindh@live.com', 'mika', 'true');
-INSERT INTO `mydb`.`henkilo` (`idhenkilo`, `etunimi`, `sukunimi`, `syntaika`,`tuntipalkka`, `lahiosoite`, `postinro`, `kaupunki`, `puhnro`, `veronro`, `email`, `salasana`, `admin`) VALUES (DEFAULT, 'Jonna', 'Partanen', '1715-05-25','18.50','Jokutie ', '01300', 'Vantaa', '0455432155', '987613131232', 'jonna.partanen@student.laurea.fi', 'jonna', 'false');
+USE `localdb`;
+INSERT INTO `localdb`.`henkilo` (`idhenkilo`, `etunimi`, `sukunimi`, `syntaika`,`tuntipalkka`, `lahiosoite`, `postinro`, `kaupunki`, `puhnro`, `veronro`, `email`, `salasana`, `admin`) VALUES (DEFAULT, 'Mika', 'Lindh', '1700-05-09', '17.50', 'Jokukuja', '01200', 'Vantaa', '0505555559', '856813312382', 'mika.lindh@live.com', 'mika', 'true');
+INSERT INTO `localdb`.`henkilo` (`idhenkilo`, `etunimi`, `sukunimi`, `syntaika`,`tuntipalkka`, `lahiosoite`, `postinro`, `kaupunki`, `puhnro`, `veronro`, `email`, `salasana`, `admin`) VALUES (DEFAULT, 'Jonna', 'Partanen', '1715-05-25','18.50','Jokutie ', '01300', 'Vantaa', '0455432155', '987613131232', 'jonna.partanen@student.laurea.fi', 'jonna', 'false');
 
 COMMIT;
 
