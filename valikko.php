@@ -50,13 +50,13 @@
 
 	</form>
   </div>
-<<<<<<< HEAD
+
   <div class="col-sm-4">
   <img src="img/hole.jpg" alt="hole" style="width:100%; border:solid 4px white; border-radius:250px">
   </div>
-=======
+
   <div class="col-sm-8"></div>
->>>>>>> 3829c32017b59ac73bb90ce98c24654ac464fb38
+
   
 </div> 
 </div>
