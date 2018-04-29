@@ -55,7 +55,7 @@ function changeView(){
 	
 	if(inputElems[1].value!='' && inputElems[2].value !='' && inputElems[3].value!='') {
 		
-		document.getElementsByTagName('h2')[2].innerText="Muokkaa tietoja tai poista henkilö";
+		document.getElementsByTagName('h2')[1].innerText="Muokkaa tietoja tai poista henkilö";
 		document.getElementsByName('check')[0].style.display="none";
 		document.getElementsByName('modify')[0].style.display="block";
 		document.getElementsByName('remove')[0].style.display="block";

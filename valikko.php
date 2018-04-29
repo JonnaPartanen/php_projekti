@@ -2,6 +2,7 @@
 //session_start();
 	require_once('sql_handler.php');
 	include('session.php');
+	getNames();
 	/*if (empty($_SESSION['userid'])) {
 
 			header("Location: index.php"); /* Redirect browser */;
