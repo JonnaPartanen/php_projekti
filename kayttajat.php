@@ -8,8 +8,10 @@
 	$state="";
 	//populate drop downs
 	getNames();
+
 	//user wants to modify.. get user data from sql and populate form fields:
 	//set variables
+
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){	
 	    if(isset($_POST['modifyperson'])){
 	        $result=getPerson($_POST["persons"]);
@@ -26,7 +28,6 @@
 	        $bdate = $result['syntaika'];
 	        $salary = $result['tuntipalkka'];
 	        $password = $result['salasana'];
-	        //$admin = $result['admin'];
 	    }
 	    
 	    //checks if user is adding, modifying or removing information:
