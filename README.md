@@ -1,9 +1,11 @@
 # php_projekti
 
-###LogIn: username: teppo@yahoo.com password: teppo
+LogIn: username: teppo@yahoo.com password: teppo
+
 ![image](https://user-images.githubusercontent.com/33378336/39417504-4dbfde76-4c5d-11e8-9ad8-dd6f3a5548a2.png)
 
-###Valikko
+Valikko
+
 ![image](https://user-images.githubusercontent.com/33378336/39417512-58c913dc-4c5d-11e8-9b36-a62e85a34069.png)
 
 
