@@ -170,7 +170,7 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
     }
     $table_header .= "</tr></thead>";
     $file_header .= "\r\n**************************************************************************************************************\r\n";
-    $sql = ("SELECT henkilo_idhenkilo,".str_replace("'","",implode(",", $arguments))." FROM henkilo join tuntiseuranta ON
+    $sql = ("SELECT henkilo_idhenkilo,tuntipalkka,".str_replace("'","",implode(",", $arguments))." FROM henkilo join tuntiseuranta ON
         henkilo.idhenkilo = tuntiseuranta.henkilo_idhenkilo WHERE henkilo.idhenkilo IN (".implode(',',$names).")
         AND pvm BETWEEN '" .$start_date."' AND '".$end_date. "' ORDER BY henkilo.idhenkilo,pvm ");
     $result = execute_query($sql);
@@ -192,6 +192,9 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
             if (isset($row['etunimi'])){
                 $firstname = $row['etunimi'];
             }
+            if (isset($row['tuntipalkka'])){
+                $salary = $row['tuntipalkka'];
+            }
             if (isset($row['tunnit'])){
                 $sumHours += $row['tunnit'];
             }
@@ -201,6 +204,7 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
             if (isset($row['km'])){
                 $sumKm += $row['km'];
             }
+            
             
 
             if($removable==1){
@@ -215,8 +219,10 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
                         $table_row .= "<td>". $item."</td>";
                     }
                 }else {
-                    $table_row .= "<td>". $item."</td>";
-                    $file_row .= $item . "\t";
+                    if($item != $row['tuntipalkka']){
+                        $table_row .= "<td>". $item."</td>";
+                        $file_row .= $item . "\t";
+                    }
                 }
             }
             if($removable==1){
@@ -230,7 +236,18 @@ function get_personal_and_working_info($arguments, $names, $start_date, $end_dat
        if($removable==1){
             $table_row .="<tr><td>Yhteenveto:<br>" . str_replace("'","", $lastname).", ".str_replace("'","", $firstname) . "</td>
             <td></td><td></td><td>Aikajakso: <br>". str_replace("'","", $start_date) ."-<br>".str_replace("'","", $end_date)."</td><td></td>
-            <td></td><td></td><td>Perustunnit yht: ".str_replace("'","", $sumHours)."h, Ylityö: ".str_replace("'","", $sumOvertime)."h, Kilometrit: ".str_replace("'","", $sumKm)."km </td></tr>";
+            <td></td><td></td><td>Perustunnit yht: ".str_replace("'","", $sumHours)."h, Ylityö: ".str_replace("'","", $sumOvertime)."h, Kilometrit: ".str_replace("'","", $sumKm)."km </td></tr>"; 
+       }else {
+         
+           $table_row .= "</td></tr></table><table class='table table-sm table-dark'><thead>
+            <tr><th class='thead-dark' scope='col'>Yhteenveto ajalta: </th><th class='thead-dark' scope='col'></th></th>
+            <th class='thead-dark' scope='col'>Henkilö: </th><th class='thead-dark' scope='col'>Tunnit: </th> <th class='thead-dark' scope='col'>Ylityö: </th>
+            <th class='thead-dark' scope='col'>Kilometrit: </th><th class='thead-dark' scope='col'>Palkkakertymä: </th><th class='thead-dark' scope='col'>Kilometrikorvaus: </th></tr>
+            <td>". str_replace("'","", $start_date) ." - ".str_replace("'","", $end_date)."</td><td></td>
+            <td>". str_replace("'","", $lastname).", ".str_replace("'","", $firstname) . "</td><td>".str_replace("'","", $sumHours)."h</td><td>".str_replace("'","", $sumOvertime)."h</td>
+            <td>".str_replace("'","", $sumKm)."km</td><td>". (($sumHours * $salary) + ($sumOvertime *20)) ." €</td><td>".$sumKm*0.42 ." €</td></tr>";
+           
+           
        }
       $html_table=$table_header. $table_row . "</table>";
       
