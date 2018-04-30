@@ -1,5 +1,7 @@
 # php_projekti
 
+Azure Url: https://1601469.azurewebsites.net/
+
 LogIn: username: teppo@yahoo.com password: teppo
 
 ![image](https://user-images.githubusercontent.com/33378336/39417504-4dbfde76-4c5d-11e8-9ad8-dd6f3a5548a2.png)
