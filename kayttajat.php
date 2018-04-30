@@ -1,15 +1,17 @@
 <?php
-//session_start();
+
 	require_once('sql_handler.php');
 	require_once('validation.php');
 	include('session.php');
 	
 	$nameErr = $bdErr = $nroErr = $emailErr = $pwErr= $phoneErr = $zipErr = $salErr ="";
 	$state="";
-	
+	//populate drop downs
 	getNames();
 
-	
+	//user wants to modify.. get user data from sql and populate form fields:
+	//set variables
+
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){	
 	    if(isset($_POST['modifyperson'])){
 	        $result=getPerson($_POST["persons"]);
@@ -26,12 +28,16 @@
 	        $bdate = $result['syntaika'];
 	        $salary = $result['tuntipalkka'];
 	        $password = $result['salasana'];
-	     //$admin = $result['admin'];
 	    }
+	    
+	    //checks if user is adding, modifying or removing information:
+	    //remove.. removes and populates dropdown so removed user is not visible there anymore
 	    if (isset($_POST['remove'])){
 	        remove_person($_POST["personid"]);
 	        getNames();
 	    }
+	    
+	    //user wants to insert or sending update.. set varibles and validate
 	    if (isset($_POST['check'])||isset($_POST['modify'])){
 	        if (isset($_POST['modify'])){
 	            $state="update";
@@ -132,7 +138,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   
 </head>
-<body style= "background: url('img/bg.jpg') no-repeat center center fixed;background-size: cover;" onload="changeView()" >
+<body onload="changeView()" style= "background: url('img/bg.jpg') no-repeat center center fixed;background-size: cover;" >
 
 <div class="jumbotron text-center" style="background-color:transparent; background-color:black; opacity:0.7;">
   <h1 class="mb-2 bg-transparent text-white">Timanttityö Lindh Oy</h1>
